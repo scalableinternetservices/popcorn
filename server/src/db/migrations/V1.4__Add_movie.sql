@@ -1,0 +1,1 @@
+insert into `movie` (`name`, `genres`) values (`Twilight`, `comedy`)
