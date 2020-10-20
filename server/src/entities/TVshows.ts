@@ -51,11 +51,13 @@ export class TVshow extends BaseEntity implements TVshowType {
   director: string
 
   @Column({
+    length: 100,
     nullable: true,
   })
   cast: string
 
   @Column({
+    length: 100,
     nullable: true,
   })
   languages: string

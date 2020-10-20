@@ -57,6 +57,7 @@ export class Movie extends BaseEntity implements MovieType {
   cast: string
 
   @Column({
+    length: 100,
     nullable: true,
   })
   languages: string

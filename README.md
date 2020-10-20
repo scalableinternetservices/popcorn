@@ -12,6 +12,7 @@
 
 # Description and Features
 
+<<<<<<< HEAD
 Our project will be
 =======
 |Saumya Dedhia|saumya0404|<img width="322" alt="Screenshot 2020-10-09 at 6 14 19 PM" src="https://user-images.githubusercontent.com/20067982/95636005-07428100-0a5c-11eb-8e77-aaa658e375a9.png">|
@@ -19,3 +20,6 @@ Our project will be
 |Maeneka Grewal||<img width="322" alt="Screenshot 2020-10-09 at 6 14 19 PM" src="https://user-images.githubusercontent.com/20067982/95636135-4e307680-0a5c-11eb-954e-529207e4d4a0.jpeg">|
 |Alissa McNerney||<img width="322" alt="Screenshot 2020-10-09 at 6 14 19 PM" src="https://user-images.githubusercontent.com/20067982/95636169-6accae80-0a5c-11eb-9213-cd7e995234cb.JPEG">|
 >>>>>>> parent of d3b12b0... Update README.md
+=======
+Our project will be
+>>>>>>> 107ddeff63de8da6baf01bfa06320702a81003cc
