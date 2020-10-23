@@ -12,6 +12,7 @@ export interface Scalars {
   Float: number
 }
 
+/* stuff added */
 export interface Movie {
   id: Scalars['Int']
   title: Scalars['String']
@@ -37,6 +38,45 @@ export interface TVshow {
   year: Scalars['Int']
   description: Scalars['String']
 }
+
+export interface Room {
+  room_id: Scalars['Int']
+  admin_user_id: Scalars['Int']
+  genre1: Scalars['String']
+  genre2: Scalars['String']
+}
+
+export interface Vote {
+  room_id: Scalars['Int']
+  movie_id: Scalars['Int']
+  num_votes: Scalars['Int']
+}
+
+export interface Genres {
+  movie_id: Scalars['Int']
+  action_and_adventure: Scalars['Boolean']
+  anime_features: Scalars['Boolean']
+  children_family_movies: Scalars['Boolean']
+  classic_movies: Scalars['Boolean']
+  comedies: Scalars['Boolean']
+  cult_movies: Scalars['Boolean']
+  documentaries: Scalars['Boolean']
+  dramas: Scalars['Boolean']
+  faith_and_Spirituality: Scalars['Boolean']
+  horror_movies: Scalars['Boolean']
+  independent_movies: Scalars['Boolean']
+  international_movies: Scalars['Boolean']
+  lgbtq_movies: Scalars['Boolean']
+  movies: Scalars['Boolean']
+  music_and_musicals: Scalars['Boolean']
+  romantic_movies: Scalars['Boolean']
+  scifi_and_fantasy: Scalars['Boolean']
+  sports_movies: Scalars['Boolean']
+  standup_comedy: Scalars['Boolean']
+  thrillers: Scalars['Boolean']
+}
+
+/* end of new stuff added*/
 
 export interface Mutation {
   __typename?: 'Mutation'
@@ -107,7 +147,7 @@ export interface User {
   __typename?: 'User'
   id: Scalars['Int']
   userType: UserType
-  email: Scalars['String']
+  room_id: Scalars['Int']
   name: Scalars['String']
 }
 
