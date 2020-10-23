@@ -3,9 +3,7 @@ import { Movie as MovieType } from '../graphql/schema.types'
 
 @Entity()
 export class Movie extends BaseEntity implements MovieType {
-  genre: string
-  title: string
-  description: string
+
   @PrimaryGeneratedColumn()
   id: number
 
@@ -19,7 +17,7 @@ export class Movie extends BaseEntity implements MovieType {
     length: 100,
     nullable: true,
   })
-  name: string
+  title: string
 
   @Column({
     length: 100,
@@ -66,4 +64,9 @@ export class Movie extends BaseEntity implements MovieType {
     nullable: true,
   })
   year: number
+
+  @Column({
+    nullable: true,
+  })
+  description: string
 }

@@ -1,1 +1,1 @@
-insert into `movie` (`name`, `genres`) values ('twilight', 'comedy');
+insert into `movie` (`title`, `genres`) values ('twilight', 'comedy');

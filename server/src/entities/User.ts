@@ -13,9 +13,9 @@ export class User extends BaseEntity implements GraphqlUser {
   timeUpdated: Date
 
   @Column({
-    length: 100,
+    nullable: true,
   })
-  email: string
+  room_id: number
 
   @Column({
     type: 'enum',
