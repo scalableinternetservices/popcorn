@@ -1,3 +1,4 @@
+movie_id,title,time,year,genre,director,actors,country,rating,netflix,enter_in
 1,"#AnneFrank - Parallel Stories",95,2019,"Documentaries, International Movies","Sabina Fedeli, Anna Migotto","Helen Mirren, Gengher Gatti","",7.0,https://www.netflix.com/br-en/title/81264660,"July 1, 2020",,
 2,"#FriendButMarried",102,2018,"Dramas, International Movies, Romantic Movies","Rako Prijanto","Adipati Dolken, Vanesha Prescilla, Rendi Jhon, Beby Tsabina, Denira Wiraguna, Refal Hady, Diandra Agatha, Sari Nila","Indonesia",7.0,https://www.netflix.com/br-en/title/81260630,"May 21, 2020",,
 3,"#FriendButMarried 2",104,2020,"Dramas, International Movies, Romantic Movies","Rako Prijanto","Adipati Dolken, Mawar de Jongh, Sari Nila, Vonny Cornellya, Clay Gribble, Ivan Leonardy, Sarah Sechan, Jourdy Pranata","",6.4,https://www.netflix.com/br-en/title/81260637,"June 28, 2020",,
