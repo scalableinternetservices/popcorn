@@ -10,12 +10,6 @@ export enum Route {
   PROJECTS = 'app/projects',
   PLAYGROUND = 'app/playground',
   PLAYGROUND_APP = 'app/playground/:app',
-  POPCORNHOME = 'app/popcorn/index',
-  POPCORNADMIN = 'app/popcorn/admin',
-  POPCORNGUEST = 'app/popcorn/guest',
-  POPCORNROOM = 'app/popcorn/room',
-  POPCORNRESULTS = 'app/popcorn/results',
-  POPCORNSWIPE = 'app/popcorn/swipe'
 }
 
 export enum PlaygroundApp {
