@@ -97,6 +97,9 @@ export interface Query {
   self?: Maybe<User>
   surveys: Array<Survey>
   survey?: Maybe<Survey>
+  //new queries
+  movies: Array<Movie>
+  movie?: Maybe<Movie>
 }
 
 export interface QuerySurveyArgs {

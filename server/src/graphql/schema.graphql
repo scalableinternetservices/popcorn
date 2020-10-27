@@ -14,12 +14,18 @@ schema {
   subscription: Subscription
 }
 
+
 type Query {
   # Returns the logged-in user making the query, or null if anonymous.
   self: User
 
   surveys: [Survey!]!
   survey (surveyId: Int!): Survey
+
+  #adding new queries
+  movies: [Movie!]!
+  movie (movieId: Int!): Movie
+
 }
 
 type Mutation {
@@ -62,6 +68,7 @@ type Survey {
   questions: [SurveyQuestion]!
 }
 
+
 type SurveyQuestion {
   id: Int!
 
@@ -89,3 +96,54 @@ input SurveyInput {
   answer: String!
 }
 
+#new schema
+type Movie {
+  id: Int!
+  title: String!
+  genres: [String!]
+  maturity: String!
+  length: Float!
+  image: String!
+  director: String!
+  cast: [String!]
+  languages: [String!]
+  year: Int!
+  description: String!
+}
+
+type Room {
+  room_id: Int!
+  admin_user_id: Int!
+  genre1: String!
+  genre2: String!
+}
+
+type Vote {
+  room_id: Int!
+  movie_id: Int!
+  num_votes: Int!
+}
+
+type Genres {
+  movie_id: Int!
+  action_and_adventure: Boolean!
+  anime_features: Boolean!
+  children_family_movies: Boolean!
+  classic_movies: Boolean!
+  comedies: Boolean!
+  cult_movies: Boolean!
+  documentaries: Boolean!
+  dramas: Boolean!
+  faith_and_Spirituality: Boolean!
+  horror_movies: Boolean!
+  independent_movies: Boolean!
+  international_movies: Boolean!
+  lgbtq_movies: Boolean!
+  movies: Boolean!
+  music_and_musicals: Boolean!
+  romantic_movies: Boolean!
+  scifi_and_fantasy: Boolean!
+  sports_movies: Boolean!
+  standup_comedy: Boolean!
+  thrillers: Boolean!
+}
