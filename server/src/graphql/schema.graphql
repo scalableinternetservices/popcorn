@@ -24,7 +24,7 @@ type Query {
 
   #adding new queries
   movies: [Movie!]!
-  movie (movieId: Int!): Movie
+  #movie (movieId: Int!): Movie
 
 }
 

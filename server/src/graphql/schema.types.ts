@@ -99,7 +99,7 @@ export interface Query {
   survey?: Maybe<Survey>
   //new queries
   movies: Array<Movie>
-  movie?: Maybe<Movie>
+  /**movie?: Maybe<Movie>*/
 }
 
 export interface QuerySurveyArgs {
@@ -248,6 +248,11 @@ export type ResolversTypes = {
   Mutation: ResolverTypeWrapper<{}>
   SurveyInput: SurveyInput
   Subscription: ResolverTypeWrapper<{}>
+  /**adding new mappings */
+  Movie: ResolverTypeWrapper<Movie>
+  /**  Room: ResolverTypeWrapper<Room>
+  Vote: ResolverTypeWrapper<Vote>
+  Genres: ResolverTypeWrapper<Genres>*/
 }
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -263,6 +268,11 @@ export type ResolversParentTypes = {
   Mutation: {}
   SurveyInput: SurveyInput
   Subscription: {}
+  /**adding new mappings */
+  Movie: Movie
+  /**Room: Room
+  Vote: Vote
+  Genres: Genres*/
 }
 
 export type MutationResolvers<
@@ -289,6 +299,7 @@ export type QueryResolvers<
 > = {
   self?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>
   surveys?: Resolver<Array<ResolversTypes['Survey']>, ParentType, ContextType>
+  movies?: Resolver<Array<ResolversTypes['Movie']>, ParentType, ContextType>
   survey?: Resolver<
     Maybe<ResolversTypes['Survey']>,
     ParentType,
@@ -320,6 +331,23 @@ export type SurveyResolvers<
   isCompleted?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>
   currentQuestion?: Resolver<Maybe<ResolversTypes['SurveyQuestion']>, ParentType, ContextType>
   questions?: Resolver<Array<Maybe<ResolversTypes['SurveyQuestion']>>, ParentType, ContextType>
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>
+}
+
+export type MovieResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['Movie'] = ResolversParentTypes['Movie']
+> = {
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
+  title?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  genres?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  maturity?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  length?: Resolver<ResolversTypes['Int'], ParentType, ContextType> /** type is float but dont have resolver for that */
+  image?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  director?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  cast?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  year?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
+  despcription?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   __isTypeOf?: IsTypeOfResolverFn<ParentType>
 }
 
