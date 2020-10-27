@@ -17,15 +17,21 @@ count = 1
 
 existing_genres = ["Action & Adventure", "Anime Features", "Children & Family Movies", \
   "Classic Movies", "Comedies", "Cult Movies", "Documentaries", "Dramas", "Faith & Spirituality", \
-  "Horror Movies", "Independent Movies", "International Movies", "LGBTQ Movies", "Music & Musicals", \
-  "Romantic Movies", "Sci-Fi & Fantasy", "Sports Movies", "Stand-Up Comedy", "Thrillers", "Movies"]
+  "Horror Movies", "Independent Movies", "International Movies", "LGBTQ Movies", "Movies", "Music & Musicals", \
+  "Romantic Movies", "Sci-Fi & Fantasy", "Sports Movies", "Stand-Up Comedy", "Thrillers"]
 
-header = ['time', 'year', 'genre', 'director', 'actors', 'country', 'rating', 'netflix', 'enter_in']
+genre_columns = ['movie_id', 'action_and_adventure', 'anime_features', 'children_family_movies', 'classic_movies', \
+  'comedies', 'cult_movies', 'documentaries', 'dramas', 'faith_and_Spirituality', 'horror_movies', 'independent_movies', \
+  'international_movies', 'lgbtq_movies', 'movies', 'music_and_musicals', 'romantic_movies', 'scifi_and_fantasy', \
+  'sports_movies', 'standup_comedy', 'thrillers']
 
-with open('movie_genres.csv', 'w') as f_genres:
-  f_genres.write('movie_id,' + ','.join(existing_genres) + '\n')
-  with open('formatted_movies.csv', 'w') as f:
-    f.write('movie_id,title,' + ','.join(header) + '\n')
+#header = ['time', 'year', 'genre', 'director', 'actors', 'country', 'rating', 'netflix', 'enter_in']
+header = ['movie_id', 'title', 'time', 'year', 'genre', 'director', 'actors', 'country', 'rating', 'netflix', 'enter_in']
+
+with open('movie_genres_lines.csv', 'w') as f_genres:
+  #f_genres.write('movie_id,' + ','.join(existing_genres) + '\n')
+  with open('formatted_movies_lines.csv', 'w') as f:
+    #f.write('movie_id,title,' + ','.join(header) + '\n')
     for i in data[1:]:
       try:
         i = i.replace('\\', '')
@@ -52,9 +58,11 @@ with open('movie_genres.csv', 'w') as f_genres:
 
 
         # write to the general movies file
-        line = str(count) + ',\"' + name + '\",' + ','.join(vals) + ',,\n'
+        #line = str(count) + ',\"' + name + '\",' + ','.join(vals) + ',,\n'
+        formatted_header = ['`' + i + '`' for i in header]
+        line = 'insert into `Movie` (' + ','.join(formatted_header) + ') values (' + str(count) + ',\"' + name + '\",' + ','.join(vals) + ');\n'
         count += 1
-        # print(line)
+        print(line)
         f.write(line)
 
         # write to the genres movie file
@@ -63,7 +71,10 @@ with open('movie_genres.csv', 'w') as f_genres:
           if existing_genres[i] in vals[2]:
             genres[i] = True
         genres = [str(genre) for genre in genres]
-        line_genres = str(count) + ',' + ','.join(genres) + '\n'
+
+        #line_genres = str(count) + ',' + ','.join(genres) + '\n'
+        formatted_columns = ['`' + i + '`' for i in genre_columns]
+        line_genres = 'insert into `genres` (' + ','.join(formatted_columns) + ') values (' + str(count) + ',' + ','.join(genres) + ');\n'
         f_genres.write(line_genres)
       except:
         continue
