@@ -64,7 +64,7 @@ with open('movie_genres_lines.csv', 'w') as f_genres:
         #line = str(count) + ',\"' + name + '\",' + ','.join(vals) + ',,\n'
         formatted_header = ['`' + i + '`' for i in header]
         line = 'insert into `movie` (' + ','.join(formatted_header) + ') values (' + str(count) + ',\"' + name + '\",' + ','.join(vals) + ');\n'
-        count += 1
+
         print(line)
         f.write(line)
 
@@ -79,6 +79,8 @@ with open('movie_genres_lines.csv', 'w') as f_genres:
         formatted_columns = ['`' + i + '`' for i in genre_columns]
         line_genres = 'insert into `genres` (' + ','.join(formatted_columns) + ') values (' + str(count) + ',' + ','.join(genres) + ');\n'
         f_genres.write(line_genres)
+
+        count += 1
       except:
         continue
 

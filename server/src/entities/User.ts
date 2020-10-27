@@ -1,5 +1,6 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
+import { BaseEntity, Column, CreateDateColumn, Entity, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
 import { User as GraphqlUser, UserType } from '../graphql/schema.types'
+import { Room } from './Rooms'
 
 @Entity()
 export class User extends BaseEntity implements GraphqlUser {
@@ -12,6 +13,7 @@ export class User extends BaseEntity implements GraphqlUser {
   @UpdateDateColumn()
   timeUpdated: Date
 
+  @OneToOne(() => Room)
   @Column({
     nullable: true,
   })

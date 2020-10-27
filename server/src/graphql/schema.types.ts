@@ -14,7 +14,6 @@ export interface Scalars {
 
 /* stuff added */
 export interface Movie {
-  id: Scalars['Int']
   movie_id: Scalars['Int']
   title: Scalars['String']
   time: Scalars['Float']
@@ -50,6 +49,7 @@ export interface Room {
 }
 
 export interface Vote {
+  id: Scalars['Int']
   room_id: Scalars['Int']
   movie_id: Scalars['Int']
   num_votes: Scalars['Int']
