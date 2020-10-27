@@ -14,6 +14,12 @@ import { HomePage } from './page/HomePage'
 import { LecturesPage } from './page/LecturesPage'
 import { PlaygroundPage } from './page/PlaygroundPage'
 import { ProjectsPage } from './page/ProjectsPage'
+import { AdminPage as PopcornAdminPage } from './popcorn/AdminPage'
+import { GuestPage as PopcornGuestPage } from './popcorn/GuestPage'
+import { HomePage as PopcornHomePage } from './popcorn/HomePage'
+import { ResultsPage as PopcornResultsPage } from './popcorn/ResultsPage'
+import { RoomPage as PopcornRoomPage } from './popcorn/RoomPage'
+import { SwipePage as PopcornSwipePage } from './popcorn/SwipePage'
 
 const Styletron = require('styletron-engine-monolithic')
 
@@ -57,6 +63,12 @@ export function AppBody() {
         <ProjectsPage path={Route.PROJECTS} />
         <PlaygroundPage path={Route.PLAYGROUND} />
         <PlaygroundPage path={Route.PLAYGROUND_APP} />
+        <PopcornHomePage path={Route.POPCORNHOME} />
+        <PopcornAdminPage path={Route.POPCORNADMIN} />
+        <PopcornGuestPage path={Route.POPCORNGUEST} />
+        <PopcornRoomPage path={Route.POPCORNROOM} />
+        <PopcornSwipePage path={Route.POPCORNSWIPE} />
+        <PopcornResultsPage path={Route.POPCORNRESULTS} />
       </Router>
       <Footer>
         <FooterText>© 2020 John Rothfels</FooterText>
