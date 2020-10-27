@@ -37,6 +37,8 @@ with open('movie_genres_lines.csv', 'w') as f_genres:
         i = i.replace('\\', '')
         temp = i.split(":\"")
         name = temp[0][:-1]
+        name = name.replace('\"', '\\\"')
+        name = name[:99]
         rest = ':\"'.join(temp[1:])
 
 
@@ -48,11 +50,12 @@ with open('movie_genres_lines.csv', 'w') as f_genres:
 
         vals = [str(i) for i in test.values()]
         #vals[0] = '\"' + vals[0] + '\"'
-        vals[2] = '\"' + vals[2] + '\"'
-        vals[3] = '\"' + vals[3] + '\"'
-        vals[4] = '\"' + vals[4] + '\"'
-        vals[5] = '\"' + vals[5] + '\"'
-        vals[8] = '\"' + vals[8] + '\"'
+        vals[2] = '\"' + vals[2][:99] + '\"'
+        vals[3] = '\"' + vals[3][:99] + '\"'
+        vals[4] = '\"' + vals[4][:99] + '\"'
+        vals[5] = '\"' + vals[5][:99] + '\"'
+        vals[7] = '\"' + vals[7][:99] + '\"'
+        vals[8] = '\"' + vals[8][:99] + '\"'
 
         all_movies[name] = test
 
@@ -60,7 +63,7 @@ with open('movie_genres_lines.csv', 'w') as f_genres:
         # write to the general movies file
         #line = str(count) + ',\"' + name + '\",' + ','.join(vals) + ',,\n'
         formatted_header = ['`' + i + '`' for i in header]
-        line = 'insert into `Movie` (' + ','.join(formatted_header) + ') values (' + str(count) + ',\"' + name + '\",' + ','.join(vals) + ');\n'
+        line = 'insert into `movie` (' + ','.join(formatted_header) + ') values (' + str(count) + ',\"' + name + '\",' + ','.join(vals) + ');\n'
         count += 1
         print(line)
         f.write(line)

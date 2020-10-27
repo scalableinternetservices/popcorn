@@ -14,33 +14,31 @@ export class Movie extends BaseEntity implements MovieType {
   timeUpdated: Date
 
   @Column({
+    nullable: true,
+  })
+  movie_id: number
+
+  @Column({
     length: 100,
     nullable: true,
   })
   title: string
 
   @Column({
-    length: 100,
     nullable: true,
   })
-  genres: string
+  time: number
+
+  @Column({
+    nullable: true,
+  })
+  year: number
 
   @Column({
     length: 100,
     nullable: true,
   })
-  maturity: string
-
-  @Column({
-    nullable: true,
-  })
-  length: number
-
-  @Column({
-    length: 100,
-    nullable: true,
-  })
-  image: string
+  genre: string
 
   @Column({
     length: 100,
@@ -52,18 +50,36 @@ export class Movie extends BaseEntity implements MovieType {
     length: 100,
     nullable: true,
   })
-  cast: string
+  actors: string
 
   @Column({
     length: 100,
     nullable: true,
   })
-  languages: string
+  country: string
 
   @Column({
     nullable: true,
   })
-  year: number
+  rating: number
+
+
+  @Column({
+    nullable: true,
+  })
+  netflix: string
+
+  @Column({
+    length: 100,
+    nullable: true,
+  })
+  enter_in: string
+
+  @Column({
+    length: 100,
+    nullable: true,
+  })
+  image: string
 
   @Column({
     nullable: true,
