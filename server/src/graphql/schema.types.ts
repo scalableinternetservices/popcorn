@@ -14,16 +14,18 @@ export interface Scalars {
 
 /* stuff added */
 export interface Movie {
-  id: Scalars['Int']
+  movie_id: Scalars['Int']
   title: Scalars['String']
-  genres: Scalars['String']
-  maturity: Scalars['String']
-  length: Scalars['Float']
-  image: Scalars['String']
-  director: Scalars['String']
-  cast: Scalars['String']
-  languages: Scalars['String']
+  time: Scalars['Float']
   year: Scalars['Int']
+  genre: Scalars['String']
+  director: Scalars['String']
+  actors: Scalars['String']
+  country: Scalars['String']
+  rating: Scalars['Float']
+  netflix: Scalars['String']
+  enter_in: Scalars['String']
+  image: Scalars['String']
   description: Scalars['String']
 }
 
@@ -47,6 +49,7 @@ export interface Room {
 }
 
 export interface Vote {
+  id: Scalars['Int']
   room_id: Scalars['Int']
   movie_id: Scalars['Int']
   num_votes: Scalars['Int']

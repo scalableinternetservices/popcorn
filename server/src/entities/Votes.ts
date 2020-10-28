@@ -1,5 +1,7 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from 'typeorm'
+import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from 'typeorm'
 import { Vote as VoteType } from '../graphql/schema.types'
+import { Movie } from './Movies'
+import { Room } from './Rooms'
 
 @Entity()
 export class Votes extends BaseEntity implements VoteType {
@@ -9,11 +11,11 @@ export class Votes extends BaseEntity implements VoteType {
   @CreateDateColumn()
   timeCreated: Date
 
-  @Column({
-    nullable: true,
-  })
+  @OneToOne(() => Room)
+  @JoinColumn()
   room_id: number
 
+  @ManyToOne(() => Movie)
   @Column({
     nullable: true,
   })
