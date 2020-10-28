@@ -30,6 +30,30 @@ const otherTabs = [
     name: 'playground',
     path: getPath(Route.PLAYGROUND),
   },
+  {
+    name: 'popcorn-homepage',
+    path: getPath(Route.POPCORNHOME),
+  },
+  {
+    name: 'popcorn-adminpage',
+    path: getPath(Route.POPCORNADMIN),
+  },
+  {
+    name: 'popcorn-guestpage',
+    path: getPath(Route.POPCORNGUEST),
+  },
+  {
+    name: 'popcorn-roompage',
+    path: getPath(Route.POPCORNROOM),
+  },
+  {
+    name: 'popcorn-swipepage',
+    path: getPath(Route.POPCORNSWIPE),
+  },
+  {
+    name: 'popcorn-resultspage',
+    path: getPath(Route.POPCORNRESULTS),
+  }
 ]
 
 export function NavBar() {
