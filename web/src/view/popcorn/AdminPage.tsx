@@ -1,8 +1,10 @@
-import { RouteComponentProps } from '@reach/router'
-import * as React from 'react'
-import { Input } from '../../style/input'
-import { AppRouteParams } from '../nav/route'
-import { Page } from '../page/Page'
+import { RouteComponentProps } from '@reach/router';
+import * as React from 'react';
+import { Input } from '../../style/input';
+import { style } from '../../style/styled';
+import { link } from '../nav/Link';
+import { AppRouteParams } from '../nav/route';
+import { Page } from '../page/Page';
 
 interface AdminPageProps extends RouteComponentProps, AppRouteParams {}
 
@@ -27,7 +29,20 @@ export function AdminPage(props: AdminPageProps) {
           Choose Max Swipes
       </label>
       <Input name="max-swipes" type="max-swipes" />
+      <div style={{padding: "20px", fontSize: "30px", border: "black", borderStyle: "double", margin: "10px" }}>
+        <NavLink to="app/popcorn/room">Enter</NavLink>
+      </div>
       </div>
     </Page>
   )
 }
+
+const NavAnchor = style(
+  'a',
+  'link black hover-bg-black-10 pa2 br2',
+  (p: { $bold?: boolean; $title?: boolean }) => ({
+    fontWeight: p.$bold ? 600 : 200,
+    fontSize: p.$title ? '1.5em' : undefined,
+  })
+)
+const NavLink = link(NavAnchor)
