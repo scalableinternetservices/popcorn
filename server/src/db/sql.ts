@@ -2,6 +2,7 @@ import { createPool, PoolConnection, QueryOptions } from 'mysql2'
 import { createConnection } from 'typeorm'
 import { Genres } from '../entities/Genres'
 import { Movie } from '../entities/Movies'
+import { RoomMovieCollection } from '../entities/RoomMovieCollection'
 import { Room } from '../entities/Rooms'
 import { Session } from '../entities/Session'
 import { Survey } from '../entities/Survey'
@@ -25,7 +26,7 @@ export async function initORM() {
     username: process.env.MYSQL_USER || 'root',
     synchronize: true,
     logging: false,
-    entities: [User, Session, Survey, SurveyQuestion, SurveyAnswer, Movie, TVshow, Room, Votes, Genres],
+    entities: [User, Session, Survey, SurveyQuestion, SurveyAnswer, Movie, TVshow, Room, Votes, Genres, RoomMovieCollection],
     extra: {
       connectionLimit: 5,
     },

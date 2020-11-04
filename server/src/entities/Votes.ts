@@ -2,6 +2,7 @@ import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, On
 import { Vote as VoteType } from '../graphql/schema.types'
 import { Movie } from './Movies'
 import { Room } from './Rooms'
+import { User } from './User'
 
 @Entity()
 export class Votes extends BaseEntity implements VoteType {
@@ -21,9 +22,10 @@ export class Votes extends BaseEntity implements VoteType {
   })
   movie_id: number
 
+  @ManyToOne(() => User)
   @Column({
     nullable: true,
   })
-  num_votes: number
+  user_id: number
 
 }
