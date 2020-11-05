@@ -48,11 +48,18 @@ export interface Room {
   genre2: Scalars['String']
 }
 
+export interface RoomMovieCollection {
+  id: Scalars['Int']
+  room_id: Scalars['Int']
+  movie_id: Scalars['Int']
+  index: Scalars['Int']
+}
+
 export interface Vote {
   id: Scalars['Int']
   room_id: Scalars['Int']
   movie_id: Scalars['Int']
-  num_votes: Scalars['Int']
+  user_id: Scalars['Int']
 }
 
 export interface Genres {

@@ -98,17 +98,19 @@ input SurveyInput {
 
 #new schema
 type Movie {
-  id: Int!
-  title: String!
-  genres: [String!]
-  maturity: String!
-  length: Float!
-  image: String!
-  director: String!
-  cast: [String!]
-  languages: [String!]
+  movie_id: Int!
+  title: Int!
+  time: Int!
   year: Int!
-  description: String!
+  genre: Int!
+  director: Int!
+  actors: Int!
+  country: Int!
+  rating: Int!
+  netflix: Int!
+  enter_in: Int!
+  image: Int!
+  description: Int!
 }
 
 type Room {
@@ -118,10 +120,18 @@ type Room {
   genre2: String!
 }
 
-type Vote {
+type RoomMovieCollection {
+  id: Int!
   room_id: Int!
   movie_id: Int!
-  num_votes: Int!
+  index: Int!
+}
+
+type Vote {
+  id: Int!
+  room_id: Int!
+  movie_id: Int!
+  user_id: Int!
 }
 
 type Genres {
