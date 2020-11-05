@@ -56,6 +56,22 @@ export const graphqlRoot: Resolvers<Context> = {
       ctx.pubsub.publish('SURVEY_UPDATE_' + surveyId, survey)
       return survey
     },
+    addRoom: async (_, { admin_user_id }, ctx) => {
+      // check(ctx.user?.userType === UserType.Admin)
+      //const admin_user_id = admin_user_id
+      //const question = check(await SurveyQuestion.findOne({ where: { id: questionId }, relations: ['survey'] }))
+
+      const room = new Room()
+      room.admin_user_id = admin_user_id
+      room.genre1 = "test1"
+      room.genre2 = "test2"
+      await room.save()
+
+      //question.survey.currentQuestion?.answers.push(surveyAnswer)
+      ctx.pubsub.publish('NEW_ROOM_' + 1, room)
+
+      return true
+    },
   },
   Subscription: {
     surveyUpdates: {

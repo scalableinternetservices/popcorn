@@ -36,6 +36,8 @@ type Mutation {
 
   # Moves the survey to the next question (or starts it if it hasn't started). ADMIN only.
   nextSurveyQuestion (surveyId: Int!): Survey
+
+  addRoom (admin_user_id: Int!): Boolean!
 }
 
 type Subscription {

@@ -92,10 +92,15 @@ export interface Mutation {
   __typename?: 'Mutation'
   answerSurvey: Scalars['Boolean']
   nextSurveyQuestion?: Maybe<Survey>
+  addRoom: Scalars['Boolean']
 }
 
 export interface MutationAnswerSurveyArgs {
   input: SurveyInput
+}
+
+export interface MutationAddRoomArgs {
+  admin_user_id: Scalars['Int']
 }
 
 export interface MutationNextSurveyQuestionArgs {
@@ -308,6 +313,12 @@ export type MutationResolvers<
     ParentType,
     ContextType,
     RequireFields<MutationNextSurveyQuestionArgs, 'surveyId'>
+  >
+  addRoom?: Resolver<
+    Maybe<ResolversTypes['Boolean']>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationAddRoomArgs, 'admin_user_id'>
   >
 }
 
