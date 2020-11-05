@@ -109,11 +109,14 @@ export interface Query {
   survey?: Maybe<Survey>
   //new queries
   movies: Array<Movie>
-  /**movie?: Maybe<Movie>*/
+  movie?: Maybe<Movie>
 }
 
 export interface QuerySurveyArgs {
   surveyId: Scalars['Int']
+}
+export interface QueryMovieArgs {
+  movieId: Scalars['Int']
 }
 
 export interface Subscription {
@@ -310,6 +313,7 @@ export type QueryResolvers<
   self?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>
   surveys?: Resolver<Array<ResolversTypes['Survey']>, ParentType, ContextType>
   movies?: Resolver<Array<ResolversTypes['Movie']>, ParentType, ContextType>
+  movie?: Resolver<Maybe<ResolversTypes['Movie']>, ParentType, ContextType, RequireFields<QueryMovieArgs, 'movieId'>>
   survey?: Resolver<
     Maybe<ResolversTypes['Survey']>,
     ParentType,
@@ -348,15 +352,18 @@ export type MovieResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes['Movie'] = ResolversParentTypes['Movie']
 > = {
-  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
+  movie_id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
   title?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-  genres?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-  maturity?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-  length?: Resolver<ResolversTypes['Int'], ParentType, ContextType> /** type is float but dont have resolver for that */
-  image?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-  director?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-  cast?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  time?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
   year?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
+  genre?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  director?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  actors?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  country?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  rating?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
+  netflix?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  enter_in?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  image?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   despcription?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   __isTypeOf?: IsTypeOfResolverFn<ParentType>
 }
@@ -399,6 +406,7 @@ export type Resolvers<ContextType = any> = {
   Query?: QueryResolvers<ContextType>
   Subscription?: SubscriptionResolvers<ContextType>
   Survey?: SurveyResolvers<ContextType>
+  Movie?: SurveyResolvers<ContextType>
   SurveyAnswer?: SurveyAnswerResolvers<ContextType>
   SurveyQuestion?: SurveyQuestionResolvers<ContextType>
   User?: UserResolvers<ContextType>
