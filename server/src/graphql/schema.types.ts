@@ -109,11 +109,17 @@ export interface Query {
   survey?: Maybe<Survey>
   //new queries
   movies: Array<Movie>
+  rooms: Array<Room>
+  room?: Maybe<Room>
   /**movie?: Maybe<Movie>*/
 }
 
 export interface QuerySurveyArgs {
   surveyId: Scalars['Int']
+}
+
+export interface QueryRoomArgs {
+  room_id: Scalars['Int']
 }
 
 export interface Subscription {
@@ -260,7 +266,8 @@ export type ResolversTypes = {
   Subscription: ResolverTypeWrapper<{}>
   /**adding new mappings */
   Movie: ResolverTypeWrapper<Movie>
-  /**  Room: ResolverTypeWrapper<Room>
+  Room: ResolverTypeWrapper<Room>
+  /*
   Vote: ResolverTypeWrapper<Vote>
   Genres: ResolverTypeWrapper<Genres>*/
 }
@@ -280,6 +287,7 @@ export type ResolversParentTypes = {
   Subscription: {}
   /**adding new mappings */
   Movie: Movie
+  Room: Room
   /**Room: Room
   Vote: Vote
   Genres: Genres*/
@@ -310,6 +318,13 @@ export type QueryResolvers<
   self?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>
   surveys?: Resolver<Array<ResolversTypes['Survey']>, ParentType, ContextType>
   movies?: Resolver<Array<ResolversTypes['Movie']>, ParentType, ContextType>
+  rooms?: Resolver<Array<ResolversTypes['Room']>, ParentType, ContextType>
+  room? : Resolver<
+    Maybe<ResolversTypes['Room']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryRoomArgs, 'room_id'>
+  >
   survey?: Resolver<
     Maybe<ResolversTypes['Survey']>,
     ParentType,
@@ -359,6 +374,14 @@ export type MovieResolvers<
   year?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
   despcription?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   __isTypeOf?: IsTypeOfResolverFn<ParentType>
+}
+
+export type RoomResolvers<ContextType = any,
+ParentType extends ResolversParentTypes['Room'] = ResolversParentTypes['Room']> = {
+  room_id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
+  admin_user_id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
+  genre1?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  genre2?: Resolver<ResolversTypes['String'], ParentType, ContextType>
 }
 
 export type SurveyAnswerResolvers<

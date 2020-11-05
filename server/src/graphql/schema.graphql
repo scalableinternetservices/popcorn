@@ -24,6 +24,8 @@ type Query {
 
   #adding new queries
   movies: [Movie!]!
+  rooms: [Room!]!
+  room (room_id: Int!): Room
   #movie (movieId: Int!): Movie
 
 }
@@ -99,18 +101,18 @@ input SurveyInput {
 #new schema
 type Movie {
   movie_id: Int!
-  title: Int!
+  title: String!
   time: Int!
   year: Int!
-  genre: Int!
-  director: Int!
-  actors: Int!
-  country: Int!
-  rating: Int!
-  netflix: Int!
-  enter_in: Int!
-  image: Int!
-  description: Int!
+  genre: String!
+  director: String!
+  actors: String!
+  country: String!
+  rating: Float!
+  netflix: String!
+  enter_in: String!
+  image: String!
+  description: String!
 }
 
 type Room {
