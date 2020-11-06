@@ -9,9 +9,8 @@ interface ResultsPageProps extends RouteComponentProps, AppRouteParams {}
 export function ResultsPage(props: ResultsPageProps) {
   return (
     <Page>
-      <div style={{padding: "20px", fontSize: "30px", border: "black", borderStyle: "double", margin: "10px" }}>
+      <div style={{padding: "20px", fontSize: "30px", border: "black", borderStyle: "double", margin: "10px", fontWeight: "lighter" }}>
         Results:
       </div>
-    </Page>
-  )
+    </Page>  )
 }

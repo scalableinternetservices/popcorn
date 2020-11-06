@@ -9,7 +9,7 @@ interface SwipePageProps extends RouteComponentProps, AppRouteParams {}
 export function SwipePage(props: SwipePageProps) {
   return (
     <Page>
-      <div style={{padding: "20px", fontSize: "30px", border: "black", borderStyle: "double", margin: "10px" }}>
+      <div style={{padding: "20px", fontSize: "30px", border: "black", borderStyle: "double", margin: "10px", fontWeight: "lighter" }}>
         Movie Image
       </div>
     </Page>

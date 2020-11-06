@@ -11,13 +11,13 @@ interface RoomPageProps extends RouteComponentProps, AppRouteParams {}
 export function RoomPage(props: RoomPageProps) {
   return (
     <Page>
-      <div style={{padding: "20px", fontSize: "30px", border: "black", borderStyle: "double", margin: "10px" }}>
+      <div style={{padding: "20px", fontSize: "30px", border: "black", margin: "10px", fontWeight: "lighter" }}>
         Your Room Code Is:
       </div>
-      <div style={{padding: "20px", fontSize: "30px", border: "black", borderStyle: "double", margin: "10px" }}>
+      <div style={{padding: "20px", fontSize: "30px", border: "black", margin: "10px", fontWeight: "lighter" }}>
         People In The Room:
       </div>
-      <div style={{padding: "20px", fontSize: "30px", border: "black", borderStyle: "double", margin: "10px" }}>
+      <div style={{padding: "20px", fontSize: "30px", border: "black", borderStyle: "double", margin: "10px", fontWeight: "lighter", textAlign: "center" }}>
         <NavLink to="app/popcorn/swipe">Start</NavLink>
       </div>
     </Page>

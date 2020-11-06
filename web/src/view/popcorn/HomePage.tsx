@@ -11,10 +11,11 @@ interface HomePageProps extends RouteComponentProps, AppRouteParams {}
 export function HomePage(props: HomePageProps) {
   return (
     <Page>
+      <img style={{marginLeft: "32px"}} src="https://lh3.googleusercontent.com/proxy/O70PMisAo5uuH2SqcnTBSwSFg_ElXDRAkd6z43Ez5G8HmaeNrLAW6-2UQB0rJXNpGXSTz0Y22HKbbT6xd2xOagAiNjZcHo08j-VegwH2pdg4Vsmn1AyLw0d6ZxEAslcxnMU-BUv_O1JN7A"/>
       <div style={{padding: "20px", fontSize: "30px", border: "black", borderStyle: "double", margin: "10px" }}>
         <NavLink to="app/popcorn/admin">Create A Room</NavLink>
       </div>
-      <div style={{padding: "20px", fontSize: "30px", border: "black", borderStyle: "double", margin: "10px" }}>
+      <div style={{padding: "20px", fontSize: "30px", border: "black", borderStyle: "double", margin: "10px", textAlign: "center" }}>
       <NavLink to="app/popcorn/guest">Join A Room</NavLink>
       </div>
     </Page>

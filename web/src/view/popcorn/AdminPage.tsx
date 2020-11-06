@@ -13,25 +13,30 @@ export function AdminPage(props: AdminPageProps) {
   return (
     <Page>
       <div style={{margin: "30px"}}>
-      <label style={{fontSize: "30px", margin: "10px" }} htmlFor="email">
+      <label style={{fontSize: "30px", margin: "10px", fontWeight: "lighter" }} htmlFor="name">
           Enter Name
       </label>
-      <Input name="name" type="name" />
+      <Input style={{marginTop: "12px"}} name="name" type="name" />
       </div>
       <div style={{margin: "30px"}}>
-      <label style={{fontSize: "30px", margin: "10px" }} htmlFor="email">
+      <label style={{fontSize: "30px", margin: "10px", fontWeight: "lighter" }} htmlFor="genres">
           Choose Genre/s
       </label>
-      <Input name="genre" type="genre" />
+      <Input style={{marginTop: "12px"}} name="genre" type="genre" />
       </div>
       <div style={{margin: "30px"}}>
-      <label style={{fontSize: "30px", margin: "10px" }} htmlFor="email">
+      <label style={{fontSize: "30px", margin: "10px", fontWeight: "lighter" }} htmlFor="max-swipes">
           Choose Max Swipes
       </label>
-      <Input name="max-swipes" type="max-swipes" />
-      <div style={{padding: "20px", fontSize: "30px", border: "black", borderStyle: "double", margin: "10px" }}>
-        <NavLink to="app/popcorn/room">Enter</NavLink>
+      <Input style={{marginTop: "12px"}} name="max-swipes" type="max-swipes" />
       </div>
+      <div style={{marginTop: "48px"}}>
+      <span style={{padding: "12px", fontSize: "30px", border: "black", borderStyle: "double", marginLeft: "28px" }}>
+        <NavLink to="app/popcorn/index">Back</NavLink>
+      </span>
+      <span style={{padding: "12px", fontSize: "30px", border: "black", borderStyle: "double", marginLeft: "240px" }}>
+        <NavLink to="app/popcorn/room">Next</NavLink>
+      </span>
       </div>
     </Page>
   )

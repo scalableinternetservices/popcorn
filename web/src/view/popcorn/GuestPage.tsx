@@ -13,18 +13,23 @@ export function GuestPage(props: GuestPageProps) {
   return (
     <Page>
       <div style={{margin: "30px"}}>
-      <label style={{padding: "20px", fontSize: "30px", margin: "10px" }} htmlFor="email">
+      <label style={{fontSize: "30px", margin: "10px", fontWeight: "lighter" }} htmlFor="email">
           Enter Name
       </label>
-      <Input name="name" type="name" />
+      <Input style={{marginTop: "12px"}} name="name" type="name" />
       </div>
       <div style={{margin: "30px"}}>
-      <label style={{padding: "20px", fontSize: "30px", margin: "10px" }} htmlFor="email">
+      <label style={{fontSize: "30px", margin: "10px", fontWeight: "lighter" }} htmlFor="email">
           Enter Room Code
       </label>
-      <Input name="room-code" type="room-code" />
-      <div style={{padding: "20px", fontSize: "30px", border: "black", borderStyle: "double", margin: "10px" }}>
-        <NavLink to="app/popcorn/room">Enter</NavLink>
+      <Input style={{marginTop: "12px"}} name="room-code" type="room-code" />
+      <div style={{marginTop: "48px"}}>
+      <span style={{padding: "12px", fontSize: "30px", border: "black", borderStyle: "double" }}>
+        <NavLink to="app/popcorn/index">Back</NavLink>
+      </span>
+      <span style={{padding: "12px", fontSize: "30px", border: "black", borderStyle: "double", marginLeft: "240px" }}>
+        <NavLink to="app/popcorn/room">Next</NavLink>
+      </span>
       </div>
       </div>
     </Page>
