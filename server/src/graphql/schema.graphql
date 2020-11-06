@@ -26,7 +26,7 @@ type Query {
   movies: [Movie!]!
   rooms: [Room!]!
   room (room_id: Int!): Room
-  #movie (movieId: Int!): Movie
+  movie (movieId: Int!): Movie
 
 }
 
