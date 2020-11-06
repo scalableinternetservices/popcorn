@@ -135,7 +135,6 @@ export interface QueryMovieArgs {
 
 export interface QueryVoteArgs {
   roomId: Scalars['Int']
-  movieId: Scalars['Int']
 }
 
 export interface QueryRoomArgs {
