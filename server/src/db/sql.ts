@@ -10,7 +10,7 @@ import { SurveyAnswer } from '../entities/SurveyAnswer'
 import { SurveyQuestion } from '../entities/SurveyQuestion'
 import { TVshow } from '../entities/TVshows'
 import { User } from '../entities/User'
-import { Votes } from '../entities/Votes'
+import { Vote } from '../entities/Votes'
 
 const baseConfig = {
   host: process.env.MYSQL_HOST || '127.0.0.1',
@@ -26,7 +26,19 @@ export async function initORM() {
     username: process.env.MYSQL_USER || 'root',
     synchronize: true,
     logging: false,
-    entities: [User, Session, Survey, SurveyQuestion, SurveyAnswer, Movie, TVshow, Room, Votes, Genres, RoomMovieCollection],
+    entities: [
+      User,
+      Session,
+      Survey,
+      SurveyQuestion,
+      SurveyAnswer,
+      Movie,
+      TVshow,
+      Room,
+      Vote,
+      Genres,
+      RoomMovieCollection,
+    ],
     extra: {
       connectionLimit: 5,
     },

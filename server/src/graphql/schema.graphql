@@ -38,6 +38,7 @@ type Mutation {
   nextSurveyQuestion (surveyId: Int!): Survey
 
   addRoom (admin_user_id: Int!): Boolean!
+  addVote(input: VoteInput!): Boolean!
 }
 
 type Subscription {
@@ -98,6 +99,12 @@ type SurveyAnswer {
 input SurveyInput {
   questionId: Int!
   answer: String!
+}
+
+input VoteInput {
+  room_id: Int!
+  movie_id: Int!
+  user_id: Int!
 }
 
 #new schema

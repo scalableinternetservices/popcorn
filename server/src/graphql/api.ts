@@ -8,6 +8,7 @@ import { Survey } from '../entities/Survey'
 import { SurveyAnswer } from '../entities/SurveyAnswer'
 import { SurveyQuestion } from '../entities/SurveyQuestion'
 import { User } from '../entities/User'
+import { Vote } from '../entities/Votes'
 import { Resolvers } from './schema.types'
 
 export const pubsub = new PubSub()
@@ -63,13 +64,23 @@ export const graphqlRoot: Resolvers<Context> = {
 
       const room = new Room()
       room.admin_user_id = admin_user_id
-      room.genre1 = "test1"
-      room.genre2 = "test2"
+      room.genre1 = 'test1'
+      room.genre2 = 'test2'
       await room.save()
 
       //question.survey.currentQuestion?.answers.push(surveyAnswer)
       ctx.pubsub.publish('NEW_ROOM_' + 1, room)
 
+      return true
+    },
+    addVote: async (_, { input }, ctx) => {
+      const vote = new Vote()
+      const { room_id, movie_id, user_id } = input
+      vote.room_id = room_id
+      vote.movie_id = movie_id
+      vote.user_id = user_id
+      await vote.save()
+      //ctx.pubsub.publish('NEW_VOTE_' + 1, vote)
       return true
     },
   },

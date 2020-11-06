@@ -93,10 +93,15 @@ export interface Mutation {
   answerSurvey: Scalars['Boolean']
   nextSurveyQuestion?: Maybe<Survey>
   addRoom: Scalars['Boolean']
+  addVote: Scalars['Boolean']
 }
 
 export interface MutationAnswerSurveyArgs {
   input: SurveyInput
+}
+
+export interface MutationAddVoteArgs {
+  input: VoteInput
 }
 
 export interface MutationAddRoomArgs {
@@ -156,6 +161,12 @@ export interface SurveyAnswer {
 export interface SurveyInput {
   questionId: Scalars['Int']
   answer: Scalars['String']
+}
+
+export interface VoteInput {
+  room_id: Scalars['Int']
+  movie_id: Scalars['Int']
+  user_id: Scalars['Int']
 }
 
 export interface SurveyQuestion {
@@ -268,6 +279,7 @@ export type ResolversTypes = {
   SurveyAnswer: ResolverTypeWrapper<SurveyAnswer>
   Mutation: ResolverTypeWrapper<{}>
   SurveyInput: SurveyInput
+  VoteInput: VoteInput
   Subscription: ResolverTypeWrapper<{}>
   /**adding new mappings */
   Movie: ResolverTypeWrapper<Movie>
@@ -289,6 +301,7 @@ export type ResolversParentTypes = {
   SurveyAnswer: SurveyAnswer
   Mutation: {}
   SurveyInput: SurveyInput
+  VoteInput: VoteInput
   Subscription: {}
   /**adding new mappings */
   Movie: Movie
@@ -320,6 +333,12 @@ export type MutationResolvers<
     ContextType,
     RequireFields<MutationAddRoomArgs, 'admin_user_id'>
   >
+  addVote?: Resolver<
+    Maybe<ResolversTypes['Boolean']>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationAddVoteArgs, 'input'>
+  >
 }
 
 export type QueryResolvers<
@@ -330,12 +349,7 @@ export type QueryResolvers<
   surveys?: Resolver<Array<ResolversTypes['Survey']>, ParentType, ContextType>
   movies?: Resolver<Array<ResolversTypes['Movie']>, ParentType, ContextType>
   rooms?: Resolver<Array<ResolversTypes['Room']>, ParentType, ContextType>
-  room? : Resolver<
-    Maybe<ResolversTypes['Room']>,
-    ParentType,
-    ContextType,
-    RequireFields<QueryRoomArgs, 'room_id'>
-  >
+  room?: Resolver<Maybe<ResolversTypes['Room']>, ParentType, ContextType, RequireFields<QueryRoomArgs, 'room_id'>>
   survey?: Resolver<
     Maybe<ResolversTypes['Survey']>,
     ParentType,
@@ -387,8 +401,10 @@ export type MovieResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType>
 }
 
-export type RoomResolvers<ContextType = any,
-ParentType extends ResolversParentTypes['Room'] = ResolversParentTypes['Room']> = {
+export type RoomResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['Room'] = ResolversParentTypes['Room']
+> = {
   room_id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
   admin_user_id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
   genre1?: Resolver<ResolversTypes['String'], ParentType, ContextType>
