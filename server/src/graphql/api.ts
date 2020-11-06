@@ -33,6 +33,7 @@ export const graphqlRoot: Resolvers<Context> = {
     rooms: () => Room.find(),
     room: async (_, { room_id }) => (await Room.findOne({ where: { room_id: room_id } })) || null,
     movies: () => Movie.find(),
+    votes: async (_, { roomId }) => Vote.find({ where: { room_id: roomId } }) || null,
     movie: async (_, { movieId }) => (await Movie.findOne({ where: { movie_id: movieId } })) || null,
   },
   Mutation: {

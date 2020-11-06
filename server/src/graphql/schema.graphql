@@ -24,6 +24,7 @@ type Query {
 
   #adding new queries
   movies: [Movie!]!
+  votes (roomId: Int!): [Vote]
   rooms: [Room!]!
   room (room_id: Int!): Room
   movie (movieId: Int!): Movie

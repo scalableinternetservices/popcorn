@@ -121,6 +121,7 @@ export interface Query {
   movies: Array<Movie>
   rooms: Array<Room>
   room?: Maybe<Room>
+  votes?: Array<Vote>
   /**movie?: Maybe<Movie>*/
   movie?: Maybe<Movie>
 }
@@ -130,6 +131,10 @@ export interface QuerySurveyArgs {
 }
 export interface QueryMovieArgs {
   movieId: Scalars['Int']
+}
+
+export interface QueryVoteArgs {
+  roomId: Scalars['Int']
 }
 
 export interface QueryRoomArgs {
@@ -288,6 +293,7 @@ export type ResolversTypes = {
   /**adding new mappings */
   Movie: ResolverTypeWrapper<Movie>
   Room: ResolverTypeWrapper<Room>
+  Vote: ResolverTypeWrapper<Vote>
   /*
   Vote: ResolverTypeWrapper<Vote>
   Genres: ResolverTypeWrapper<Genres>*/
@@ -310,6 +316,7 @@ export type ResolversParentTypes = {
   /**adding new mappings */
   Movie: Movie
   Room: Room
+  Vote: Vote
   /**Room: Room
   Vote: Vote
   Genres: Genres*/
@@ -352,6 +359,7 @@ export type QueryResolvers<
   self?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>
   surveys?: Resolver<Array<ResolversTypes['Survey']>, ParentType, ContextType>
   movies?: Resolver<Array<ResolversTypes['Movie']>, ParentType, ContextType>
+  votes?: Resolver<Array<ResolversTypes['Vote']>, ParentType, ContextType, RequireFields<QueryVoteArgs, 'roomId'>>
   rooms?: Resolver<Array<ResolversTypes['Room']>, ParentType, ContextType>
   room?: Resolver<Maybe<ResolversTypes['Room']>, ParentType, ContextType, RequireFields<QueryRoomArgs, 'room_id'>>
   movie?: Resolver<Maybe<ResolversTypes['Movie']>, ParentType, ContextType, RequireFields<QueryMovieArgs, 'movieId'>>
@@ -419,6 +427,15 @@ export type RoomResolvers<
   genre2?: Resolver<ResolversTypes['String'], ParentType, ContextType>
 }
 
+export type VoteResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['Vote'] = ResolversParentTypes['Vote']
+> = {
+  room_id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
+  movie_id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
+  user_id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
+}
+
 export type SurveyAnswerResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes['SurveyAnswer'] = ResolversParentTypes['SurveyAnswer']
@@ -458,6 +475,7 @@ export type Resolvers<ContextType = any> = {
   Subscription?: SubscriptionResolvers<ContextType>
   Survey?: SurveyResolvers<ContextType>
   Movie?: SurveyResolvers<ContextType>
+  Vote?: SurveyResolvers<ContextType>
   SurveyAnswer?: SurveyAnswerResolvers<ContextType>
   SurveyQuestion?: SurveyQuestionResolvers<ContextType>
   User?: UserResolvers<ContextType>
