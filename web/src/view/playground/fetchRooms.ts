@@ -3,14 +3,14 @@ import { gql } from '@apollo/client'
 export const fragmentRoom = gql`
   fragment Room on Room {
     room_id
-    user_admin_id
+    admin_user_id
     genre1
     genre2
   }
 `
 
-export const fetchSurveys = gql`
-  query FetchRoom {
+export const fetchRooms = gql`
+  query FetchRooms {
     rooms {
       ...Room
     }
@@ -18,9 +18,9 @@ export const fetchSurveys = gql`
   ${fragmentRoom}
 `
 
-export const fetchSurvey = gql`
+export const fetchRoom = gql`
   query FetchRoom($room_id: Int!) {
-    room(roomId: $room_id) {
+    room(room_id: $room_id) {
       ...Room
     }
   }
