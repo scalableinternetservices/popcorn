@@ -1,8 +1,10 @@
 import { readFileSync } from 'fs'
 import { PubSub } from 'graphql-yoga'
 import path from 'path'
+import { getRepository } from 'typeorm'
 import { check } from '../../../common/src/util'
 import { Movie } from '../entities/Movies'
+import { RoomMovieCollection } from '../entities/RoomMovieCollection'
 import { Room } from '../entities/Rooms'
 import { Survey } from '../entities/Survey'
 import { SurveyAnswer } from '../entities/SurveyAnswer'
@@ -25,6 +27,17 @@ interface Context {
   pubsub: PubSub
 }
 
+/*
+function genre_format(genres: string[]) {
+  var object: any = {}
+  for (let g in genres) {
+    object[g] = 1
+  }
+  return object
+}
+*/
+
+
 export const graphqlRoot: Resolvers<Context> = {
   Query: {
     self: (_, args, ctx) => ctx.user,
@@ -35,6 +48,7 @@ export const graphqlRoot: Resolvers<Context> = {
     movies: () => Movie.find(),
     votes: async (_, { roomId }) => Vote.find({ where: { room_id: roomId } }) || null,
     movie: async (_, { movieId }) => (await Movie.findOne({ where: { movie_id: movieId } })) || null,
+    //movieByGenre: async (_, { genres }) => (await Genres.findOne({ where: { genre_format( genres: string[]) } })) || null,
   },
   Mutation: {
     answerSurvey: async (_, { input }, ctx) => {
@@ -59,20 +73,54 @@ export const graphqlRoot: Resolvers<Context> = {
       ctx.pubsub.publish('SURVEY_UPDATE_' + surveyId, survey)
       return survey
     },
-    addRoom: async (_, { admin_user_id }, ctx) => {
+    addRoom: async (_, { input }, ctx) => {
       // check(ctx.user?.userType === UserType.Admin)
-      //const admin_user_id = admin_user_id
+      const { admin_user_id, genre1, genre2 } = input
       //const question = check(await SurveyQuestion.findOne({ where: { id: questionId }, relations: ['survey'] }))
 
       const room = new Room()
       room.admin_user_id = admin_user_id
-      room.genre1 = 'test1'
-      room.genre2 = 'test2'
+      room.genre1 = genre1
+      room.genre2 = genre2
       await room.save()
 
       //question.survey.currentQuestion?.answers.push(surveyAnswer)
       ctx.pubsub.publish('NEW_ROOM_' + 1, room)
 
+      // add movies to room
+      const new_movies = await getRepository(Movie)
+        .createQueryBuilder('movies')
+        .getMany()
+      if (!new_movies) {
+        return false
+      }
+
+      const get_rooms = await getRepository(Room)
+        .createQueryBuilder('rooms')
+        .getMany()
+      if (!get_rooms) {
+        return false
+      }
+
+      var use_movies = new_movies.slice( 0, 20)
+
+      var index = 0
+      use_movies.forEach(m => {
+        const room_m = new RoomMovieCollection()
+        room_m.room_id = get_rooms.length
+        room_m.movie_id = m.movie_id//new_movies.movie_id
+        room_m.index = index
+        room_m.save()
+        index = index + 1
+      })
+
+      /*
+      const room_m = new RoomMovieCollection()
+      room_m.room_id = 10
+      room_m.movie_id = 10//new_movies.movie_id
+      room_m.index = 10
+      await room_m.save()
+      */
       return true
     },
     addVote: async (_, { input }, ctx) => {
@@ -83,6 +131,16 @@ export const graphqlRoot: Resolvers<Context> = {
       vote.user_id = user_id
       await vote.save()
       //ctx.pubsub.publish('NEW_VOTE_' + 1, vote)
+      return true
+    },
+    addMovieToRoom: async (_, { input }, ctx) => {
+      const room_m = new RoomMovieCollection()
+      const { room_id, movie_id, index } = input
+      room_m.room_id = room_id
+      room_m.movie_id = movie_id
+      room_m.index = index
+      await room_m.save()
+      //ctx.room_m.publish('NEW_VOTE_' + 1, vote)
       return true
     },
   },
