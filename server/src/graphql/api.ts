@@ -49,6 +49,7 @@ export const graphqlRoot: Resolvers<Context> = {
     movies: () => Movie.find(),
     votes: async (_, { roomId }) => Vote.find({ where: { room_id: roomId } }) || null,
     movie: async (_, { movieId }) => (await Movie.findOne({ where: { movie_id: movieId } })) || null,
+    movieUser: async (_, { uid }) => (await MovieUser.findOne({ where: { uId: uid } })) || null,
     //movieByGenre: async (_, { genres }) => (await Genres.findOne({ where: { genre_format( genres: string[]) } })) || null,
   },
   Mutation: {
@@ -135,8 +136,9 @@ export const graphqlRoot: Resolvers<Context> = {
     },
     addMovieUser: async (_, { input }, ctx) => {
       const new_movieuser = new MovieUser()
-      const { room_id, name } = input
+      const { room_id, uid, name } = input
       new_movieuser.room_id = room_id
+      new_movieuser.uid = uid
       new_movieuser.name = name
       await new_movieuser.save()
       //ctx.pubsub.publish('NEW_VOTE_' + 1, vote)

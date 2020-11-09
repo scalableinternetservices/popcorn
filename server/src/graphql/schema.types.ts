@@ -23,10 +23,15 @@ export interface Query {
   room?: Maybe<Room>
   movie?: Maybe<Movie>
   movieByGenre: Array<Movie>
+  movieUser?: Maybe<MovieUser>
 }
 
 export interface QuerySurveyArgs {
   surveyId: Scalars['Int']
+}
+
+export interface QueryMovieUserArgs {
+  uid: Scalars['Int']
 }
 
 export interface QueryVotesArgs {
@@ -98,6 +103,7 @@ export interface User {
 
 export interface MovieUserInput {
   room_id: Scalars['Int']
+  uid: Scalars['Int']
   name: Scalars['String']
 }
 
@@ -180,6 +186,7 @@ export interface Movie {
 export interface MovieUser {
   __typename?: 'MovieUser'
   room_id: Scalars['Int']
+  uid: Scalars['Int']
   name: Scalars['String']
 }
 
@@ -384,6 +391,12 @@ export type QueryResolvers<
   rooms?: Resolver<Array<ResolversTypes['Room']>, ParentType, ContextType>
   room?: Resolver<Maybe<ResolversTypes['Room']>, ParentType, ContextType, RequireFields<QueryRoomArgs, 'room_id'>>
   movie?: Resolver<Maybe<ResolversTypes['Movie']>, ParentType, ContextType, RequireFields<QueryMovieArgs, 'movieId'>>
+  movieUser?: Resolver<
+    Maybe<ResolversTypes['MovieUser']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryMovieUserArgs, 'uid'>
+  >
   movieByGenre?: Resolver<
     Array<ResolversTypes['Movie']>,
     ParentType,
@@ -508,6 +521,7 @@ export type MovieUserResolvers<
   ParentType extends ResolversParentTypes['MovieUser'] = ResolversParentTypes['MovieUser']
 > = {
   room_id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
+  uid?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   __isTypeOf?: IsTypeOfResolverFn<ParentType>
 }

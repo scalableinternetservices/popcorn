@@ -12,6 +12,8 @@ import { Room } from './Rooms'
 
 @Entity()
 export class MovieUser extends BaseEntity implements GraphqlUser {
+  __typename?: 'MovieUser' | undefined
+  uid: number
   @PrimaryGeneratedColumn()
   id: number
 
@@ -26,6 +28,11 @@ export class MovieUser extends BaseEntity implements GraphqlUser {
     nullable: true,
   })
   room_id: number
+
+  @Column({
+    nullable: true,
+  })
+  uId: number
 
   @Column({
     length: 100,
