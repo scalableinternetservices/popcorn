@@ -37,7 +37,6 @@ function genre_format(genres: string[]) {
 }
 */
 
-
 export const graphqlRoot: Resolvers<Context> = {
   Query: {
     self: (_, args, ctx) => ctx.user,
@@ -75,11 +74,11 @@ export const graphqlRoot: Resolvers<Context> = {
     },
     addRoom: async (_, { input }, ctx) => {
       // check(ctx.user?.userType === UserType.Admin)
-      const { admin_user_id, genre1, genre2 } = input
+      const { genre1, genre2 } = input
       //const question = check(await SurveyQuestion.findOne({ where: { id: questionId }, relations: ['survey'] }))
 
       const room = new Room()
-      room.admin_user_id = admin_user_id
+      //room.admin_user_id = admin_user_id
       room.genre1 = genre1
       room.genre2 = genre2
       await room.save()
@@ -88,27 +87,23 @@ export const graphqlRoot: Resolvers<Context> = {
       ctx.pubsub.publish('NEW_ROOM_' + 1, room)
 
       // add movies to room
-      const new_movies = await getRepository(Movie)
-        .createQueryBuilder('movies')
-        .getMany()
+      const new_movies = await getRepository(Movie).createQueryBuilder('movies').getMany()
       if (!new_movies) {
         return false
       }
 
-      const get_rooms = await getRepository(Room)
-        .createQueryBuilder('rooms')
-        .getMany()
+      const get_rooms = await getRepository(Room).createQueryBuilder('rooms').getMany()
       if (!get_rooms) {
         return false
       }
 
-      var use_movies = new_movies.slice( 0, 20)
+      const use_movies = new_movies.slice(0, 20)
 
-      var index = 0
+      let index = 0
       use_movies.forEach(m => {
         const room_m = new RoomMovieCollection()
         room_m.room_id = get_rooms.length
-        room_m.movie_id = m.movie_id//new_movies.movie_id
+        room_m.movie_id = m.movie_id //new_movies.movie_id
         room_m.index = index
         room_m.save()
         index = index + 1

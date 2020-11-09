@@ -66,6 +66,52 @@ export interface FetchMovieVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: FetchRooms
+// ====================================================
+
+export interface FetchRooms_rooms {
+  __typename: "Room";
+  room_id: number;
+  admin_user_id: number;
+  genre1: string;
+  genre2: string;
+}
+
+export interface FetchRooms {
+  rooms: FetchRooms_rooms[];
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: FetchRoom
+// ====================================================
+
+export interface FetchRoom_room {
+  __typename: "Room";
+  room_id: number;
+  admin_user_id: number;
+  genre1: string;
+  genre2: string;
+}
+
+export interface FetchRoom {
+  room: FetchRoom_room | null;
+}
+
+export interface FetchRoomVariables {
+  room_id: number;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: FetchSurveys
 // ====================================================
 
@@ -264,6 +310,23 @@ export interface Movie {
   __typename: "Movie";
   movie_id: number;
   title: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: Room
+// ====================================================
+
+export interface Room {
+  __typename: "Room";
+  room_id: number;
+  admin_user_id: number;
+  genre1: string;
+  genre2: string;
 }
 
 /* tslint:disable */
