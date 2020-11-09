@@ -1,12 +1,13 @@
 import { useQuery } from '@apollo/client'
 import * as React from 'react'
 import { strutil } from '../../../../common/src/util'
-import { FetchVotes, FetchVotes_votes } from '../../graphql/query.gen'
+import { FetchMovie, FetchVotes, FetchVotes_votes } from '../../graphql/query.gen'
 import { SmallText } from '../../style/text'
+import { fetchMovie } from './fetchMovies'
 import { fetchVotes } from './fetchVotes'
 
 export function Votes() {
-  const { loading, data } = useQuery<FetchVotes>(fetchVotes)
+  const { loading, data } = useQuery<FetchVotes>(fetchVotes, { variables: { room_id: 1 } })
   if (loading) {
     return <div>loading...</div>
   }
@@ -26,7 +27,21 @@ function ResultsHistogram({ votes }: { votes: (FetchVotes_votes | null)[] }) {
     if (!a) {
       norm = 'null movie'
     } else {
-      norm = a.movie_id.toString()
+      const mId = a.movie_id
+      const { loading, data } = useQuery<FetchMovie>(fetchMovie, { variables: { movie_id: mId } })
+      if (loading) {
+        norm = 'loading'
+      }
+      if (!data) {
+        norm = 'null titles'
+      } else {
+        const mv = data.movie
+        if (!mv) {
+          norm = 'null title'
+        } else {
+          norm = mv.title
+        }
+      }
     }
     answerBuckets[norm] = answerBuckets[norm] || 0
     answerBuckets[norm]++
