@@ -3,7 +3,6 @@ import { Movie as MovieType } from '../graphql/schema.types'
 
 @Entity()
 export class Movie extends BaseEntity implements MovieType {
-
   @CreateDateColumn()
   timeCreated: Date
 
@@ -57,7 +56,6 @@ export class Movie extends BaseEntity implements MovieType {
     nullable: true,
   })
   rating: number
-
 
   @Column({
     nullable: true,

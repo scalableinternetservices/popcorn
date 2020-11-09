@@ -12,11 +12,149 @@ export interface Scalars {
   Float: number
 }
 
-/* stuff added */
+export interface Query {
+  __typename?: 'Query'
+  self?: Maybe<User>
+  surveys: Array<Survey>
+  survey?: Maybe<Survey>
+  movies: Array<Movie>
+  votes?: Maybe<Array<Maybe<Vote>>>
+  rooms: Array<Room>
+  room?: Maybe<Room>
+  movie?: Maybe<Movie>
+  movieByGenre: Array<Movie>
+}
+
+export interface QuerySurveyArgs {
+  surveyId: Scalars['Int']
+}
+
+export interface QueryVotesArgs {
+  roomId: Scalars['Int']
+}
+
+export interface QueryRoomArgs {
+  room_id: Scalars['Int']
+}
+
+export interface QueryMovieArgs {
+  movieId: Scalars['Int']
+}
+
+export interface QueryMovieByGenreArgs {
+  genres: MovieByGenreInput
+}
+
+export interface Mutation {
+  __typename?: 'Mutation'
+  answerSurvey: Scalars['Boolean']
+  nextSurveyQuestion?: Maybe<Survey>
+  addRoom: Scalars['Boolean']
+  addVote: Scalars['Boolean']
+  addMovieToRoom: Scalars['Boolean']
+}
+
+export interface MutationAnswerSurveyArgs {
+  input: SurveyInput
+}
+
+export interface MutationNextSurveyQuestionArgs {
+  surveyId: Scalars['Int']
+}
+
+export interface MutationAddRoomArgs {
+  input: RoomInput
+}
+
+export interface MutationAddVoteArgs {
+  input: VoteInput
+}
+
+export interface MutationAddMovieToRoomArgs {
+  input: MovieToRoomInput
+}
+
+export interface Subscription {
+  __typename?: 'Subscription'
+  surveyUpdates?: Maybe<Survey>
+}
+
+export interface SubscriptionSurveyUpdatesArgs {
+  surveyId: Scalars['Int']
+}
+
+export interface User {
+  __typename?: 'User'
+  id: Scalars['Int']
+  userType: UserType
+  email: Scalars['String']
+  name: Scalars['String']
+}
+
+export enum UserType {
+  Admin = 'ADMIN',
+  User = 'USER',
+}
+
+export interface Survey {
+  __typename?: 'Survey'
+  id: Scalars['Int']
+  name: Scalars['String']
+  isStarted: Scalars['Boolean']
+  isCompleted: Scalars['Boolean']
+  currentQuestion?: Maybe<SurveyQuestion>
+  questions: Array<Maybe<SurveyQuestion>>
+}
+
+export interface SurveyQuestion {
+  __typename?: 'SurveyQuestion'
+  id: Scalars['Int']
+  prompt: Scalars['String']
+  choices?: Maybe<Array<Scalars['String']>>
+  answers: Array<SurveyAnswer>
+  survey: Survey
+}
+
+export interface SurveyAnswer {
+  __typename?: 'SurveyAnswer'
+  id: Scalars['Int']
+  answer: Scalars['String']
+  question: SurveyQuestion
+}
+
+export interface SurveyInput {
+  questionId: Scalars['Int']
+  answer: Scalars['String']
+}
+
+export interface RoomInput {
+  room_id: Scalars['Int']
+  genre1: Scalars['String']
+  genre2: Scalars['String']
+}
+
+export interface MovieToRoomInput {
+  room_id: Scalars['Int']
+  movie_id: Scalars['Int']
+  index: Scalars['Int']
+}
+
+export interface MovieByGenreInput {
+  genre1: Scalars['String']
+  genre2: Scalars['String']
+}
+
+export interface VoteInput {
+  room_id: Scalars['Int']
+  movie_id: Scalars['Int']
+  user_id: Scalars['Int']
+}
+
 export interface Movie {
+  __typename?: 'Movie'
   movie_id: Scalars['Int']
   title: Scalars['String']
-  time: Scalars['Float']
+  time: Scalars['Int']
   year: Scalars['Int']
   genre: Scalars['String']
   director: Scalars['String']
@@ -29,19 +167,15 @@ export interface Movie {
   description: Scalars['String']
 }
 
-export interface TVshow {
-  id: Scalars['Int']
-  title: Scalars['String']
-  genre: Scalars['String']
-  maturity: Scalars['String']
-  image: Scalars['String']
-  seasons: Scalars['Int']
-  languages: Scalars['String']
-  year: Scalars['Int']
-  description: Scalars['String']
+export interface MovieUser {
+  __typename?: 'MovieUser'
+  room_id: Scalars['Int']
+  userType: UserType
+  name: Scalars['String']
 }
 
 export interface Room {
+  __typename?: 'Room'
   room_id: Scalars['Int']
   admin_user_id: Scalars['Int']
   genre1: Scalars['String']
@@ -49,6 +183,7 @@ export interface Room {
 }
 
 export interface RoomMovieCollection {
+  __typename?: 'RoomMovieCollection'
   id: Scalars['Int']
   room_id: Scalars['Int']
   movie_id: Scalars['Int']
@@ -56,6 +191,7 @@ export interface RoomMovieCollection {
 }
 
 export interface Vote {
+  __typename?: 'Vote'
   id: Scalars['Int']
   room_id: Scalars['Int']
   movie_id: Scalars['Int']
@@ -63,6 +199,7 @@ export interface Vote {
 }
 
 export interface Genres {
+  __typename?: 'Genres'
   movie_id: Scalars['Int']
   action_and_adventure: Scalars['Boolean']
   anime_features: Scalars['Boolean']
@@ -84,142 +221,6 @@ export interface Genres {
   sports_movies: Scalars['Boolean']
   standup_comedy: Scalars['Boolean']
   thrillers: Scalars['Boolean']
-}
-
-/* end of new stuff added*/
-
-export interface Mutation {
-  __typename?: 'Mutation'
-  answerSurvey: Scalars['Boolean']
-  nextSurveyQuestion?: Maybe<Survey>
-  addRoom: Scalars['Boolean']
-  addVote: Scalars['Boolean']
-}
-
-export interface MutationAnswerSurveyArgs {
-  input: SurveyInput
-}
-
-export interface MutationAddVoteArgs {
-  input: VoteInput
-}
-
-export interface MutationAddMovieToRoomArgs {
-  input: MovieToRoomInput
-}
-
-export interface MutationAddRoomArgs {
-  input: RoomInput
-}
-
-export interface MutationNextSurveyQuestionArgs {
-  surveyId: Scalars['Int']
-}
-
-export interface Query {
-  __typename?: 'Query'
-  self?: Maybe<User>
-  surveys: Array<Survey>
-  survey?: Maybe<Survey>
-  //new queries
-  movies: Array<Movie>
-  rooms: Array<Room>
-  room?: Maybe<Room>
-  votes?: Array<Vote>
-  /**movie?: Maybe<Movie>*/
-  movie?: Maybe<Movie>
-  movieByGenre?: Array<Movie>
-}
-
-export interface QuerySurveyArgs {
-  surveyId: Scalars['Int']
-}
-export interface QueryMovieArgs {
-  movieId: Scalars['Int']
-}
-
-export interface QueryVoteArgs {
-  roomId: Scalars['Int']
-}
-
-export interface QueryRoomArgs {
-  room_id: Scalars['Int']
-}
-
-export interface QueryMovieByGenreArgs {
-  genres: Scalars['String']
-
-}
-
-export interface Subscription {
-  __typename?: 'Subscription'
-  surveyUpdates?: Maybe<Survey>
-}
-
-export interface SubscriptionSurveyUpdatesArgs {
-  surveyId: Scalars['Int']
-}
-
-export interface Survey {
-  __typename?: 'Survey'
-  id: Scalars['Int']
-  name: Scalars['String']
-  isStarted: Scalars['Boolean']
-  isCompleted: Scalars['Boolean']
-  currentQuestion?: Maybe<SurveyQuestion>
-  questions: Array<Maybe<SurveyQuestion>>
-}
-
-export interface SurveyAnswer {
-  __typename?: 'SurveyAnswer'
-  id: Scalars['Int']
-  answer: Scalars['String']
-  question: SurveyQuestion
-}
-
-export interface SurveyInput {
-  questionId: Scalars['Int']
-  answer: Scalars['String']
-}
-
-export interface VoteInput {
-  room_id: Scalars['Int']
-  movie_id: Scalars['Int']
-  user_id: Scalars['Int']
-}
-
-export interface MovieToRoomInput {
-  room_id: Scalars['Int']
-  movie_id: Scalars['Int']
-  index: Scalars['Int']
-}
-
-export interface RoomInput {
-  admin_user_id: Scalars['Int']
-  genre1: Scalars['String']
-  genre2: Scalars['String']
-}
-
-export interface SurveyQuestion {
-  __typename?: 'SurveyQuestion'
-  id: Scalars['Int']
-  prompt: Scalars['String']
-  choices?: Maybe<Array<Scalars['String']>>
-  answers: Array<SurveyAnswer>
-  survey: Survey
-}
-
-export interface User {
-  __typename?: 'User'
-  id: Scalars['Int']
-  userType: UserType
-  room_id: Scalars['Int']
-  name: Scalars['String']
-}
-
-export enum UserType {
-  Admin = 'ADMIN',
-  User = 'USER',
 }
 
 export type ResolverTypeWrapper<T> = Promise<T> | T
@@ -300,52 +301,84 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
   Query: ResolverTypeWrapper<{}>
-  User: ResolverTypeWrapper<User>
   Int: ResolverTypeWrapper<Scalars['Int']>
-  UserType: UserType
-  String: ResolverTypeWrapper<Scalars['String']>
-  Survey: ResolverTypeWrapper<Survey>
+  Mutation: ResolverTypeWrapper<{}>
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>
+  Subscription: ResolverTypeWrapper<{}>
+  User: ResolverTypeWrapper<User>
+  String: ResolverTypeWrapper<Scalars['String']>
+  UserType: UserType
+  Survey: ResolverTypeWrapper<Survey>
   SurveyQuestion: ResolverTypeWrapper<SurveyQuestion>
   SurveyAnswer: ResolverTypeWrapper<SurveyAnswer>
-  Mutation: ResolverTypeWrapper<{}>
   SurveyInput: SurveyInput
-  VoteInput: VoteInput
   RoomInput: RoomInput
-  Subscription: ResolverTypeWrapper<{}>
-  /**adding new mappings */
+  MovieToRoomInput: MovieToRoomInput
+  MovieByGenreInput: MovieByGenreInput
+  VoteInput: VoteInput
   Movie: ResolverTypeWrapper<Movie>
+  Float: ResolverTypeWrapper<Scalars['Float']>
+  MovieUser: ResolverTypeWrapper<MovieUser>
   Room: ResolverTypeWrapper<Room>
+  RoomMovieCollection: ResolverTypeWrapper<RoomMovieCollection>
   Vote: ResolverTypeWrapper<Vote>
-  MovieByGenre: ResolverTypeWrapper<Genres>
-  /*
-  Vote: ResolverTypeWrapper<Vote>
-  Genres: ResolverTypeWrapper<Genres>*/
+  Genres: ResolverTypeWrapper<Genres>
 }
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
   Query: {}
-  User: User
   Int: Scalars['Int']
+  Mutation: {}
+  Boolean: Scalars['Boolean']
+  Subscription: {}
+  User: User
   String: Scalars['String']
   Survey: Survey
-  Boolean: Scalars['Boolean']
   SurveyQuestion: SurveyQuestion
   SurveyAnswer: SurveyAnswer
-  Mutation: {}
   SurveyInput: SurveyInput
-  VoteInput: VoteInput
   RoomInput: RoomInput
-  Subscription: {}
-  /**adding new mappings */
+  MovieToRoomInput: MovieToRoomInput
+  MovieByGenreInput: MovieByGenreInput
+  VoteInput: VoteInput
   Movie: Movie
+  Float: Scalars['Float']
+  MovieUser: MovieUser
   Room: Room
+  RoomMovieCollection: RoomMovieCollection
   Vote: Vote
-  MovieByGenre: Genres
-  /**Room: Room
-  Vote: Vote
-  Genres: Genres*/
+  Genres: Genres
+}
+
+export type QueryResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']
+> = {
+  self?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>
+  surveys?: Resolver<Array<ResolversTypes['Survey']>, ParentType, ContextType>
+  survey?: Resolver<
+    Maybe<ResolversTypes['Survey']>,
+    ParentType,
+    ContextType,
+    RequireFields<QuerySurveyArgs, 'surveyId'>
+  >
+  movies?: Resolver<Array<ResolversTypes['Movie']>, ParentType, ContextType>
+  votes?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['Vote']>>>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryVotesArgs, 'roomId'>
+  >
+  rooms?: Resolver<Array<ResolversTypes['Room']>, ParentType, ContextType>
+  room?: Resolver<Maybe<ResolversTypes['Room']>, ParentType, ContextType, RequireFields<QueryRoomArgs, 'room_id'>>
+  movie?: Resolver<Maybe<ResolversTypes['Movie']>, ParentType, ContextType, RequireFields<QueryMovieArgs, 'movieId'>>
+  movieByGenre?: Resolver<
+    Array<ResolversTypes['Movie']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryMovieByGenreArgs, 'genres'>
+  >
 }
 
 export type MutationResolvers<
@@ -364,43 +397,13 @@ export type MutationResolvers<
     ContextType,
     RequireFields<MutationNextSurveyQuestionArgs, 'surveyId'>
   >
-  addRoom?: Resolver<
-    Maybe<ResolversTypes['Boolean']>,
-    ParentType,
-    ContextType,
-    RequireFields<MutationAddRoomArgs, 'input'>
-  >
-  addVote?: Resolver<
-    Maybe<ResolversTypes['Boolean']>,
-    ParentType,
-    ContextType,
-    RequireFields<MutationAddVoteArgs, 'input'>
-  >
+  addRoom?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationAddRoomArgs, 'input'>>
+  addVote?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationAddVoteArgs, 'input'>>
   addMovieToRoom?: Resolver<
-  Maybe<ResolversTypes['Boolean']>,
-  ParentType,
-  ContextType,
-  RequireFields<MutationAddMovieToRoomArgs, 'input'>
-  >
-}
-
-export type QueryResolvers<
-  ContextType = any,
-  ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']
-> = {
-  self?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>
-  surveys?: Resolver<Array<ResolversTypes['Survey']>, ParentType, ContextType>
-  movies?: Resolver<Array<ResolversTypes['Movie']>, ParentType, ContextType>
-  votes?: Resolver<Array<ResolversTypes['Vote']>, ParentType, ContextType, RequireFields<QueryVoteArgs, 'roomId'>>
-  rooms?: Resolver<Array<ResolversTypes['Room']>, ParentType, ContextType>
-  room?: Resolver<Maybe<ResolversTypes['Room']>, ParentType, ContextType, RequireFields<QueryRoomArgs, 'room_id'>>
-  movie?: Resolver<Maybe<ResolversTypes['Movie']>, ParentType, ContextType, RequireFields<QueryMovieArgs, 'movieId'>>
-  movieByGenre?: Resolver<Maybe<ResolversTypes['MovieByGenre']>, ParentType, ContextType, RequireFields<QueryMovieByGenreArgs, 'genres'>>
-  survey?: Resolver<
-    Maybe<ResolversTypes['Survey']>,
+    ResolversTypes['Boolean'],
     ParentType,
     ContextType,
-    RequireFields<QuerySurveyArgs, 'surveyId'>
+    RequireFields<MutationAddMovieToRoomArgs, 'input'>
   >
 }
 
@@ -417,6 +420,17 @@ export type SubscriptionResolvers<
   >
 }
 
+export type UserResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']
+> = {
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
+  userType?: Resolver<ResolversTypes['UserType'], ParentType, ContextType>
+  email?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>
+}
+
 export type SurveyResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes['Survey'] = ResolversParentTypes['Survey']
@@ -427,64 +441,6 @@ export type SurveyResolvers<
   isCompleted?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>
   currentQuestion?: Resolver<Maybe<ResolversTypes['SurveyQuestion']>, ParentType, ContextType>
   questions?: Resolver<Array<Maybe<ResolversTypes['SurveyQuestion']>>, ParentType, ContextType>
-  __isTypeOf?: IsTypeOfResolverFn<ParentType>
-}
-
-export type MovieResolvers<
-  ContextType = any,
-  ParentType extends ResolversParentTypes['Movie'] = ResolversParentTypes['Movie']
-> = {
-  movie_id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-  title?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-  time?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-  year?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-  genre?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-  director?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-  actors?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-  country?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-  rating?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-  netflix?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-  enter_in?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-  image?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-  despcription?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-  __isTypeOf?: IsTypeOfResolverFn<ParentType>
-}
-
-export type MovieByGenreResolvers<
-  ContextType = any,
-  ParentType extends ResolversParentTypes['MovieByGenre'] = ResolversParentTypes['MovieByGenre']
-> = {
-  genre1?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-  genre2?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-  __isTypeOf?: IsTypeOfResolverFn<ParentType>
-}
-
-export type RoomResolvers<
-  ContextType = any,
-  ParentType extends ResolversParentTypes['Room'] = ResolversParentTypes['Room']
-> = {
-  room_id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-  admin_user_id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-  genre1?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-  genre2?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-}
-
-export type VoteResolvers<
-  ContextType = any,
-  ParentType extends ResolversParentTypes['Vote'] = ResolversParentTypes['Vote']
-> = {
-  room_id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-  movie_id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-  user_id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-}
-
-export type SurveyAnswerResolvers<
-  ContextType = any,
-  ParentType extends ResolversParentTypes['SurveyAnswer'] = ResolversParentTypes['SurveyAnswer']
-> = {
-  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-  answer?: Resolver<ResolversTypes['String'], ParentType, ContextType>
-  question?: Resolver<ResolversTypes['SurveyQuestion'], ParentType, ContextType>
   __isTypeOf?: IsTypeOfResolverFn<ParentType>
 }
 
@@ -500,27 +456,121 @@ export type SurveyQuestionResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType>
 }
 
-export type UserResolvers<
+export type SurveyAnswerResolvers<
   ContextType = any,
-  ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']
+  ParentType extends ResolversParentTypes['SurveyAnswer'] = ResolversParentTypes['SurveyAnswer']
 > = {
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
+  answer?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  question?: Resolver<ResolversTypes['SurveyQuestion'], ParentType, ContextType>
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>
+}
+
+export type MovieResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['Movie'] = ResolversParentTypes['Movie']
+> = {
+  movie_id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
+  title?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  time?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
+  year?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
+  genre?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  director?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  actors?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  country?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  rating?: Resolver<ResolversTypes['Float'], ParentType, ContextType>
+  netflix?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  enter_in?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  image?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  description?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>
+}
+
+export type MovieUserResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['MovieUser'] = ResolversParentTypes['MovieUser']
+> = {
+  room_id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
   userType?: Resolver<ResolversTypes['UserType'], ParentType, ContextType>
-  email?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   __isTypeOf?: IsTypeOfResolverFn<ParentType>
 }
 
+export type RoomResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['Room'] = ResolversParentTypes['Room']
+> = {
+  room_id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
+  admin_user_id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
+  genre1?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  genre2?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>
+}
+
+export type RoomMovieCollectionResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['RoomMovieCollection'] = ResolversParentTypes['RoomMovieCollection']
+> = {
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
+  room_id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
+  movie_id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
+  index?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>
+}
+
+export type VoteResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['Vote'] = ResolversParentTypes['Vote']
+> = {
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
+  room_id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
+  movie_id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
+  user_id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>
+}
+
+export type GenresResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes['Genres'] = ResolversParentTypes['Genres']
+> = {
+  movie_id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
+  action_and_adventure?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>
+  anime_features?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>
+  children_family_movies?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>
+  classic_movies?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>
+  comedies?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>
+  cult_movies?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>
+  documentaries?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>
+  dramas?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>
+  faith_and_Spirituality?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>
+  horror_movies?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>
+  independent_movies?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>
+  international_movies?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>
+  lgbtq_movies?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>
+  movies?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>
+  music_and_musicals?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>
+  romantic_movies?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>
+  scifi_and_fantasy?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>
+  sports_movies?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>
+  standup_comedy?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>
+  thrillers?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>
+}
+
 export type Resolvers<ContextType = any> = {
-  Mutation?: MutationResolvers<ContextType>
   Query?: QueryResolvers<ContextType>
+  Mutation?: MutationResolvers<ContextType>
   Subscription?: SubscriptionResolvers<ContextType>
-  Survey?: SurveyResolvers<ContextType>
-  Movie?: SurveyResolvers<ContextType>
-  Vote?: SurveyResolvers<ContextType>
-  SurveyAnswer?: SurveyAnswerResolvers<ContextType>
-  SurveyQuestion?: SurveyQuestionResolvers<ContextType>
   User?: UserResolvers<ContextType>
+  Survey?: SurveyResolvers<ContextType>
+  SurveyQuestion?: SurveyQuestionResolvers<ContextType>
+  SurveyAnswer?: SurveyAnswerResolvers<ContextType>
+  Movie?: MovieResolvers<ContextType>
+  MovieUser?: MovieUserResolvers<ContextType>
+  Room?: RoomResolvers<ContextType>
+  RoomMovieCollection?: RoomMovieCollectionResolvers<ContextType>
+  Vote?: VoteResolvers<ContextType>
+  Genres?: GenresResolvers<ContextType>
 }
 
 /**

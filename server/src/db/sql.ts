@@ -2,13 +2,13 @@ import { createPool, PoolConnection, QueryOptions } from 'mysql2'
 import { createConnection } from 'typeorm'
 import { Genres } from '../entities/Genres'
 import { Movie } from '../entities/Movies'
+import { MovieUser } from '../entities/MovieUser'
 import { RoomMovieCollection } from '../entities/RoomMovieCollection'
 import { Room } from '../entities/Rooms'
 import { Session } from '../entities/Session'
 import { Survey } from '../entities/Survey'
 import { SurveyAnswer } from '../entities/SurveyAnswer'
 import { SurveyQuestion } from '../entities/SurveyQuestion'
-import { TVshow } from '../entities/TVshows'
 import { User } from '../entities/User'
 import { Vote } from '../entities/Votes'
 
@@ -33,7 +33,7 @@ export async function initORM() {
       SurveyQuestion,
       SurveyAnswer,
       Movie,
-      TVshow,
+      MovieUser,
       Room,
       Vote,
       Genres,

@@ -1,17 +1,16 @@
 import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm'
 import { Room as RoomType } from '../graphql/schema.types'
-import { User } from './User'
+import { MovieUser } from './MovieUser'
 
 @Entity()
 export class Room extends BaseEntity implements RoomType {
-
   @PrimaryGeneratedColumn()
   room_id: number
 
   @CreateDateColumn()
   timeCreated: Date
 
-  @OneToOne(() => User)
+  @OneToOne(() => MovieUser)
   @JoinColumn()
   admin_user_id: number
 
@@ -24,5 +23,4 @@ export class Room extends BaseEntity implements RoomType {
     nullable: true,
   })
   genre2: string
-
 }
