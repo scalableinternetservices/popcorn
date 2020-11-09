@@ -191,6 +191,10 @@ export interface FetchVotes {
   votes: (FetchVotes_votes | null)[] | null;
 }
 
+export interface FetchVotesVariables {
+  room_id: number;
+}
+
 /* tslint:disable */
 /* eslint-disable */
 // @generated
