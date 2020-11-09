@@ -1,18 +1,19 @@
-import { readFileSync } from 'fs';
-import { PubSub } from 'graphql-yoga';
-import path from 'path';
-import { getRepository } from 'typeorm';
-import { check } from '../../../common/src/util';
-import { Genres } from '../entities/Genres';
-import { Movie } from '../entities/Movies';
-import { RoomMovieCollection } from '../entities/RoomMovieCollection';
-import { Room } from '../entities/Rooms';
-import { Survey } from '../entities/Survey';
-import { SurveyAnswer } from '../entities/SurveyAnswer';
-import { SurveyQuestion } from '../entities/SurveyQuestion';
-import { User } from '../entities/User';
-import { Vote } from '../entities/Votes';
-import { Resolvers } from './schema.types';
+import { readFileSync } from 'fs'
+import { PubSub } from 'graphql-yoga'
+import path from 'path'
+import { getRepository } from 'typeorm'
+import { check } from '../../../common/src/util'
+import { Genres } from '../entities/Genres'
+import { Movie } from '../entities/Movies'
+import { MovieUser } from '../entities/MovieUser'
+import { RoomMovieCollection } from '../entities/RoomMovieCollection'
+import { Room } from '../entities/Rooms'
+import { Survey } from '../entities/Survey'
+import { SurveyAnswer } from '../entities/SurveyAnswer'
+import { SurveyQuestion } from '../entities/SurveyQuestion'
+import { User } from '../entities/User'
+import { Vote } from '../entities/Votes'
+import { Resolvers } from './schema.types'
 
 export const pubsub = new PubSub()
 
@@ -88,13 +89,10 @@ export const graphqlRoot: Resolvers<Context> = {
       ctx.pubsub.publish('NEW_ROOM_' + 1, room)
 
       // query movies of those genres
-      var wherestring = "(" + genre1 + " = true or " + genre2 + " = true)"
+      const wherestring = '(' + genre1 + ' = true or ' + genre2 + ' = true)'
 
       //.where(':genre1 = 1 OR :genre2 = 1', { genre1, genre2 })
-      const movies_by_genre = await getRepository(Genres)
-        .createQueryBuilder('genres')
-        .where(wherestring)
-        .getMany()
+      const movies_by_genre = await getRepository(Genres).createQueryBuilder('genres').where(wherestring).getMany()
       if (!movies_by_genre) {
         return false
       }
@@ -104,9 +102,9 @@ export const graphqlRoot: Resolvers<Context> = {
         return false
       }
 
-      var use_movies = movies_by_genre.slice( 0, 20)
+      const use_movies = movies_by_genre.slice(0, 20)
 
-      var index = 1
+      let index = 1
       use_movies.forEach(m => {
         const room_m = new RoomMovieCollection()
         room_m.room_id = get_rooms.length
@@ -132,6 +130,15 @@ export const graphqlRoot: Resolvers<Context> = {
       vote.movie_id = movie_id
       vote.user_id = user_id
       await vote.save()
+      //ctx.pubsub.publish('NEW_VOTE_' + 1, vote)
+      return true
+    },
+    addMovieUser: async (_, { input }, ctx) => {
+      const new_movieuser = new MovieUser()
+      const { room_id, name } = input
+      new_movieuser.room_id = room_id
+      new_movieuser.name = name
+      await new_movieuser.save()
       //ctx.pubsub.publish('NEW_VOTE_' + 1, vote)
       return true
     },

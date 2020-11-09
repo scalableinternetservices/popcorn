@@ -7,7 +7,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm'
-import { MovieUser as GraphqlUser, UserType } from '../graphql/schema.types'
+import { MovieUser as GraphqlUser } from '../graphql/schema.types'
 import { Room } from './Rooms'
 
 @Entity()
@@ -26,13 +26,6 @@ export class MovieUser extends BaseEntity implements GraphqlUser {
     nullable: true,
   })
   room_id: number
-
-  @Column({
-    type: 'enum',
-    enum: UserType,
-    default: UserType.User,
-  })
-  userType: UserType
 
   @Column({
     length: 100,

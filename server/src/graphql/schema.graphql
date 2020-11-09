@@ -42,6 +42,7 @@ type Mutation {
   addRoom (input: RoomInput!): Boolean!
   addVote(input: VoteInput!): Boolean!
   addMovieToRoom(input: MovieToRoomInput!): Boolean!
+  addMovieUser(input: MovieUserInput!): Boolean!
 }
 
 type Subscription {
@@ -52,6 +53,12 @@ type User {
   id: Int!
   userType: UserType!
   email: String!
+  name: String!
+}
+
+
+input MovieUserInput {
+  room_id: Int!
   name: String!
 }
 
@@ -147,7 +154,6 @@ type Movie {
 
 type MovieUser {
   room_id: Int!
-  userType: UserType!
   name: String!
 }
 

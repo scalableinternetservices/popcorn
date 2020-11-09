@@ -52,6 +52,7 @@ export interface Mutation {
   addRoom: Scalars['Boolean']
   addVote: Scalars['Boolean']
   addMovieToRoom: Scalars['Boolean']
+  addMovieUser: Scalars['Boolean']
 }
 
 export interface MutationAnswerSurveyArgs {
@@ -74,6 +75,10 @@ export interface MutationAddMovieToRoomArgs {
   input: MovieToRoomInput
 }
 
+export interface MutationAddMovieUserArgs {
+  input: MovieUserInput
+}
+
 export interface Subscription {
   __typename?: 'Subscription'
   surveyUpdates?: Maybe<Survey>
@@ -88,6 +93,11 @@ export interface User {
   id: Scalars['Int']
   userType: UserType
   email: Scalars['String']
+  name: Scalars['String']
+}
+
+export interface MovieUserInput {
+  room_id: Scalars['Int']
   name: Scalars['String']
 }
 
@@ -170,7 +180,6 @@ export interface Movie {
 export interface MovieUser {
   __typename?: 'MovieUser'
   room_id: Scalars['Int']
-  userType: UserType
   name: Scalars['String']
 }
 
@@ -307,6 +316,7 @@ export type ResolversTypes = {
   Subscription: ResolverTypeWrapper<{}>
   User: ResolverTypeWrapper<User>
   String: ResolverTypeWrapper<Scalars['String']>
+  MovieUserInput: MovieUserInput
   UserType: UserType
   Survey: ResolverTypeWrapper<Survey>
   SurveyQuestion: ResolverTypeWrapper<SurveyQuestion>
@@ -334,6 +344,7 @@ export type ResolversParentTypes = {
   Subscription: {}
   User: User
   String: Scalars['String']
+  MovieUserInput: MovieUserInput
   Survey: Survey
   SurveyQuestion: SurveyQuestion
   SurveyAnswer: SurveyAnswer
@@ -404,6 +415,12 @@ export type MutationResolvers<
     ParentType,
     ContextType,
     RequireFields<MutationAddMovieToRoomArgs, 'input'>
+  >
+  addMovieUser?: Resolver<
+    ResolversTypes['Boolean'],
+    ParentType,
+    ContextType,
+    RequireFields<MutationAddMovieUserArgs, 'input'>
   >
 }
 
@@ -491,7 +508,6 @@ export type MovieUserResolvers<
   ParentType extends ResolversParentTypes['MovieUser'] = ResolversParentTypes['MovieUser']
 > = {
   room_id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-  userType?: Resolver<ResolversTypes['UserType'], ParentType, ContextType>
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   __isTypeOf?: IsTypeOfResolverFn<ParentType>
 }
