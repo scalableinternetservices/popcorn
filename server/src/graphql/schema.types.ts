@@ -30,10 +30,6 @@ export interface QuerySurveyArgs {
   surveyId: Scalars['Int']
 }
 
-export interface QueryMovieUserArgs {
-  uid: Scalars['Int']
-}
-
 export interface QueryVotesArgs {
   roomId: Scalars['Int']
 }
@@ -48,6 +44,10 @@ export interface QueryMovieArgs {
 
 export interface QueryMovieByGenreArgs {
   genres: MovieByGenreInput
+}
+
+export interface QueryMovieUserArgs {
+  uid: Scalars['Int']
 }
 
 export interface Mutation {
@@ -391,17 +391,17 @@ export type QueryResolvers<
   rooms?: Resolver<Array<ResolversTypes['Room']>, ParentType, ContextType>
   room?: Resolver<Maybe<ResolversTypes['Room']>, ParentType, ContextType, RequireFields<QueryRoomArgs, 'room_id'>>
   movie?: Resolver<Maybe<ResolversTypes['Movie']>, ParentType, ContextType, RequireFields<QueryMovieArgs, 'movieId'>>
-  movieUser?: Resolver<
-    Maybe<ResolversTypes['MovieUser']>,
-    ParentType,
-    ContextType,
-    RequireFields<QueryMovieUserArgs, 'uid'>
-  >
   movieByGenre?: Resolver<
     Array<ResolversTypes['Movie']>,
     ParentType,
     ContextType,
     RequireFields<QueryMovieByGenreArgs, 'genres'>
+  >
+  movieUser?: Resolver<
+    Maybe<ResolversTypes['MovieUser']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryMovieUserArgs, 'uid'>
   >
 }
 
