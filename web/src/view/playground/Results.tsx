@@ -13,15 +13,21 @@ export function Votes() {
   if (!data) {
     return <div>no votes</div>
   }
+  if (!data.votes) return <div>null votes</div>
   if (data.votes.length === 0) return <div>no length</div>
 
   return <ResultsHistogram votes={data.votes} />
 }
 
-function ResultsHistogram({ votes }: { votes: FetchVotes_votes[] }) {
+function ResultsHistogram({ votes }: { votes: (FetchVotes_votes | null)[] }) {
   const answerBuckets: { [key: string]: number } = {}
   votes.forEach(a => {
-    const norm = a.movie_id.toString()
+    let norm = ''
+    if (!a) {
+      norm = 'null movie'
+    } else {
+      norm = a.movie_id.toString()
+    }
     answerBuckets[norm] = answerBuckets[norm] || 0
     answerBuckets[norm]++
   })

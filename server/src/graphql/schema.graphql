@@ -125,6 +125,12 @@ type Movie {
   description: String!
 }
 
+type MovieUser {
+  room_id: Int!
+  userType: UserType!
+  name: String!
+}
+
 type Room {
   room_id: Int!
   admin_user_id: Int!

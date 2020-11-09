@@ -8,7 +8,7 @@ export const fragmentMovie = gql`
 `
 
 export const fetchMovies = gql`
-  query FetchMovie {
+  query FetchMovies {
     movies {
       ...Movie
     }
@@ -18,7 +18,7 @@ export const fetchMovies = gql`
 
 export const fetchMovie = gql`
   query FetchMovie($movie_id: Int!) {
-    movie(roomId: $movie_id) {
+    movie(movieId: $movie_id) {
       ...Movie
     }
   }
