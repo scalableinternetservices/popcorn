@@ -1,17 +1,18 @@
-import { readFileSync } from 'fs'
-import { PubSub } from 'graphql-yoga'
-import path from 'path'
-import { getRepository } from 'typeorm'
-import { check } from '../../../common/src/util'
-import { Movie } from '../entities/Movies'
-import { RoomMovieCollection } from '../entities/RoomMovieCollection'
-import { Room } from '../entities/Rooms'
-import { Survey } from '../entities/Survey'
-import { SurveyAnswer } from '../entities/SurveyAnswer'
-import { SurveyQuestion } from '../entities/SurveyQuestion'
-import { User } from '../entities/User'
-import { Vote } from '../entities/Votes'
-import { Resolvers } from './schema.types'
+import { readFileSync } from 'fs';
+import { PubSub } from 'graphql-yoga';
+import path from 'path';
+import { getRepository } from 'typeorm';
+import { check } from '../../../common/src/util';
+import { Genres } from '../entities/Genres';
+import { Movie } from '../entities/Movies';
+import { RoomMovieCollection } from '../entities/RoomMovieCollection';
+import { Room } from '../entities/Rooms';
+import { Survey } from '../entities/Survey';
+import { SurveyAnswer } from '../entities/SurveyAnswer';
+import { SurveyQuestion } from '../entities/SurveyQuestion';
+import { User } from '../entities/User';
+import { Vote } from '../entities/Votes';
+import { Resolvers } from './schema.types';
 
 export const pubsub = new PubSub()
 
@@ -86,9 +87,15 @@ export const graphqlRoot: Resolvers<Context> = {
       //question.survey.currentQuestion?.answers.push(surveyAnswer)
       ctx.pubsub.publish('NEW_ROOM_' + 1, room)
 
-      // add movies to room
-      const new_movies = await getRepository(Movie).createQueryBuilder('movies').getMany()
-      if (!new_movies) {
+      // query movies of those genres
+      var wherestring = "(" + genre1 + " = true or " + genre2 + " = true)"
+
+      //.where(':genre1 = 1 OR :genre2 = 1', { genre1, genre2 })
+      const movies_by_genre = await getRepository(Genres)
+        .createQueryBuilder('genres')
+        .where(wherestring)
+        .getMany()
+      if (!movies_by_genre) {
         return false
       }
 
@@ -97,9 +104,9 @@ export const graphqlRoot: Resolvers<Context> = {
         return false
       }
 
-      const use_movies = new_movies.slice(0, 20)
+      var use_movies = movies_by_genre.slice( 0, 20)
 
-      let index = 0
+      var index = 1
       use_movies.forEach(m => {
         const room_m = new RoomMovieCollection()
         room_m.room_id = get_rooms.length
