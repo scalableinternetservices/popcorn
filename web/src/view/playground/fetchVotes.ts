@@ -7,8 +7,8 @@ export const fragmentVote = gql`
 `
 
 export const fetchVotes = gql`
-  query FetchVotes {
-    votes(roomId: 1) {
+  query FetchVotes($room_id: Int!) {
+    votes(roomId: $room_id) {
       ...Vote
     }
   }
