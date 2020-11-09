@@ -22,6 +22,7 @@ export interface Query {
   rooms: Array<Room>
   room?: Maybe<Room>
   movie?: Maybe<Movie>
+  movieByGenre: Array<Movie>
 }
 
 export interface QuerySurveyArgs {
@@ -40,12 +41,17 @@ export interface QueryMovieArgs {
   movieId: Scalars['Int']
 }
 
+export interface QueryMovieByGenreArgs {
+  genres: MovieByGenreInput
+}
+
 export interface Mutation {
   __typename?: 'Mutation'
   answerSurvey: Scalars['Boolean']
   nextSurveyQuestion?: Maybe<Survey>
   addRoom: Scalars['Boolean']
   addVote: Scalars['Boolean']
+  addMovieToRoom: Scalars['Boolean']
 }
 
 export interface MutationAnswerSurveyArgs {
@@ -57,11 +63,15 @@ export interface MutationNextSurveyQuestionArgs {
 }
 
 export interface MutationAddRoomArgs {
-  admin_user_id: Scalars['Int']
+  input: RoomInput
 }
 
 export interface MutationAddVoteArgs {
   input: VoteInput
+}
+
+export interface MutationAddMovieToRoomArgs {
+  input: MovieToRoomInput
 }
 
 export interface Subscription {
@@ -115,6 +125,23 @@ export interface SurveyAnswer {
 export interface SurveyInput {
   questionId: Scalars['Int']
   answer: Scalars['String']
+}
+
+export interface RoomInput {
+  room_id: Scalars['Int']
+  genre1: Scalars['String']
+  genre2: Scalars['String']
+}
+
+export interface MovieToRoomInput {
+  room_id: Scalars['Int']
+  movie_id: Scalars['Int']
+  index: Scalars['Int']
+}
+
+export interface MovieByGenreInput {
+  genre1: Scalars['String']
+  genre2: Scalars['String']
 }
 
 export interface VoteInput {
@@ -285,6 +312,9 @@ export type ResolversTypes = {
   SurveyQuestion: ResolverTypeWrapper<SurveyQuestion>
   SurveyAnswer: ResolverTypeWrapper<SurveyAnswer>
   SurveyInput: SurveyInput
+  RoomInput: RoomInput
+  MovieToRoomInput: MovieToRoomInput
+  MovieByGenreInput: MovieByGenreInput
   VoteInput: VoteInput
   Movie: ResolverTypeWrapper<Movie>
   Float: ResolverTypeWrapper<Scalars['Float']>
@@ -308,6 +338,9 @@ export type ResolversParentTypes = {
   SurveyQuestion: SurveyQuestion
   SurveyAnswer: SurveyAnswer
   SurveyInput: SurveyInput
+  RoomInput: RoomInput
+  MovieToRoomInput: MovieToRoomInput
+  MovieByGenreInput: MovieByGenreInput
   VoteInput: VoteInput
   Movie: Movie
   Float: Scalars['Float']
@@ -340,6 +373,12 @@ export type QueryResolvers<
   rooms?: Resolver<Array<ResolversTypes['Room']>, ParentType, ContextType>
   room?: Resolver<Maybe<ResolversTypes['Room']>, ParentType, ContextType, RequireFields<QueryRoomArgs, 'room_id'>>
   movie?: Resolver<Maybe<ResolversTypes['Movie']>, ParentType, ContextType, RequireFields<QueryMovieArgs, 'movieId'>>
+  movieByGenre?: Resolver<
+    Array<ResolversTypes['Movie']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryMovieByGenreArgs, 'genres'>
+  >
 }
 
 export type MutationResolvers<
@@ -358,13 +397,14 @@ export type MutationResolvers<
     ContextType,
     RequireFields<MutationNextSurveyQuestionArgs, 'surveyId'>
   >
-  addRoom?: Resolver<
+  addRoom?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationAddRoomArgs, 'input'>>
+  addVote?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationAddVoteArgs, 'input'>>
+  addMovieToRoom?: Resolver<
     ResolversTypes['Boolean'],
     ParentType,
     ContextType,
-    RequireFields<MutationAddRoomArgs, 'admin_user_id'>
+    RequireFields<MutationAddMovieToRoomArgs, 'input'>
   >
-  addVote?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationAddVoteArgs, 'input'>>
 }
 
 export type SubscriptionResolvers<

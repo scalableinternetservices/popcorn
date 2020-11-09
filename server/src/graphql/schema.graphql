@@ -28,6 +28,7 @@ type Query {
   rooms: [Room!]!
   room (room_id: Int!): Room
   movie (movieId: Int!): Movie
+  movieByGenre (genres: MovieByGenreInput!): [Movie!]!
 
 }
 
@@ -38,8 +39,9 @@ type Mutation {
   # Moves the survey to the next question (or starts it if it hasn't started). ADMIN only.
   nextSurveyQuestion (surveyId: Int!): Survey
 
-  addRoom (admin_user_id: Int!): Boolean!
+  addRoom (input: RoomInput!): Boolean!
   addVote(input: VoteInput!): Boolean!
+  addMovieToRoom(input: MovieToRoomInput!): Boolean!
 }
 
 type Subscription {
@@ -101,6 +103,24 @@ input SurveyInput {
   questionId: Int!
   answer: String!
 }
+
+input RoomInput {
+  room_id: Int!
+  genre1: String!
+  genre2: String!
+}
+
+input MovieToRoomInput {
+  room_id: Int!
+  movie_id: Int!
+  index: Int!
+}
+
+input MovieByGenreInput {
+  genre1: String!
+  genre2: String!
+}
+
 
 input VoteInput {
   room_id: Int!
