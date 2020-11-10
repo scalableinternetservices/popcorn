@@ -30,6 +30,7 @@ type Query {
   movie (movieId: Int!): Movie
   movieByGenre (genres: MovieByGenreInput!): [Movie!]!
   movieUser (uid : Int!): MovieUser
+  movieInRoom (room_id: Int!, index: Int!): Movie
 }
 
 type Mutation {
@@ -38,6 +39,8 @@ type Mutation {
 
   # Moves the survey to the next question (or starts it if it hasn't started). ADMIN only.
   nextSurveyQuestion (surveyId: Int!): Survey
+
+  nextMovie (input: NextMovieInput!): Int!
 
   addRoom (input: RoomInput!): Boolean!
   addVote(input: VoteInput!): Boolean!
@@ -124,6 +127,13 @@ input MovieToRoomInput {
   index: Int!
 }
 
+
+input NextMovieInput {
+  room_id: Int!
+  index: Int!
+}
+
+
 input MovieByGenreInput {
   genre1: String!
   genre2: String!
@@ -170,7 +180,7 @@ type RoomMovieCollection {
   id: Int!
   room_id: Int!
   movie_id: Int!
-  index: Int!
+  movie_index: Int!
 }
 
 type Vote {

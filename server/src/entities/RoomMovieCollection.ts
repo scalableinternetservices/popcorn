@@ -1,10 +1,13 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
+import { BaseEntity, Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
 import { RoomMovieCollection as RoomMovieCollectionType } from '../graphql/schema.types'
 import { Movie } from './Movies'
 import { Room } from './Rooms'
 
 @Entity()
 export class RoomMovieCollection extends BaseEntity implements RoomMovieCollectionType {
+  __typename?: 'RoomMovieCollection' | undefined
+  room_id: number
+  movie_id: number
 
   @PrimaryGeneratedColumn()
   id: number
@@ -13,17 +16,17 @@ export class RoomMovieCollection extends BaseEntity implements RoomMovieCollecti
   timeCreated: Date
 
   @ManyToOne(() => Room)
-  @JoinColumn()
-  room_id: number
+  @Column()
+  m_room_id: number
 
   @ManyToOne(() => Movie)
-  @JoinColumn()
-  movie_id: number
+  @Column()
+  m_movie_id: number
 
   @Column({
     nullable: true,
   })
-  index: number
+  movie_index: number
 
 
 }

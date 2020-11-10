@@ -50,7 +50,8 @@ export const graphqlRoot: Resolvers<Context> = {
     votes: async (_, { roomId }) => Vote.find({ where: { room_id: roomId } }) || null,
     movie: async (_, { movieId }) => (await Movie.findOne({ where: { movie_id: movieId } })) || null,
     movieUser: async (_, { uid }) => (await MovieUser.findOne({ where: { uId: uid } })) || null,
-    //movieByGenre: async (_, { genres }) => (await Genres.findOne({ where: { genre_format( genres: string[]) } })) || null,
+    //movieInRoom: async (_, { roomId, index }) => (await MovieInRoom.findOne({ where: { room_id: roomId, index: index } })) || null,
+    //movieByGenre: async (_, { genres }) => (await Genres.findOne({ wherMoe: { genre_format( genres: string[]) } })) || null,
   },
   Mutation: {
     answerSurvey: async (_, { input }, ctx) => {
@@ -74,6 +75,35 @@ export const graphqlRoot: Resolvers<Context> = {
       await survey.save()
       ctx.pubsub.publish('SURVEY_UPDATE_' + surveyId, survey)
       return survey
+    },
+    nextMovie: async (_, { input }, ctx) => {
+      // check(ctx.user?.userType === UserType.Admin)
+      const { room_id, index } = input
+
+      /*
+      const theNextMovie = await getRepository(RoomMovieCollection)
+      .createQueryBuilder('nextMovie')
+      .leftJoinAndSelect('room_movie_collection.movie_id', 'movie')
+      .where("room_movie_collection.room_id = :room_id and room_movie_collection.index = :index", { room_id, index })
+      .getOne()
+      if (!theNextMovie) {
+        return false
+      }*/
+      var nextMovieStr = "(m_room_id = " + room_id.toString() + " and movie_index = " + (index + 1).toString() + ")"
+
+      const theNextMovie = await getRepository(RoomMovieCollection)
+      .createQueryBuilder('nextMovie')
+      .where(nextMovieStr)
+      .getOne()
+      if (!theNextMovie) {
+        return 1
+      }
+
+      console.log(theNextMovie)
+      console.log(theNextMovie.m_movie_id);
+
+
+      return theNextMovie.m_movie_id
     },
     addRoom: async (_, { input }, ctx) => {
       // check(ctx.user?.userType === UserType.Admin)
@@ -108,9 +138,9 @@ export const graphqlRoot: Resolvers<Context> = {
       let index = 1
       use_movies.forEach(m => {
         const room_m = new RoomMovieCollection()
-        room_m.room_id = get_rooms.length
-        room_m.movie_id = m.movie_id //new_movies.movie_id
-        room_m.index = index
+        room_m.m_room_id = get_rooms.length
+        room_m.m_movie_id = m.movie_id //new_movies.movie_id
+        room_m.movie_index = index
         room_m.save()
         index = index + 1
       })
@@ -147,9 +177,9 @@ export const graphqlRoot: Resolvers<Context> = {
     addMovieToRoom: async (_, { input }, ctx) => {
       const room_m = new RoomMovieCollection()
       const { room_id, movie_id, index } = input
-      room_m.room_id = room_id
-      room_m.movie_id = movie_id
-      room_m.index = index
+      room_m.m_room_id = room_id
+      room_m.m_movie_id = movie_id
+      room_m.movie_index = index
       await room_m.save()
       //ctx.room_m.publish('NEW_VOTE_' + 1, vote)
       return true
