@@ -49,7 +49,8 @@ export const graphqlRoot: Resolvers<Context> = {
     movies: () => Movie.find(),
     votes: async (_, { roomId }) => Vote.find({ where: { room_id: roomId } }) || null,
     movie: async (_, { movieId }) => (await Movie.findOne({ where: { movie_id: movieId } })) || null,
-    movieUser: async (_, { uid }) => (await MovieUser.findOne({ where: { uId: uid } })) || null,
+    movieUser: async (_, { u_id }) => (await MovieUser.findOne({ where: { u_id: u_id } })) || null,
+    movieUsers: () => MovieUser.find(),
     roomMovieCollection: async (_, { room_id }) =>
       (await RoomMovieCollection.find({ where: { m_room_id: room_id } })) || null,
     //movieInRoom: async (_, { roomId, index }) => (await MovieInRoom.findOne({ where: { room_id: roomId, index: index } })) || null,
@@ -106,16 +107,17 @@ export const graphqlRoot: Resolvers<Context> = {
 
       return theNextMovie.m_movie_id
     },
-    addRoom: async (_, { input }, ctx) => {
+    addRoomAndMovieUser: async (_, { input }, ctx) => {
       // check(ctx.user?.userType === UserType.Admin)
-      const { genre1, genre2 } = input
+      const { genre1, genre2, name, u_id } = input
       //const question = check(await SurveyQuestion.findOne({ where: { id: questionId }, relations: ['survey'] }))
 
       const room = new Room()
       //room.admin_user_id = admin_user_id
       room.genre1 = genre1
       room.genre2 = genre2
-      await room.save()
+      const new_room = await room.save()
+      console.log("here!", new_room);
 
       //question.survey.currentQuestion?.answers.push(surveyAnswer)
       ctx.pubsub.publish('NEW_ROOM_' + 1, room)
@@ -153,6 +155,15 @@ export const graphqlRoot: Resolvers<Context> = {
       room_m.index = 10
       await room_m.save()
       */
+
+      // make movieUser
+      const new_movieuser = new MovieUser()
+      new_movieuser.room_id = new_room.room_id
+      new_movieuser.u_id = u_id
+      new_movieuser.name = name
+      const haha = await new_movieuser.save()
+      console.log("new movie user", haha);
+
       return true
     },
     addVote: async (_, { input }, ctx) => {
@@ -167,9 +178,9 @@ export const graphqlRoot: Resolvers<Context> = {
     },
     addMovieUser: async (_, { input }, ctx) => {
       const new_movieuser = new MovieUser()
-      const { room_id, uid, name } = input
+      const { room_id, u_id, name } = input
       new_movieuser.room_id = room_id
-      new_movieuser.uid = uid
+      new_movieuser.u_id = u_id
       new_movieuser.name = name
       await new_movieuser.save()
       //ctx.pubsub.publish('NEW_VOTE_' + 1, vote)

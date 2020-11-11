@@ -5,7 +5,7 @@ import {
   AnswerSurveyQuestionVariables,
   NextSurveyQuestion,
   NextSurveyQuestionVariables,
-  SurveyInput,
+  SurveyInput
 } from '../../graphql/query.gen'
 import { fragmentSurvey, fragmentSurveyQuestion } from './fetchSurveys'
 
