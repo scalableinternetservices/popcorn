@@ -11,7 +11,7 @@ import {
   FetchSurvey_survey_currentQuestion,
   FetchSurvey_survey_currentQuestion_answers,
   SurveySubscription,
-  SurveySubscriptionVariables,
+  SurveySubscriptionVariables
 } from '../../graphql/query.gen'
 import { Button } from '../../style/button'
 import { H1, H2 } from '../../style/header'
