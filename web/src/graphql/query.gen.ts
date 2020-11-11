@@ -303,15 +303,15 @@ export interface NextSurveyQuestionVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: AddRoom
+// GraphQL mutation operation: AddRoomAndMovieUser
 // ====================================================
 
-export interface AddRoom {
-  addRoom: boolean;
+export interface AddRoomAndMovieUser {
+  addRoomAndMovieUser: boolean;
 }
 
-export interface AddRoomVariables {
-  input: RoomInput;
+export interface AddRoomAndMovieUserVariables {
+  input: RoomAndMovieUserInput;
 }
 
 /* tslint:disable */
@@ -427,10 +427,12 @@ export enum UserType {
   USER = "USER",
 }
 
-export interface RoomInput {
+export interface RoomAndMovieUserInput {
   room_id: number;
   genre1: string;
   genre2: string;
+  u_id: number;
+  name: string;
 }
 
 export interface SurveyInput {

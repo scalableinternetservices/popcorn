@@ -5,7 +5,7 @@ import {
   Entity,
   OneToOne,
   PrimaryGeneratedColumn,
-  UpdateDateColumn,
+  UpdateDateColumn
 } from 'typeorm'
 import { MovieUser as GraphqlUser } from '../graphql/schema.types'
 import { Room } from './Rooms'
@@ -13,7 +13,6 @@ import { Room } from './Rooms'
 @Entity()
 export class MovieUser extends BaseEntity implements GraphqlUser {
   __typename?: 'MovieUser' | undefined
-  uid: number
   @PrimaryGeneratedColumn()
   id: number
 
@@ -32,7 +31,7 @@ export class MovieUser extends BaseEntity implements GraphqlUser {
   @Column({
     nullable: true,
   })
-  uId: number
+  u_id: number
 
   @Column({
     length: 100,

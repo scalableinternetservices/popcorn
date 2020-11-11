@@ -11,7 +11,7 @@ interface HomePageProps extends RouteComponentProps, AppRouteParams {}
 export function HomePage(props: HomePageProps) {
   return (
     <Page>
-      <img style={{marginLeft: "32px"}} src="/public/assets/logo.6526ae59.png"/>
+      <img style={{marginLeft: "32px"}} src="public/assets/logo.6526ae59.png"/>
       <div style={{padding: "20px", fontSize: "30px", border: "black", borderStyle: "double", margin: "10px" }}>
         <NavLink to="app/popcorn/admin">Create A Room</NavLink>
       </div>

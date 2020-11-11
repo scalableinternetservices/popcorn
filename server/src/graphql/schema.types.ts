@@ -24,6 +24,7 @@ export interface Query {
   movie?: Maybe<Movie>
   movieByGenre: Array<Movie>
   movieUser?: Maybe<MovieUser>
+  movieUsers?: Array<MovieUser>
   movieInRoom?: Maybe<Movie>
 }
 
@@ -48,7 +49,7 @@ export interface QueryMovieByGenreArgs {
 }
 
 export interface QueryMovieUserArgs {
-  uid: Scalars['Int']
+  u_id: Scalars['Int']
 }
 
 export interface QueryMovieInRoomArgs {
@@ -61,7 +62,7 @@ export interface Mutation {
   answerSurvey: Scalars['Boolean']
   nextSurveyQuestion?: Maybe<Survey>
   nextMovie: Scalars['Int']
-  addRoom: Scalars['Boolean']
+  addRoomAndMovieUser: Scalars['Boolean']
   addVote: Scalars['Boolean']
   addMovieToRoom: Scalars['Boolean']
   addMovieUser: Scalars['Boolean']
@@ -79,8 +80,8 @@ export interface MutationNextMovieArgs {
   input: NextMovieInput
 }
 
-export interface MutationAddRoomArgs {
-  input: RoomInput
+export interface MutationAddRoomAndMovieUserArgs {
+  input: RoomAndMovieUserInput
 }
 
 export interface MutationAddVoteArgs {
@@ -114,7 +115,7 @@ export interface User {
 
 export interface MovieUserInput {
   room_id: Scalars['Int']
-  uid: Scalars['Int']
+  u_id: Scalars['Int']
   name: Scalars['String']
 }
 
@@ -154,10 +155,12 @@ export interface SurveyInput {
   answer: Scalars['String']
 }
 
-export interface RoomInput {
+export interface RoomAndMovieUserInput {
   room_id: Scalars['Int']
   genre1: Scalars['String']
   genre2: Scalars['String']
+  u_id: Scalars['Int']
+  name: Scalars['String']
 }
 
 export interface MovieToRoomInput {
@@ -202,7 +205,7 @@ export interface Movie {
 export interface MovieUser {
   __typename?: 'MovieUser'
   room_id: Scalars['Int']
-  uid: Scalars['Int']
+  u_id: Scalars['Int']
   name: Scalars['String']
 }
 
@@ -345,7 +348,7 @@ export type ResolversTypes = {
   SurveyQuestion: ResolverTypeWrapper<SurveyQuestion>
   SurveyAnswer: ResolverTypeWrapper<SurveyAnswer>
   SurveyInput: SurveyInput
-  RoomInput: RoomInput
+  RoomAndMovieUserInput: RoomAndMovieUserInput
   MovieToRoomInput: MovieToRoomInput
   NextMovieInput: NextMovieInput
   MovieByGenreInput: MovieByGenreInput
@@ -373,7 +376,7 @@ export type ResolversParentTypes = {
   SurveyQuestion: SurveyQuestion
   SurveyAnswer: SurveyAnswer
   SurveyInput: SurveyInput
-  RoomInput: RoomInput
+  RoomAndMovieUserInput: RoomAndMovieUserInput
   MovieToRoomInput: MovieToRoomInput
   NextMovieInput: NextMovieInput
   MovieByGenreInput: MovieByGenreInput
@@ -419,7 +422,7 @@ export type QueryResolvers<
     Maybe<ResolversTypes['MovieUser']>,
     ParentType,
     ContextType,
-    RequireFields<QueryMovieUserArgs, 'uid'>
+    RequireFields<QueryMovieUserArgs, 'u_id'>
   >
   movieInRoom?: Resolver<
     Maybe<ResolversTypes['Movie']>,
@@ -427,6 +430,7 @@ export type QueryResolvers<
     ContextType,
     RequireFields<QueryMovieInRoomArgs, 'room_id' | 'index'>
   >
+  movieUsers?: Resolver<Array<ResolversTypes['MovieUser']>, ParentType, ContextType>
 }
 
 export type MutationResolvers<
@@ -446,7 +450,12 @@ export type MutationResolvers<
     RequireFields<MutationNextSurveyQuestionArgs, 'surveyId'>
   >
   nextMovie?: Resolver<ResolversTypes['Int'], ParentType, ContextType, RequireFields<MutationNextMovieArgs, 'input'>>
-  addRoom?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationAddRoomArgs, 'input'>>
+  addRoomAndMovieUser?: Resolver<
+    ResolversTypes['Boolean'],
+    ParentType,
+    ContextType,
+    RequireFields<MutationAddRoomAndMovieUserArgs, 'input'>
+  >
   addVote?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<MutationAddVoteArgs, 'input'>>
   addMovieToRoom?: Resolver<
     ResolversTypes['Boolean'],
@@ -546,7 +555,7 @@ export type MovieUserResolvers<
   ParentType extends ResolversParentTypes['MovieUser'] = ResolversParentTypes['MovieUser']
 > = {
   room_id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-  uid?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
+  u_id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   __isTypeOf?: IsTypeOfResolverFn<ParentType>
 }
