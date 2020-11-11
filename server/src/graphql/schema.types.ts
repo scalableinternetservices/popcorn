@@ -26,6 +26,7 @@ export interface Query {
   movieUser?: Maybe<MovieUser>
   movieUsers?: Array<MovieUser>
   movieInRoom?: Maybe<Movie>
+  roomMovieCollection?: Maybe<Array<Maybe<RoomMovieCollection>>>
 }
 
 export interface QuerySurveyArgs {
@@ -55,6 +56,10 @@ export interface QueryMovieUserArgs {
 export interface QueryMovieInRoomArgs {
   room_id: Scalars['Int']
   index: Scalars['Int']
+}
+
+export interface QueryRoomMovieCollectionArgs {
+  room_id: Scalars['Int']
 }
 
 export interface Mutation {
@@ -431,6 +436,12 @@ export type QueryResolvers<
     RequireFields<QueryMovieInRoomArgs, 'room_id' | 'index'>
   >
   movieUsers?: Resolver<Array<ResolversTypes['MovieUser']>, ParentType, ContextType>
+  roomMovieCollection?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['RoomMovieCollection']>>>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryRoomMovieCollectionArgs, 'room_id'>
+  >
 }
 
 export type MutationResolvers<
