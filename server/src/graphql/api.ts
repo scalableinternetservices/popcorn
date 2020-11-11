@@ -50,6 +50,8 @@ export const graphqlRoot: Resolvers<Context> = {
     votes: async (_, { roomId }) => Vote.find({ where: { room_id: roomId } }) || null,
     movie: async (_, { movieId }) => (await Movie.findOne({ where: { movie_id: movieId } })) || null,
     movieUser: async (_, { uid }) => (await MovieUser.findOne({ where: { uId: uid } })) || null,
+    roomMovieCollection: async (_, { room_id }) =>
+      (await RoomMovieCollection.find({ where: { m_room_id: room_id } })) || null,
     //movieInRoom: async (_, { roomId, index }) => (await MovieInRoom.findOne({ where: { room_id: roomId, index: index } })) || null,
     //movieByGenre: async (_, { genres }) => (await Genres.findOne({ wherMoe: { genre_format( genres: string[]) } })) || null,
   },
@@ -89,19 +91,18 @@ export const graphqlRoot: Resolvers<Context> = {
       if (!theNextMovie) {
         return false
       }*/
-      var nextMovieStr = "(m_room_id = " + room_id.toString() + " and movie_index = " + (index + 1).toString() + ")"
+      const nextMovieStr = '(m_room_id = ' + room_id.toString() + ' and movie_index = ' + (index + 1).toString() + ')'
 
       const theNextMovie = await getRepository(RoomMovieCollection)
-      .createQueryBuilder('nextMovie')
-      .where(nextMovieStr)
-      .getOne()
+        .createQueryBuilder('nextMovie')
+        .where(nextMovieStr)
+        .getOne()
       if (!theNextMovie) {
         return 1
       }
 
       console.log(theNextMovie)
-      console.log(theNextMovie.m_movie_id);
-
+      console.log(theNextMovie.m_movie_id)
 
       return theNextMovie.m_movie_id
     },

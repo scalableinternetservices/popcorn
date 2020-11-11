@@ -31,6 +31,7 @@ type Query {
   movieByGenre (genres: MovieByGenreInput!): [Movie!]!
   movieUser (uid : Int!): MovieUser
   movieInRoom (room_id: Int!, index: Int!): Movie
+  roomMovieCollection (room_id: Int!):[RoomMovieCollection]
 }
 
 type Mutation {
