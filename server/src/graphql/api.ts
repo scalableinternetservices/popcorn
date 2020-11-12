@@ -114,7 +114,8 @@ export const graphqlRoot: Resolvers<Context> = {
       //room.admin_user_id = admin_user_id
       room.genre1 = genre1
       room.genre2 = genre2
-      await room.save()
+      const new_room = await room.save()
+      console.log(new_room)
 
       //question.survey.currentQuestion?.answers.push(surveyAnswer)
       ctx.pubsub.publish('NEW_ROOM_' + 1, room)
@@ -128,17 +129,12 @@ export const graphqlRoot: Resolvers<Context> = {
         return false
       }
 
-      const get_rooms = await getRepository(Room).createQueryBuilder('rooms').getMany()
-      if (!get_rooms) {
-        return false
-      }
-
       const use_movies = movies_by_genre.slice(0, 20)
 
       let index = 1
       use_movies.forEach(m => {
         const room_m = new RoomMovieCollection()
-        room_m.m_room_id = get_rooms.length
+        room_m.m_room_id = new_room.room_id
         room_m.m_movie_id = m.movie_id //new_movies.movie_id
         room_m.movie_index = index
         room_m.save()

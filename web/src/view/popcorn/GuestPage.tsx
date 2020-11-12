@@ -13,13 +13,13 @@ export function GuestPage(props: GuestPageProps) {
   return (
     <Page>
       <div style={{margin: "30px"}}>
-      <label style={{fontSize: "30px", margin: "10px", fontWeight: "lighter" }} htmlFor="email">
+      <label style={{fontSize: "30px", margin: "10px", fontWeight: "lighter" }} htmlFor="name">
           Enter Name
       </label>
       <Input style={{marginTop: "12px"}} name="name" type="name" />
       </div>
       <div style={{margin: "30px"}}>
-      <label style={{fontSize: "30px", margin: "10px", fontWeight: "lighter" }} htmlFor="email">
+      <label style={{fontSize: "30px", margin: "10px", fontWeight: "lighter" }} htmlFor="room_code">
           Enter Room Code
       </label>
       <Input style={{marginTop: "12px"}} name="room-code" type="room-code" />
