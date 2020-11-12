@@ -72,10 +72,11 @@ export interface FetchMovieVariables {
 export interface FetchRoomMovieCollection_roomMovieCollection {
   __typename: "RoomMovieCollection";
   movie_id: number;
+  movie_index: number;
 }
 
 export interface FetchRoomMovieCollection {
-  roomMovieCollection: FetchRoomMovieCollection_roomMovieCollection | null;
+  roomMovieCollection: (FetchRoomMovieCollection_roomMovieCollection | null)[] | null;
 }
 
 export interface FetchRoomMovieCollectionVariables {
@@ -269,6 +270,23 @@ export interface FetchVotesVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: AddMovieUser
+// ====================================================
+
+export interface AddMovieUser {
+  addMovieUser: boolean;
+}
+
+export interface AddMovieUserVariables {
+  input: MovieUserInput;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: AnswerSurveyQuestion
 // ====================================================
 
@@ -363,6 +381,7 @@ export interface Movie {
 export interface RoomMovieCollection {
   __typename: "RoomMovieCollection";
   movie_id: number;
+  movie_index: number;
 }
 
 /* tslint:disable */
@@ -461,6 +480,12 @@ export interface Vote {
 export enum UserType {
   ADMIN = "ADMIN",
   USER = "USER",
+}
+
+export interface MovieUserInput {
+  room_id: number;
+  u_id: number;
+  name: string;
 }
 
 export interface RoomAndMovieUserInput {
