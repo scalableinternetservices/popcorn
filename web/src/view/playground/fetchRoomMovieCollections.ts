@@ -2,8 +2,8 @@ import { gql } from '@apollo/client'
 
 export const fragmentRoomMovieCollection = gql`
   fragment RoomMovieCollection on RoomMovieCollection {
-    movie_index
     movie_id
+    movie_index
   }
 `
 

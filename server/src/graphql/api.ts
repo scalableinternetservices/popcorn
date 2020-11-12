@@ -49,7 +49,7 @@ export const graphqlRoot: Resolvers<Context> = {
     movies: () => Movie.find(),
     votes: async (_, { roomId }) => Vote.find({ where: { room_id: roomId } }) || null,
     movie: async (_, { movieId }) => (await Movie.findOne({ where: { movie_id: movieId } })) || null,
-    movieUser: async (_, { u_id }) => (await MovieUser.findOne({ where: { u_id: u_id } })) || null,
+    movieUser: async (_, { uid }) => (await MovieUser.findOne({ where: { u_id: uid } })) || null,
     movieUsers: () => MovieUser.find(),
     roomMovieCollection: async (_, { room_id }) =>
       (await RoomMovieCollection.find({ where: { m_room_id: room_id } })) || null,

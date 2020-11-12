@@ -1112,7 +1112,7 @@
             "description": null,
             "args": [
               {
-                "name": "u_id",
+                "name": "uid",
                 "description": null,
                 "type": {
                   "kind": "NON_NULL",
@@ -1176,6 +1176,30 @@
             "deprecationReason": null
           },
           {
+            "name": "movieUsers",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "MovieUser",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "roomMovieCollection",
             "description": null,
             "args": [
@@ -1195,9 +1219,13 @@
               }
             ],
             "type": {
-              "kind": "OBJECT",
-              "name": "RoomMovieCollection",
-              "ofType": null
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "RoomMovieCollection",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
