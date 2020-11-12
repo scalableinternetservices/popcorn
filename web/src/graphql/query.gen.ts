@@ -66,6 +66,28 @@ export interface FetchMovieVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: FetchRoomMovieCollection
+// ====================================================
+
+export interface FetchRoomMovieCollection_roomMovieCollection {
+  __typename: "RoomMovieCollection";
+  movie_id: number;
+}
+
+export interface FetchRoomMovieCollection {
+  roomMovieCollection: FetchRoomMovieCollection_roomMovieCollection | null;
+}
+
+export interface FetchRoomMovieCollectionVariables {
+  room_id: number;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: FetchRooms
 // ====================================================
 
@@ -303,6 +325,23 @@ export interface NextSurveyQuestionVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: AddRoomAndMovieUser
+// ====================================================
+
+export interface AddRoomAndMovieUser {
+  addRoomAndMovieUser: boolean;
+}
+
+export interface AddRoomAndMovieUserVariables {
+  input: RoomAndMovieUserInput;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL fragment: Movie
 // ====================================================
 
@@ -310,6 +349,20 @@ export interface Movie {
   __typename: "Movie";
   movie_id: number;
   title: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: RoomMovieCollection
+// ====================================================
+
+export interface RoomMovieCollection {
+  __typename: "RoomMovieCollection";
+  movie_id: number;
 }
 
 /* tslint:disable */
@@ -408,6 +461,14 @@ export interface Vote {
 export enum UserType {
   ADMIN = "ADMIN",
   USER = "USER",
+}
+
+export interface RoomAndMovieUserInput {
+  room_id: number;
+  genre1: string;
+  genre2: string;
+  u_id: number;
+  name: string;
 }
 
 export interface SurveyInput {

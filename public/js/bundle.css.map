@@ -1,0 +1,1 @@
+{"version":3,"sources":["view/popcorn/popcorn.module.css"],"names":[],"mappings":"AAAA;AACA;AACA;AACA","file":"bundle.css","sourceRoot":"../../web/src","sourcesContent":[".home {\n  background: red;\n}\n"]}

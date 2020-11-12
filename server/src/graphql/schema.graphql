@@ -14,42 +14,43 @@ schema {
   subscription: Subscription
 }
 
-
 type Query {
   # Returns the logged-in user making the query, or null if anonymous.
   self: User
 
   surveys: [Survey!]!
-  survey (surveyId: Int!): Survey
+  survey(surveyId: Int!): Survey
 
   #adding new queries
   movies: [Movie!]!
-  votes (roomId: Int!): [Vote]
+  votes(roomId: Int!): [Vote]
   rooms: [Room!]!
-  room (room_id: Int!): Room
-  movie (movieId: Int!): Movie
-  movieByGenre (genres: MovieByGenreInput!): [Movie!]!
-  movieUser (uid : Int!): MovieUser
-  movieInRoom (room_id: Int!, index: Int!): Movie
+  room(room_id: Int!): Room
+  movie(movieId: Int!): Movie
+  movieByGenre(genres: MovieByGenreInput!): [Movie!]!
+  movieUser(uid: Int!): MovieUser
+  movieInRoom(room_id: Int!, index: Int!): Movie
+  movieUsers: [MovieUser!]!
+  roomMovieCollection(room_id: Int!): [RoomMovieCollection]
 }
 
 type Mutation {
   # Records an answer to a survey question presented in class.
-  answerSurvey (input: SurveyInput!): Boolean!
+  answerSurvey(input: SurveyInput!): Boolean!
 
   # Moves the survey to the next question (or starts it if it hasn't started). ADMIN only.
-  nextSurveyQuestion (surveyId: Int!): Survey
+  nextSurveyQuestion(surveyId: Int!): Survey
 
-  nextMovie (input: NextMovieInput!): Int!
+  nextMovie(input: NextMovieInput!): Int!
 
-  addRoom (input: RoomInput!): Boolean!
+  addRoomAndMovieUser(input: RoomAndMovieUserInput!): Boolean!
   addVote(input: VoteInput!): Boolean!
   addMovieToRoom(input: MovieToRoomInput!): Boolean!
   addMovieUser(input: MovieUserInput!): Boolean!
 }
 
 type Subscription {
-  surveyUpdates (surveyId: Int!): Survey
+  surveyUpdates(surveyId: Int!): Survey
 }
 
 type User {
@@ -59,14 +60,16 @@ type User {
   name: String!
 }
 
-
 input MovieUserInput {
   room_id: Int!
-  uid: Int!
+  u_id: Int!
   name: String!
 }
 
-enum UserType { ADMIN, USER }
+enum UserType {
+  ADMIN
+  USER
+}
 
 type Survey {
   id: Int!
@@ -86,7 +89,6 @@ type Survey {
   # All the survey's questions, in presentation order.
   questions: [SurveyQuestion]!
 }
-
 
 type SurveyQuestion {
   id: Int!
@@ -115,10 +117,12 @@ input SurveyInput {
   answer: String!
 }
 
-input RoomInput {
+input RoomAndMovieUserInput {
   room_id: Int!
   genre1: String!
   genre2: String!
+  u_id: Int!
+  name: String!
 }
 
 input MovieToRoomInput {
@@ -127,18 +131,15 @@ input MovieToRoomInput {
   index: Int!
 }
 
-
 input NextMovieInput {
   room_id: Int!
   index: Int!
 }
 
-
 input MovieByGenreInput {
   genre1: String!
   genre2: String!
 }
-
 
 input VoteInput {
   room_id: Int!
@@ -165,7 +166,7 @@ type Movie {
 
 type MovieUser {
   room_id: Int!
-  uid: Int!
+  u_id: Int!
   name: String!
 }
 

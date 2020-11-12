@@ -1,5 +1,5 @@
 require('honeycomb-beeline')({
-  writeKey: process.env.HONEYCOMB_KEY || 'd29d5f5ec24178320dae437383480737',
+  writeKey: process.env.HONEYCOMB_KEY || '2eef309664a1bc76739f57e5e74015d5',
   dataset: process.env.APP_NAME || 'bespin',
   serviceName: process.env.APPSERVER_TAG || 'local',
   enabledInstrumentations: ['express', 'mysql2', 'react-dom/server'],
