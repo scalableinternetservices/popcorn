@@ -1,6 +1,7 @@
 import { RouteComponentProps } from '@reach/router';
 import * as React from 'react';
 import { useState } from 'react';
+import { check } from '../../../../common/src/util';
 import { getApolloClient } from '../../graphql/apolloClient';
 import { Button } from '../../style/button';
 import { Input } from '../../style/input';
@@ -25,7 +26,22 @@ export function GuestPage(props: GuestPageProps) {
   function doAddMovieUser() {
     console.log("lol", name, room_code)
     console.log("user!!!", user)
-    addMovieUser(getApolloClient(), { room_id: 1, u_id: 12, name: name }).catch(handleError)
+    var room_as_num: number = +room_code;
+    addMovieUser(getApolloClient(), { room_id: room_as_num, u_id: 12, name: name }).catch(handleError)
+  }
+
+  function login() {
+    console.log('in login function in admin')
+
+    fetch('/auth/createUser', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: "test", name: "name" }),
+    })
+      .then(res => {
+        check(res.ok, 'response status ' + res.status)
+        return res.text()
+      })
   }
 
   return (
@@ -47,7 +63,7 @@ export function GuestPage(props: GuestPageProps) {
       </span>
       <span style={{padding: "12px", fontSize: "30px", border: "black", borderStyle: "double", marginLeft: "240px" }}>
         <NavLink to="app/popcorn/room">
-          <Button onClick={() => doAddMovieUser()}>Next</Button>
+          <Button onClick={() => {doAddMovieUser(); login()}}>Next</Button>
         </NavLink>
       </span>
       </div>
