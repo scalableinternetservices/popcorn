@@ -2,6 +2,7 @@ import { RouteComponentProps } from '@reach/router';
 // import { Multiselect } from 'multiselect-react-dropdown';
 import * as React from 'react';
 import { useState } from 'react';
+import { check } from '../../../../common/src/util';
 import { getApolloClient } from '../../graphql/apolloClient';
 import { Button } from '../../style/button';
 import { Input } from '../../style/input';
@@ -26,7 +27,21 @@ export function AdminPage(props: AdminPageProps) {
     console.log("lol", name, genres, maxSwipes)
     console.log("user!!!", user)
     const [genre1, genre2] = genres.split(',');
-    addRoomAndMovieUser(getApolloClient(), { genre1, genre2, room_id: 1, name: 'Hha', u_id: 12 }).catch(handleError)
+    addRoomAndMovieUser(getApolloClient(), { genre1, genre2, room_id: 1, name: name, u_id: 12 }).catch(handleError)
+  }
+
+  function login() {
+    console.log('in login function in admin')
+
+    fetch('/auth/createUser', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: "test", name: "name" }),
+    })
+      .then(res => {
+        check(res.ok, 'response status ' + res.status)
+        return res.text()
+      })
   }
 
   return (
@@ -64,13 +79,14 @@ export function AdminPage(props: AdminPageProps) {
       </span>
       <span style={{padding: "12px", fontSize: "30px", marginLeft: "240px" }}>
         <NavLink to="app/popcorn/room">
-          <Button onClick={() => doAddRoomAndMovieUser()}>Next</Button>
+          <Button onClick={() => {doAddRoomAndMovieUser(); login(); console.log("user!!!", React.useContext(UserContext))} }>Next</Button>
         </NavLink>
       </span>
       </div>
     </Page>
   )
 }
+
 
 const NavAnchor = style(
   'a',
@@ -81,3 +97,4 @@ const NavAnchor = style(
   })
 )
 const NavLink = link(NavAnchor)
+

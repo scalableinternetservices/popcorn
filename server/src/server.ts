@@ -17,6 +17,7 @@ import path from 'path'
 import 'reflect-metadata'
 import { v4 as uuidv4 } from 'uuid'
 import { checkEqual, Unpromise } from '../../common/src/util'
+//import { UserType } from '../../web/src/graphql/query.gen'
 import { Config } from './config'
 import { migrate } from './db/migrate'
 import { initORM } from './db/sql'
@@ -24,6 +25,7 @@ import { Session } from './entities/Session'
 import { User } from './entities/User'
 import { getSchema, graphqlRoot, pubsub } from './graphql/api'
 import { ConnectionManager } from './graphql/ConnectionManager'
+import { UserType } from './graphql/schema.types'
 import { expressLambdaProxy } from './lambda/handler'
 import { renderApp } from './render'
 
@@ -51,22 +53,65 @@ server.express.get('/app/*', (req, res) => {
   renderApp(req, res)
 })
 
+const SESSION_DURATION = 30 * 24 * 60 * 60 * 1000 // 30 days
+
+
+// create user
+server.express.post(
+  '/auth/createUser',
+  asyncRoute(async (req, res) => {
+    console.log('POST /auth/createUser')
+    // create User model with data from HTTP request
+    let user = new User()
+    user.email = req.body.email
+    user.name = req.body.name
+    user.userType = UserType.User
+
+    // save the User model to the database, refresh `user` to get ID
+    user = await user.save()
+
+    const authToken = await createSession(user)
+    res
+      .status(200)
+      .cookie('authToken', authToken, { maxAge: SESSION_DURATION, path: '/', httpOnly: true, secure: Config.isProd })
+      .send('Success!')
+  })
+)
+
+async function createSession(user: User): Promise<string> {
+  const authToken = uuidv4()
+
+  const session = new Session()
+  session.authToken = authToken
+  session.user = user
+  await Session.save(session).then(s => console.log('saved session ' + s.id))
+
+  return authToken
+}
+
 server.express.post(
   '/auth/login',
   asyncRoute(async (req, res) => {
     console.log('POST /auth/login')
     const email = req.body.email
-    const password = req.body.password
+    //const password = req.body.password
+    console.log("in login")
 
     const user = await User.findOne({ where: { email } })
-    if (!user || password !== Config.adminPassword) {
+
+    if (!user) {
       res.status(403).send('Forbidden')
       return
     }
 
     const authToken = uuidv4()
 
+    console.log("in login 1")
+
     await Session.delete({ user })
+
+    console.log("should print user")
+    console.log(user)
 
     const session = new Session()
     session.authToken = authToken
