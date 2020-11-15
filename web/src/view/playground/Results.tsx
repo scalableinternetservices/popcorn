@@ -3,11 +3,17 @@ import * as React from 'react'
 import { strutil } from '../../../../common/src/util'
 import { FetchMovie, FetchVotes, FetchVotes_votes } from '../../graphql/query.gen'
 import { SmallText } from '../../style/text'
+import { UserContext } from '../auth/user'
 import { fetchMovie } from './fetchMovies'
 import { fetchVotes } from './fetchVotes'
 
 export function Votes() {
-  const { loading, data } = useQuery<FetchVotes>(fetchVotes, { variables: { room_id: 1 } })
+  const { user } = React.useContext(UserContext)
+  if (!user || user.room_id == null) {
+    return <div>error: no user found</div>
+  }
+  console.log('test', user.room_id)
+  const { loading, data } = useQuery<FetchVotes>(fetchVotes, { variables: { room_id: user.room_id } })
   if (loading) {
     return <div>loading...</div>
   }
