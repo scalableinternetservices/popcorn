@@ -29,15 +29,6 @@ interface Context {
   pubsub: PubSub
 }
 
-/*
-function genre_format(genres: string[]) {
-  var object: any = {}
-  for (let g in genres) {
-    object[g] = 1
-  }
-  return object
-}
-*/
 
 export const graphqlRoot: Resolvers<Context> = {
   Query: {
@@ -53,6 +44,7 @@ export const graphqlRoot: Resolvers<Context> = {
     movieUsers: () => MovieUser.find(),
     roomMovieCollection: async (_, { room_id }) =>
       (await RoomMovieCollection.find({ where: { m_room_id: room_id } })) || null,
+    usersInRoom: async (_, { room_id }) => (await User.find({ where: { room_id: room_id } })) || null,
     //movieInRoom: async (_, { roomId, index }) => (await MovieInRoom.findOne({ where: { room_id: roomId, index: index } })) || null,
     //movieByGenre: async (_, { genres }) => (await Genres.findOne({ wherMoe: { genre_format( genres: string[]) } })) || null,
   },
@@ -126,7 +118,6 @@ export const graphqlRoot: Resolvers<Context> = {
       // query movies of those genres
       const wherestring = '(' + genre1 + ' = true or ' + genre2 + ' = true)'
 
-      //.where(':genre1 = 1 OR :genre2 = 1', { genre1, genre2 })
       const movies_by_genre = await getRepository(Genres).createQueryBuilder('genres').where(wherestring).getMany()
       if (!movies_by_genre) {
         return false
@@ -144,27 +135,6 @@ export const graphqlRoot: Resolvers<Context> = {
         index = index + 1
       })
 
-      /*
-      const room_m = new RoomMovieCollection()
-      room_m.room_id = 10
-      room_m.movie_id = 10//new_movies.movie_id
-      room_m.index = 10
-      await room_m.save()
-      */
-
-      // make movieUser
-      /*
-      if (!ctx.user) {
-        return false
-      }
-
-      const new_movieuser = new MovieUser()
-      new_movieuser.room_id = room_id
-      new_movieuser.u_id = ctx.user.id
-      new_movieuser.name = name
-      const haha = await new_movieuser.save()
-      console.log("new movie user", haha);
-      */
       return true
     },
     addVote: async (_, { input }, ctx) => {

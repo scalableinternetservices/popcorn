@@ -2,16 +2,12 @@ import { RouteComponentProps } from '@reach/router';
 import * as React from 'react';
 import { useState } from 'react';
 import { check } from '../../../../common/src/util';
-import { getApolloClient } from '../../graphql/apolloClient';
 import { Button } from '../../style/button';
 import { Input } from '../../style/input';
 import { style } from '../../style/styled';
-import { UserContext } from '../auth/user';
 import { link } from '../nav/Link';
 import { AppRouteParams } from '../nav/route';
 import { Page } from '../page/Page';
-import { addMovieUser } from '../playground/Guests';
-import { handleError } from '../toast/error';
 
 
 
@@ -21,14 +17,6 @@ interface GuestPageProps extends RouteComponentProps, AppRouteParams {}
 export function GuestPage(props: GuestPageProps) {
   const [name, setName]= useState('')
   const [room_code, setRoomCode] = useState('')
-  const { user } = React.useContext(UserContext)
-
-  function doAddMovieUser() {
-    console.log("lol", name, room_code)
-    console.log("user!!!", user)
-    var room_as_num: number = +room_code;
-    addMovieUser(getApolloClient(), { room_id: room_as_num, name: name }).catch(handleError)
-  }
 
   function login() {
     console.log('in login function in admin')
@@ -63,7 +51,7 @@ export function GuestPage(props: GuestPageProps) {
         <NavLink to="app/popcorn/index">Back</NavLink>
       </span>
       <span style={{padding: "12px", fontSize: "30px", border: "black", borderStyle: "double", marginLeft: "240px" }}>
-          <Button onClick={() => {doAddMovieUser(); login()}}>Next</Button>
+          <Button onClick={() => {login()}}>Next</Button>
       </span>
       </div>
       </div>
