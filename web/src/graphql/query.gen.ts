@@ -249,6 +249,28 @@ export interface FetchSurveyVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: FetchUsersInRoom
+// ====================================================
+
+export interface FetchUsersInRoom_usersInRoom {
+  __typename: "User";
+  name: string;
+}
+
+export interface FetchUsersInRoom {
+  usersInRoom: (FetchUsersInRoom_usersInRoom | null)[] | null;
+}
+
+export interface FetchUsersInRoomVariables {
+  room_id: number;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: FetchVotes
 // ====================================================
 
@@ -453,6 +475,20 @@ export interface SurveyQuestion {
   prompt: string;
   choices: string[] | null;
   answers: SurveyQuestion_answers[];
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL fragment: User
+// ====================================================
+
+export interface User {
+  __typename: "User";
+  name: string;
 }
 
 /* tslint:disable */
