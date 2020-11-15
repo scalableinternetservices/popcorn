@@ -67,17 +67,41 @@ export interface FetchMovieVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: FetchNextMovie
+// ====================================================
+
+export interface FetchNextMovie_nextMovie {
+  __typename: "RoomMovieCollection";
+  m_movie_id: number;
+  movie_index: number;
+}
+
+export interface FetchNextMovie {
+  nextMovie: FetchNextMovie_nextMovie | null;
+}
+
+export interface FetchNextMovieVariables {
+  room_id: number;
+  index: number;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: FetchRoomMovieCollection
 // ====================================================
 
 export interface FetchRoomMovieCollection_roomMovieCollection {
   __typename: "RoomMovieCollection";
-  movie_id: number;
+  m_movie_id: number;
   movie_index: number;
 }
 
 export interface FetchRoomMovieCollection {
-  roomMovieCollection: (FetchRoomMovieCollection_roomMovieCollection | null)[] | null;
+  roomMovieCollection: FetchRoomMovieCollection_roomMovieCollection[];
 }
 
 export interface FetchRoomMovieCollectionVariables {
@@ -403,7 +427,7 @@ export interface Movie {
 
 export interface RoomMovieCollection {
   __typename: "RoomMovieCollection";
-  movie_id: number;
+  m_movie_id: number;
   movie_index: number;
 }
 

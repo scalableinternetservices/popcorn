@@ -29,7 +29,6 @@ interface Context {
   pubsub: PubSub
 }
 
-
 export const graphqlRoot: Resolvers<Context> = {
   Query: {
     self: (_, args, ctx) => ctx.user,
@@ -45,6 +44,8 @@ export const graphqlRoot: Resolvers<Context> = {
     roomMovieCollection: async (_, { room_id }) =>
       (await RoomMovieCollection.find({ where: { m_room_id: room_id } })) || null,
     usersInRoom: async (_, { room_id }) => (await User.find({ where: { room_id: room_id } })) || null,
+    nextMovie: async (_, { roomId, curIndex }) =>
+      (await RoomMovieCollection.findOne({ where: { m_room_id: roomId, movie_index: curIndex } })) || null,
     //movieInRoom: async (_, { roomId, index }) => (await MovieInRoom.findOne({ where: { room_id: roomId, index: index } })) || null,
     //movieByGenre: async (_, { genres }) => (await Genres.findOne({ wherMoe: { genre_format( genres: string[]) } })) || null,
   },
@@ -71,11 +72,11 @@ export const graphqlRoot: Resolvers<Context> = {
       ctx.pubsub.publish('SURVEY_UPDATE_' + surveyId, survey)
       return survey
     },
-    nextMovie: async (_, { input }, ctx) => {
+    /*nextMovie: async (_, { input }, ctx) => {
       // check(ctx.user?.userType === UserType.Admin)
       const { room_id, index } = input
 
-      /*
+      //
       const theNextMovie = await getRepository(RoomMovieCollection)
       .createQueryBuilder('nextMovie')
       .leftJoinAndSelect('room_movie_collection.movie_id', 'movie')
@@ -83,7 +84,7 @@ export const graphqlRoot: Resolvers<Context> = {
       .getOne()
       if (!theNextMovie) {
         return false
-      }*/
+      }//
       const nextMovieStr = '(m_room_id = ' + room_id.toString() + ' and movie_index = ' + (index + 1).toString() + ')'
 
       const theNextMovie = await getRepository(RoomMovieCollection)
@@ -98,7 +99,7 @@ export const graphqlRoot: Resolvers<Context> = {
       console.log(theNextMovie.m_movie_id)
 
       return theNextMovie.m_movie_id
-    },
+    },*/
     addRoomAndMovieUser: async (_, { input }, ctx) => {
       // check(ctx.user?.userType === UserType.Admin)
       const { genre1, genre2, room_id } = input

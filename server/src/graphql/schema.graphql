@@ -33,6 +33,7 @@ type Query {
   movieUsers: [MovieUser!]!
   roomMovieCollection(room_id: Int!): [RoomMovieCollection!]!
   usersInRoom(room_id: Int!): [User]
+  nextMovie(roomId: Int!, curIndex: Int!): RoomMovieCollection
 }
 
 type Mutation {
@@ -42,7 +43,7 @@ type Mutation {
   # Moves the survey to the next question (or starts it if it hasn't started). ADMIN only.
   nextSurveyQuestion(surveyId: Int!): Survey
 
-  nextMovie(input: NextMovieInput!): Int!
+  #nextMovie(input: NextMovieInput!): Int!
 
   addRoomAndMovieUser(input: RoomAndMovieUserInput!): Boolean!
   addVote(input: VoteInput!): Boolean!

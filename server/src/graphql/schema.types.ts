@@ -26,8 +26,9 @@ export interface Query {
   movieUser?: Maybe<MovieUser>
   movieInRoom?: Maybe<Movie>
   movieUsers: Array<MovieUser>
-  roomMovieCollection?: Array<RoomMovieCollection>
+  roomMovieCollection: Array<RoomMovieCollection>
   usersInRoom?: Maybe<Array<Maybe<User>>>
+  nextMovie?: Maybe<RoomMovieCollection>
 }
 
 export interface QuerySurveyArgs {
@@ -67,11 +68,15 @@ export interface QueryUsersInRoomArgs {
   room_id: Scalars['Int']
 }
 
+export interface QueryNextMovieArgs {
+  roomId: Scalars['Int']
+  curIndex: Scalars['Int']
+}
+
 export interface Mutation {
   __typename?: 'Mutation'
   answerSurvey: Scalars['Boolean']
   nextSurveyQuestion?: Maybe<Survey>
-  nextMovie: Scalars['Int']
   addRoomAndMovieUser: Scalars['Boolean']
   addVote: Scalars['Boolean']
   addMovieToRoom: Scalars['Boolean']
@@ -84,10 +89,6 @@ export interface MutationAnswerSurveyArgs {
 
 export interface MutationNextSurveyQuestionArgs {
   surveyId: Scalars['Int']
-}
-
-export interface MutationNextMovieArgs {
-  input: NextMovieInput
 }
 
 export interface MutationAddRoomAndMovieUserArgs {
@@ -452,6 +453,12 @@ export type QueryResolvers<
     ContextType,
     RequireFields<QueryUsersInRoomArgs, 'room_id'>
   >
+  nextMovie?: Resolver<
+    Maybe<ResolversTypes['RoomMovieCollection']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryNextMovieArgs, 'roomId' | 'curIndex'>
+  >
 }
 
 export type MutationResolvers<
@@ -470,7 +477,6 @@ export type MutationResolvers<
     ContextType,
     RequireFields<MutationNextSurveyQuestionArgs, 'surveyId'>
   >
-  nextMovie?: Resolver<ResolversTypes['Int'], ParentType, ContextType, RequireFields<MutationNextMovieArgs, 'input'>>
   addRoomAndMovieUser?: Resolver<
     ResolversTypes['Boolean'],
     ParentType,
