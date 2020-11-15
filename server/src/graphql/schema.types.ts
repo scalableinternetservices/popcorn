@@ -114,13 +114,12 @@ export interface User {
   __typename?: 'User'
   id: Scalars['Int']
   userType: UserType
-  email: Scalars['String']
+  room_id: Scalars['Int']
   name: Scalars['String']
 }
 
 export interface MovieUserInput {
   room_id: Scalars['Int']
-  u_id: Scalars['Int']
   name: Scalars['String']
 }
 
@@ -164,7 +163,6 @@ export interface RoomAndMovieUserInput {
   room_id: Scalars['Int']
   genre1: Scalars['String']
   genre2: Scalars['String']
-  u_id: Scalars['Int']
   name: Scalars['String']
 }
 
@@ -216,6 +214,7 @@ export interface MovieUser {
 
 export interface Room {
   __typename?: 'Room'
+  id: Scalars['Int']
   room_id: Scalars['Int']
   admin_user_id: Scalars['Int']
   genre1: Scalars['String']
@@ -501,7 +500,7 @@ export type UserResolvers<
 > = {
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
   userType?: Resolver<ResolversTypes['UserType'], ParentType, ContextType>
-  email?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  room_id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   __isTypeOf?: IsTypeOfResolverFn<ParentType>
 }
@@ -575,6 +574,7 @@ export type RoomResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes['Room'] = ResolversParentTypes['Room']
 > = {
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
   room_id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
   admin_user_id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
   genre1?: Resolver<ResolversTypes['String'], ParentType, ContextType>

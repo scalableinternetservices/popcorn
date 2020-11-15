@@ -56,13 +56,12 @@ type Subscription {
 type User {
   id: Int!
   userType: UserType!
-  email: String!
+  room_id: Int!
   name: String!
 }
 
 input MovieUserInput {
   room_id: Int!
-  u_id: Int!
   name: String!
 }
 
@@ -121,7 +120,6 @@ input RoomAndMovieUserInput {
   room_id: Int!
   genre1: String!
   genre2: String!
-  u_id: Int!
   name: String!
 }
 
@@ -171,6 +169,7 @@ type MovieUser {
 }
 
 type Room {
+  id: Int!
   room_id: Int!
   admin_user_id: Int!
   genre1: String!

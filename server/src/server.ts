@@ -63,7 +63,7 @@ server.express.post(
     console.log('POST /auth/createUser')
     // create User model with data from HTTP request
     let user = new User()
-    user.email = req.body.email
+    user.room_id = req.body.room_id
     user.name = req.body.name
     user.userType = UserType.User
 

@@ -11,6 +11,7 @@ export interface FetchUserContext_self {
   __typename: "User";
   id: number;
   name: string;
+  room_id: number;
   userType: UserType;
 }
 
@@ -484,7 +485,6 @@ export enum UserType {
 
 export interface MovieUserInput {
   room_id: number;
-  u_id: number;
   name: string;
 }
 
@@ -492,7 +492,6 @@ export interface RoomAndMovieUserInput {
   room_id: number;
   genre1: string;
   genre2: string;
-  u_id: number;
   name: string;
 }
 
