@@ -27,7 +27,7 @@ export function AdminPage(props: AdminPageProps) {
     console.log("lol", name, genres, maxSwipes)
     console.log("user!!!", user)
     const [genre1, genre2] = genres.split(',');
-    addRoomAndMovieUser(getApolloClient(), { genre1, genre2, room_id: 1, name: name, u_id: 12 }).catch(handleError)
+    addRoomAndMovieUser(getApolloClient(), { genre1, genre2, room_id: 1, name: name}).catch(handleError)
   }
 
   function login() {
@@ -42,6 +42,7 @@ export function AdminPage(props: AdminPageProps) {
         check(res.ok, 'response status ' + res.status)
         return res.text()
       })
+      .then(() => window.location.replace('/app/popcorn/room'))
   }
 
   return (
@@ -78,9 +79,7 @@ export function AdminPage(props: AdminPageProps) {
         </NavLink>
       </span>
       <span style={{padding: "12px", fontSize: "30px", marginLeft: "240px" }}>
-        <NavLink to="app/popcorn/room">
-          <Button onClick={() => {doAddRoomAndMovieUser(); login(); console.log("user!!!", React.useContext(UserContext))} }>Next</Button>
-        </NavLink>
+          <Button onClick={async () => { await login(); doAddRoomAndMovieUser(); console.log("user!!!", React.useContext(UserContext))} }>Next</Button>
       </span>
       </div>
     </Page>

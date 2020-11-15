@@ -13,7 +13,7 @@ export function RoomPage(props: RoomPageProps) {
   const { user } = React.useContext(UserContext)
 
   if (!user) {
-    return <div >Didnt work</div>
+    return <div >Please Refresh Page</div>
   }
 
   return (

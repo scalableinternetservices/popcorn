@@ -120,7 +120,6 @@ export interface User {
 
 export interface MovieUserInput {
   room_id: Scalars['Int']
-  u_id: Scalars['Int']
   name: Scalars['String']
 }
 
@@ -164,7 +163,6 @@ export interface RoomAndMovieUserInput {
   room_id: Scalars['Int']
   genre1: Scalars['String']
   genre2: Scalars['String']
-  u_id: Scalars['Int']
   name: Scalars['String']
 }
 

@@ -484,7 +484,6 @@ export enum UserType {
 
 export interface MovieUserInput {
   room_id: number;
-  u_id: number;
   name: string;
 }
 
@@ -492,7 +491,6 @@ export interface RoomAndMovieUserInput {
   room_id: number;
   genre1: string;
   genre2: string;
-  u_id: number;
   name: string;
 }
 

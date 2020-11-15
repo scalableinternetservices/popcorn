@@ -109,7 +109,7 @@ export const graphqlRoot: Resolvers<Context> = {
     },
     addRoomAndMovieUser: async (_, { input }, ctx) => {
       // check(ctx.user?.userType === UserType.Admin)
-      const { genre1, genre2, name, u_id } = input
+      const { genre1, genre2, name } = input
       //const question = check(await SurveyQuestion.findOne({ where: { id: questionId }, relations: ['survey'] }))
 
       const room = new Room()
@@ -152,9 +152,13 @@ export const graphqlRoot: Resolvers<Context> = {
       */
 
       // make movieUser
+
+      if (!ctx.user) {
+        return false
+      }
       const new_movieuser = new MovieUser()
       new_movieuser.room_id = new_room.room_id
-      new_movieuser.u_id = u_id
+      new_movieuser.u_id = ctx.user.id
       new_movieuser.name = name
       const haha = await new_movieuser.save()
       console.log("new movie user", haha);
@@ -173,9 +177,12 @@ export const graphqlRoot: Resolvers<Context> = {
     },
     addMovieUser: async (_, { input }, ctx) => {
       const new_movieuser = new MovieUser()
-      const { room_id, u_id, name } = input
+      const { room_id, name } = input
       new_movieuser.room_id = room_id
-      new_movieuser.u_id = u_id
+      if (!ctx.user) {
+        return false
+      }
+      new_movieuser.u_id = ctx.user.id
       new_movieuser.name = name
       await new_movieuser.save()
       //ctx.pubsub.publish('NEW_VOTE_' + 1, vote)

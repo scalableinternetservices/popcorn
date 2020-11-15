@@ -27,7 +27,7 @@ export function GuestPage(props: GuestPageProps) {
     console.log("lol", name, room_code)
     console.log("user!!!", user)
     var room_as_num: number = +room_code;
-    addMovieUser(getApolloClient(), { room_id: room_as_num, u_id: 12, name: name }).catch(handleError)
+    addMovieUser(getApolloClient(), { room_id: room_as_num, name: name }).catch(handleError)
   }
 
   function login() {
@@ -42,6 +42,7 @@ export function GuestPage(props: GuestPageProps) {
         check(res.ok, 'response status ' + res.status)
         return res.text()
       })
+      .then(() => window.location.replace('/app/popcorn/room'))
   }
 
   return (
@@ -62,9 +63,7 @@ export function GuestPage(props: GuestPageProps) {
         <NavLink to="app/popcorn/index">Back</NavLink>
       </span>
       <span style={{padding: "12px", fontSize: "30px", border: "black", borderStyle: "double", marginLeft: "240px" }}>
-        <NavLink to="app/popcorn/room">
           <Button onClick={() => {doAddMovieUser(); login()}}>Next</Button>
-        </NavLink>
       </span>
       </div>
       </div>
