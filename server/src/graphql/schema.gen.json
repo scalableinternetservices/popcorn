@@ -1176,6 +1176,30 @@
             "deprecationReason": null
           },
           {
+            "name": "movieUsers",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "MovieUser",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "roomMovieCollection",
             "description": null,
             "args": [
@@ -1195,9 +1219,13 @@
               }
             ],
             "type": {
-              "kind": "OBJECT",
-              "name": "RoomMovieCollection",
-              "ofType": null
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "RoomMovieCollection",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -1313,7 +1341,7 @@
             "deprecationReason": null
           },
           {
-            "name": "addRoom",
+            "name": "addRoomAndMovieUser",
             "description": null,
             "args": [
               {
@@ -1324,7 +1352,7 @@
                   "name": null,
                   "ofType": {
                     "kind": "INPUT_OBJECT",
-                    "name": "RoomInput",
+                    "name": "RoomAndMovieUserInput",
                     "ofType": null
                   }
                 },
@@ -1576,7 +1604,7 @@
             "defaultValue": null
           },
           {
-            "name": "uid",
+            "name": "u_id",
             "description": null,
             "type": {
               "kind": "NON_NULL",
@@ -1941,7 +1969,7 @@
       },
       {
         "kind": "INPUT_OBJECT",
-        "name": "RoomInput",
+        "name": "RoomAndMovieUserInput",
         "description": null,
         "fields": null,
         "inputFields": [
@@ -1975,6 +2003,34 @@
           },
           {
             "name": "genre2",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "u_id",
+            "description": null,
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            "defaultValue": null
+          },
+          {
+            "name": "name",
             "description": null,
             "type": {
               "kind": "NON_NULL",
@@ -2427,7 +2483,7 @@
             "deprecationReason": null
           },
           {
-            "name": "uid",
+            "name": "u_id",
             "description": null,
             "args": [],
             "type": {

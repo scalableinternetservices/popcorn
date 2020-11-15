@@ -1,46 +1,92 @@
 import { RouteComponentProps } from '@reach/router';
+// import { Multiselect } from 'multiselect-react-dropdown';
 import * as React from 'react';
+import { useState } from 'react';
+import { check } from '../../../../common/src/util';
+import { getApolloClient } from '../../graphql/apolloClient';
+import { Button } from '../../style/button';
 import { Input } from '../../style/input';
 import { style } from '../../style/styled';
+import { UserContext } from '../auth/user';
 import { link } from '../nav/Link';
 import { AppRouteParams } from '../nav/route';
 import { Page } from '../page/Page';
+import { handleError } from '../toast/error';
+import { addRoomAndMovieUser } from './AddRoomAndMovieUser';
 
 interface AdminPageProps extends RouteComponentProps, AppRouteParams {}
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function AdminPage(props: AdminPageProps) {
+  const [name, setName]= useState('')
+  const [genres, setGenres] = useState('')
+  const [maxSwipes, setMaxSwipes] = useState('')
+  const { user } = React.useContext(UserContext)
+
+  function doAddRoomAndMovieUser() {
+    console.log("lol", name, genres, maxSwipes)
+    console.log("user!!!", user)
+    const [genre1, genre2] = genres.split(',');
+    addRoomAndMovieUser(getApolloClient(), { genre1, genre2, room_id: 1, name: name, u_id: 12 }).catch(handleError)
+  }
+
+  function login() {
+    console.log('in login function in admin')
+
+    fetch('/auth/createUser', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: "test", name: "name" }),
+    })
+      .then(res => {
+        check(res.ok, 'response status ' + res.status)
+        return res.text()
+      })
+  }
+
   return (
     <Page>
       <div style={{margin: "30px"}}>
       <label style={{fontSize: "30px", margin: "10px", fontWeight: "lighter" }} htmlFor="name">
           Enter Name
       </label>
-      <Input style={{marginTop: "12px"}} name="name" type="name" />
+      <Input $onChange={setName} style={{marginTop: "12px"}} name="name" type="name" />
       </div>
       <div style={{margin: "30px"}}>
       <label style={{fontSize: "30px", margin: "10px", fontWeight: "lighter" }} htmlFor="genres">
           Choose Genre/s
       </label>
-      <Input style={{marginTop: "12px"}} name="genre" type="genre" />
+      <Input $onChange={setGenres} style={{marginTop: "12px"}} name="genre" type="genre" />
+      {/* <Multiselect
+        options={[{name: "Hi"}]} // Options to display in the dropdown
+        // selectedValues={this.state.selectedValue} // Preselected value to persist in dropdown
+        // onSelect={this.onSelect} // Function will trigger on select event
+        // onRemove={this.onRemove} // Function will trigger on remove event
+        displayValue="name" // Property name to display in the dropdown options
+      /> */}
       </div>
       <div style={{margin: "30px"}}>
       <label style={{fontSize: "30px", margin: "10px", fontWeight: "lighter" }} htmlFor="max-swipes">
           Choose Max Swipes
       </label>
-      <Input style={{marginTop: "12px"}} name="max-swipes" type="max-swipes" />
+      <Input  $onChange={setMaxSwipes} style={{marginTop: "12px"}} name="max-swipes" type="max-swipes" />
       </div>
       <div style={{marginTop: "48px"}}>
-      <span style={{padding: "12px", fontSize: "30px", border: "black", borderStyle: "double", marginLeft: "28px" }}>
-        <NavLink to="app/popcorn/index">Back</NavLink>
+      <span style={{padding: "12px", fontSize: "30px" }}>
+        <NavLink to="app/popcorn/index">
+          <Button>Back</Button>
+        </NavLink>
       </span>
-      <span style={{padding: "12px", fontSize: "30px", border: "black", borderStyle: "double", marginLeft: "240px" }}>
-        <NavLink to="app/popcorn/room">Next</NavLink>
+      <span style={{padding: "12px", fontSize: "30px", marginLeft: "240px" }}>
+        <NavLink to="app/popcorn/room">
+          <Button onClick={() => {doAddRoomAndMovieUser(); login(); console.log("user!!!", React.useContext(UserContext))} }>Next</Button>
+        </NavLink>
       </span>
       </div>
     </Page>
   )
 }
+
 
 const NavAnchor = style(
   'a',
@@ -51,3 +97,4 @@ const NavAnchor = style(
   })
 )
 const NavLink = link(NavAnchor)
+
