@@ -26,7 +26,7 @@ export interface Query {
   movieUser?: Maybe<MovieUser>
   movieInRoom?: Maybe<Movie>
   movieUsers: Array<MovieUser>
-  roomMovieCollection?: Maybe<Array<Maybe<RoomMovieCollection>>>
+  roomMovieCollection?: Array<RoomMovieCollection>
   usersInRoom?: Maybe<Array<Maybe<User>>>
 }
 
@@ -229,8 +229,8 @@ export interface Room {
 export interface RoomMovieCollection {
   __typename?: 'RoomMovieCollection'
   id: Scalars['Int']
-  room_id: Scalars['Int']
-  movie_id: Scalars['Int']
+  m_room_id: Scalars['Int']
+  m_movie_id: Scalars['Int']
   movie_index: Scalars['Int']
 }
 
@@ -441,7 +441,7 @@ export type QueryResolvers<
   >
   movieUsers?: Resolver<Array<ResolversTypes['MovieUser']>, ParentType, ContextType>
   roomMovieCollection?: Resolver<
-    Maybe<Array<Maybe<ResolversTypes['RoomMovieCollection']>>>,
+    Array<ResolversTypes['RoomMovieCollection']>,
     ParentType,
     ContextType,
     RequireFields<QueryRoomMovieCollectionArgs, 'room_id'>
@@ -598,8 +598,8 @@ export type RoomMovieCollectionResolvers<
   ParentType extends ResolversParentTypes['RoomMovieCollection'] = ResolversParentTypes['RoomMovieCollection']
 > = {
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-  room_id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-  movie_id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
+  m_room_id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
+  m_movie_id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
   movie_index?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
   __isTypeOf?: IsTypeOfResolverFn<ParentType>
 }
