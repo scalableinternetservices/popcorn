@@ -57,7 +57,7 @@ export function RoomPage(props: RoomPageProps) {
       </div>
       { UsersInRoom(user.room_id) }
       <div style={{padding: "20px", fontSize: "30px", border: "black", borderStyle: "double", margin: "10px", fontWeight: "lighter", textAlign: "center" }}>
-      <Button onClick={async () => { }}>Refresh</Button>
+      <Button onClick={async () => { window.location.reload(); }}>Refresh</Button>
       </div>
       <div style={{padding: "20px", fontSize: "30px", border: "black", borderStyle: "double", margin: "10px", fontWeight: "lighter", textAlign: "center" }}>
       <NavLink to="app/popcorn/swipe"> Enter</NavLink>
