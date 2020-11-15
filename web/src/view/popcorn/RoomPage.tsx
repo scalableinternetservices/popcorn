@@ -19,7 +19,7 @@ export function RoomPage(props: RoomPageProps) {
   return (
     <Page>
       <div style={{padding: "20px", fontSize: "30px", border: "black", margin: "10px", fontWeight: "lighter" }}>
-        Your Room Code Is: {user.name}
+        Your Room Code Is: {user.room_id}
       </div>
       <div style={{padding: "20px", fontSize: "30px", border: "black", margin: "10px", fontWeight: "lighter" }}>
         People In The Room:

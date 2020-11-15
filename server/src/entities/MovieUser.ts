@@ -3,12 +3,11 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  OneToOne,
+
   PrimaryGeneratedColumn,
   UpdateDateColumn
 } from 'typeorm'
 import { MovieUser as GraphqlUser } from '../graphql/schema.types'
-import { Room } from './Rooms'
 
 @Entity()
 export class MovieUser extends BaseEntity implements GraphqlUser {
@@ -22,10 +21,7 @@ export class MovieUser extends BaseEntity implements GraphqlUser {
   @UpdateDateColumn()
   timeUpdated: Date
 
-  @OneToOne(() => Room)
-  @Column({
-    nullable: true,
-  })
+  @Column()
   room_id: number
 
   @Column({

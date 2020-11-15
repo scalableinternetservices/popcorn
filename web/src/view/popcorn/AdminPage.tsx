@@ -23,20 +23,24 @@ export function AdminPage(props: AdminPageProps) {
   const [maxSwipes, setMaxSwipes] = useState('')
   const { user } = React.useContext(UserContext)
 
-  function doAddRoomAndMovieUser() {
+  function doAddRoomAndMovieUser(new_room: number) {
     console.log("lol", name, genres, maxSwipes)
     console.log("user!!!", user)
     const [genre1, genre2] = genres.split(',');
-    addRoomAndMovieUser(getApolloClient(), { genre1, genre2, room_id: 1, name: name}).catch(handleError)
+    addRoomAndMovieUser(getApolloClient(), { genre1, genre2, room_id: new_room, name: name}).catch(handleError)
   }
 
-  function login() {
+  function getRandomInt() {
+    return Math.floor(Math.random() * Math.floor(89999) + 10000);
+  }
+
+  function login(new_room: number) {
     console.log('in login function in admin')
 
     fetch('/auth/createUser', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: "test", name: "name" }),
+      body: JSON.stringify({ room_id: new_room, name: name }),
     })
       .then(res => {
         check(res.ok, 'response status ' + res.status)
@@ -79,7 +83,7 @@ export function AdminPage(props: AdminPageProps) {
         </NavLink>
       </span>
       <span style={{padding: "12px", fontSize: "30px", marginLeft: "240px" }}>
-          <Button onClick={async () => { await login(); doAddRoomAndMovieUser(); console.log("user!!!", React.useContext(UserContext))} }>Next</Button>
+          <Button onClick={async () => { var new_room = getRandomInt(); login(new_room); doAddRoomAndMovieUser(new_room);  console.log("user!!!", React.useContext(UserContext))} }>Next</Button>
       </span>
       </div>
     </Page>

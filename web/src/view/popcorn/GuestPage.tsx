@@ -36,7 +36,7 @@ export function GuestPage(props: GuestPageProps) {
     fetch('/auth/createUser', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: "test", name: "name" }),
+      body: JSON.stringify({ room_id: room_code, name: name }),
     })
       .then(res => {
         check(res.ok, 'response status ' + res.status)
