@@ -4,6 +4,7 @@ import { useQuery } from '@apollo/client'
 import { RouteComponentProps } from '@reach/router'
 import * as React from 'react'
 import { useState } from 'react'
+import { getApolloClient } from '../../graphql/apolloClient'
 import { FetchMovie, FetchNextMovie } from '../../graphql/query.gen'
 import { Button } from '../../style/button'
 import { UserContext } from '../auth/user'
@@ -11,30 +12,24 @@ import { AppRouteParams } from '../nav/route'
 import { Page } from '../page/Page'
 import { fetchMovie } from '../playground/fetchMovies'
 import { fetchNextMovie } from '../playground/fetchNextMovie'
+import { addVote } from '../playground/mutateVotes'
+import { handleError } from '../toast/error'
 
 interface SwipePageProps extends RouteComponentProps, AppRouteParams {}
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function SwipePage(props: SwipePageProps) {
   const [count, setCount] = useState(1)
-  /*let currentIndex = 0
-  const swipes = 10
   const { user } = React.useContext(UserContext)
-  if (!user || user.room_id == null) {
-    return <div>no room</div>
+  const movieId = getMovieId(count)
+  const movieTitle = getMovieTitle(movieId)
+
+  function doAddVote() {
+    console.log('voting')
+    if (user != null && user.id != null && user.room_id != null && movieId != null)
+      addVote(getApolloClient(), { room_id: user.room_id, movie_id: movieId, user_id: user?.id }).catch(handleError)
   }
-  const { loading, data } = useQuery<FetchRoomMovieCollection>(fetchRoomMovieCollection, {
-    variables: { room_id: user.room_id },
-  })
-  if (loading || !data) {
-    return <div>loading</div>
-  }
-  const movieList = data.roomMovieCollection
-  if (!movieList) {
-    return <div>null</div>
-  }
-  movieList.forEach( mov =>
-  */
   console.log(count)
+  //addMovieVote(1)
   return (
     <Page>
       <div
@@ -47,19 +42,17 @@ export function SwipePage(props: SwipePageProps) {
           fontWeight: 'lighter',
         }}
       >
-        Movie: {getMovie(count)}
+        Movie: {movieTitle}
       </div>
       <span style={{ padding: '12px', fontSize: '30px', border: 'black', borderStyle: 'double', marginLeft: '240px' }}>
         <Button
-          onClick={() => {
+          onClick={async () => {
+            doAddVote()
+            console.log('voted')
             setCount(count + 1)
-            //console.log(count)
-            //movieTitle = getMovie(count)
-            window.location.replace('/app/popcorn/swipe')
           }}
         >
-          {' '}
-          No{' '}
+          Yes
         </Button>
       </span>
       <span style={{ padding: '12px', fontSize: '30px', border: 'black', borderStyle: 'double', marginLeft: '120px' }}>
@@ -68,33 +61,43 @@ export function SwipePage(props: SwipePageProps) {
             setCount(count + 1)
             //console.log(count)
             //movieTitle = getMovie(count)
-            window.location.replace('/app/popcorn/swipe')
+            //window.location.replace('/app/popcorn/swipe')
           }}
         >
           {' '}
-          Yes{' '}
+          No{' '}
+        </Button>
+      </span>
+      <span style={{ padding: '12px', fontSize: '30px', border: 'black', borderStyle: 'double', marginLeft: '10px' }}>
+        <Button
+          onClick={() => {
+            window.location.replace('/app/popcorn/results')
+          }}
+        >
+          {' '}
+          Done{' '}
         </Button>
       </span>
     </Page>
   )
 }
 
-function getMovie(cur_index: number) {
+function getMovieId(cur_index: number) {
   const { user } = React.useContext(UserContext)
   if (!user || user.room_id == null) {
-    return <div>no room</div>
+    return -1
   }
   const { loading, data } = useQuery<FetchNextMovie>(fetchNextMovie, {
     variables: { room_id: user.room_id, index: cur_index },
   })
   if (loading || !data) {
-    return <div>loading</div>
+    return -1
   }
   const currentMovie = data.nextMovie
   if (!currentMovie || currentMovie.m_movie_id == null) {
-    return <div>no</div>
+    return -1
   }
-  return getMovieTitle(currentMovie.m_movie_id)
+  return currentMovie.m_movie_id
 }
 
 function getMovieTitle(movie_id: number) {

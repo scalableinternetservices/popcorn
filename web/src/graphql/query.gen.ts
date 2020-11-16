@@ -73,7 +73,6 @@ export interface FetchMovieVariables {
 export interface FetchNextMovie_nextMovie {
   __typename: "RoomMovieCollection";
   m_movie_id: number;
-  movie_index: number;
 }
 
 export interface FetchNextMovie {
@@ -97,7 +96,6 @@ export interface FetchNextMovieVariables {
 export interface FetchRoomMovieCollection_roomMovieCollection {
   __typename: "RoomMovieCollection";
   m_movie_id: number;
-  movie_index: number;
 }
 
 export interface FetchRoomMovieCollection {
@@ -390,6 +388,23 @@ export interface NextSurveyQuestionVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: AddVote
+// ====================================================
+
+export interface AddVote {
+  addVote: boolean;
+}
+
+export interface AddVoteVariables {
+  input: VoteInput;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: AddRoomAndMovieUser
 // ====================================================
 
@@ -428,7 +443,6 @@ export interface Movie {
 export interface RoomMovieCollection {
   __typename: "RoomMovieCollection";
   m_movie_id: number;
-  movie_index: number;
 }
 
 /* tslint:disable */
@@ -558,6 +572,12 @@ export interface RoomAndMovieUserInput {
 export interface SurveyInput {
   questionId: number;
   answer: string;
+}
+
+export interface VoteInput {
+  room_id: number;
+  movie_id: number;
+  user_id: number;
 }
 
 //==============================================================
