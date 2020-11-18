@@ -32,6 +32,10 @@ export interface FetchMovies_movies {
   __typename: "Movie";
   movie_id: number;
   title: string;
+  rating: number;
+  year: number;
+  director: string;
+  actors: string;
 }
 
 export interface FetchMovies {
@@ -51,6 +55,10 @@ export interface FetchMovie_movie {
   __typename: "Movie";
   movie_id: number;
   title: string;
+  rating: number;
+  year: number;
+  director: string;
+  actors: string;
 }
 
 export interface FetchMovie {
@@ -431,6 +439,10 @@ export interface Movie {
   __typename: "Movie";
   movie_id: number;
   title: string;
+  rating: number;
+  year: number;
+  director: string;
+  actors: string;
 }
 
 /* tslint:disable */

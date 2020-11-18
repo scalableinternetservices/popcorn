@@ -22,8 +22,7 @@ export function SwipePage(props: SwipePageProps) {
   const [count, setCount] = useState(1)
   const { user } = React.useContext(UserContext)
   const movieId = getMovieId(count)
-  const movieTitle = getMovieTitle(movieId)
-
+  const mov = getMovie(movieId)
   const { loading, data } = useQuery<FetchRoom>(fetchRoom, { variables: { room_id: user?.room_id } })
   if (loading) {
     return <div>loading...</div>
@@ -32,7 +31,7 @@ export function SwipePage(props: SwipePageProps) {
     return <div>no votes</div>
   }
   const total_swipes = data.room.max_swipes
-  console.log("TOTAL SWIPES")
+  console.log('TOTAL SWIPES')
   console.log(total_swipes)
 
   function doAddVote() {
@@ -55,7 +54,55 @@ export function SwipePage(props: SwipePageProps) {
           fontWeight: 'lighter',
         }}
       >
-        Movie: {movieTitle}
+        Title: {mov?.title}
+      </div>
+      <div
+        style={{
+          padding: '20px',
+          fontSize: '30px',
+          border: 'black',
+          borderStyle: 'double',
+          margin: '10px',
+          fontWeight: 'lighter',
+        }}
+      >
+        Rating: {mov?.rating}
+      </div>
+      <div
+        style={{
+          padding: '20px',
+          fontSize: '30px',
+          border: 'black',
+          borderStyle: 'double',
+          margin: '10px',
+          fontWeight: 'lighter',
+        }}
+      >
+        Director: {mov?.director}
+      </div>
+      <div
+        style={{
+          padding: '20px',
+          fontSize: '30px',
+          border: 'black',
+          borderStyle: 'double',
+          margin: '10px',
+          fontWeight: 'lighter',
+        }}
+      >
+        Actors: {mov?.actors}
+      </div>
+      <div
+        style={{
+          padding: '20px',
+          fontSize: '30px',
+          border: 'black',
+          borderStyle: 'double',
+          margin: '10px',
+          fontWeight: 'lighter',
+        }}
+      >
+        Year: {mov?.year}
       </div>
       <span style={{ padding: '12px', fontSize: '30px', border: 'black', borderStyle: 'double', marginLeft: '240px' }}>
         <Button
@@ -121,7 +168,7 @@ function getMovieId(cur_index: number) {
   return currentMovie.m_movie_id
 }
 
-function getMovieTitle(movie_id: number) {
+function getMovie(movie_id: number) {
   const { loading, data } = useQuery<FetchMovie>(fetchMovie, {
     variables: { movie_id: movie_id },
   })
@@ -129,10 +176,5 @@ function getMovieTitle(movie_id: number) {
     //window.location.replace('/app/popcorn/results')
     return null
   }
-  const mov = data.movie
-  if (!mov) {
-    //window.location.replace('/app/popcorn/results')
-    return null
-  }
-  return mov.title
+  return data.movie
 }
