@@ -11,6 +11,7 @@ export interface FetchUserContext_self {
   __typename: "User";
   id: number;
   name: string;
+  room_id: number;
   userType: UserType;
 }
 
@@ -66,17 +67,39 @@ export interface FetchMovieVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: FetchNextMovie
+// ====================================================
+
+export interface FetchNextMovie_nextMovie {
+  __typename: "RoomMovieCollection";
+  m_movie_id: number;
+}
+
+export interface FetchNextMovie {
+  nextMovie: FetchNextMovie_nextMovie | null;
+}
+
+export interface FetchNextMovieVariables {
+  room_id: number;
+  index: number;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: FetchRoomMovieCollection
 // ====================================================
 
 export interface FetchRoomMovieCollection_roomMovieCollection {
   __typename: "RoomMovieCollection";
-  movie_id: number;
-  movie_index: number;
+  m_movie_id: number;
 }
 
 export interface FetchRoomMovieCollection {
-  roomMovieCollection: (FetchRoomMovieCollection_roomMovieCollection | null)[] | null;
+  roomMovieCollection: FetchRoomMovieCollection_roomMovieCollection[];
 }
 
 export interface FetchRoomMovieCollectionVariables {
@@ -248,6 +271,28 @@ export interface FetchSurveyVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: FetchUsersInRoom
+// ====================================================
+
+export interface FetchUsersInRoom_usersInRoom {
+  __typename: "User";
+  name: string;
+}
+
+export interface FetchUsersInRoom {
+  usersInRoom: (FetchUsersInRoom_usersInRoom | null)[] | null;
+}
+
+export interface FetchUsersInRoomVariables {
+  room_id: number;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: FetchVotes
 // ====================================================
 
@@ -343,6 +388,23 @@ export interface NextSurveyQuestionVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL mutation operation: AddVote
+// ====================================================
+
+export interface AddVote {
+  addVote: boolean;
+}
+
+export interface AddVoteVariables {
+  input: VoteInput;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL mutation operation: AddRoomAndMovieUser
 // ====================================================
 
@@ -380,8 +442,7 @@ export interface Movie {
 
 export interface RoomMovieCollection {
   __typename: "RoomMovieCollection";
-  movie_id: number;
-  movie_index: number;
+  m_movie_id: number;
 }
 
 /* tslint:disable */
@@ -460,6 +521,20 @@ export interface SurveyQuestion {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL fragment: User
+// ====================================================
+
+export interface User {
+  __typename: "User";
+  name: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL fragment: Vote
 // ====================================================
 
@@ -484,7 +559,6 @@ export enum UserType {
 
 export interface MovieUserInput {
   room_id: number;
-  u_id: number;
   name: string;
 }
 
@@ -492,13 +566,18 @@ export interface RoomAndMovieUserInput {
   room_id: number;
   genre1: string;
   genre2: string;
-  u_id: number;
   name: string;
 }
 
 export interface SurveyInput {
   questionId: number;
   answer: string;
+}
+
+export interface VoteInput {
+  room_id: number;
+  movie_id: number;
+  user_id: number;
 }
 
 //==============================================================

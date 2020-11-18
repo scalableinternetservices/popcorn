@@ -5,7 +5,7 @@ import { MovieUser } from './MovieUser'
 @Entity()
 export class Room extends BaseEntity implements RoomType {
   @PrimaryGeneratedColumn()
-  room_id: number
+  id: number
 
   @CreateDateColumn()
   timeCreated: Date
@@ -13,6 +13,9 @@ export class Room extends BaseEntity implements RoomType {
   @OneToOne(() => MovieUser)
   @JoinColumn()
   admin_user_id: number
+
+  @Column()
+  room_id: number
 
   @Column({
     nullable: true,
