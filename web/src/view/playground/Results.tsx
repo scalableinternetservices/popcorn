@@ -59,7 +59,7 @@ function ResultsHistogram({ votes }: { votes: (FetchVotes_votes | null)[] }) {
   }
   const sorted = pairs.sort((a, b) => b.count - a.count)
   if (sorted.length === 0) {
-    return null
+    return <div>no length</div>
   }
 
   return (
