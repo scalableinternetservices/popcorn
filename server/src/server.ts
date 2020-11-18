@@ -55,7 +55,6 @@ server.express.get('/app/*', (req, res) => {
 
 const SESSION_DURATION = 30 * 24 * 60 * 60 * 1000 // 30 days
 
-
 // create user
 server.express.post(
   '/auth/createUser',
@@ -95,7 +94,7 @@ server.express.post(
     console.log('POST /auth/login')
     const email = req.body.email
     //const password = req.body.password
-    console.log("in login")
+    console.log('in login')
 
     const user = await User.findOne({ where: { email } })
 
@@ -106,11 +105,11 @@ server.express.post(
 
     const authToken = uuidv4()
 
-    console.log("in login 1")
+    console.log('in login 1')
 
     await Session.delete({ user })
 
-    console.log("should print user")
+    console.log('should print user')
     console.log(user)
 
     const session = new Session()

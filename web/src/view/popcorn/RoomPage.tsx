@@ -55,8 +55,6 @@ export function RoomPage(props: RoomPageProps) {
         style={{
           padding: '20px',
           fontSize: '30px',
-          border: 'black',
-          borderStyle: 'double',
           margin: '10px',
           fontWeight: 'lighter',
           textAlign: 'center',
@@ -70,7 +68,7 @@ export function RoomPage(props: RoomPageProps) {
           Refresh
         </Button>
       </div>
-      <span style={{ padding: '12px', fontSize: '30px', border: 'black', borderStyle: 'double', marginLeft: '240px' }}>
+      <div style={{ padding: '20px', fontSize: '30px', margin: '10px', fontWeight: 'lighter', textAlign: 'center' }}>
         <Button
           onClick={() => {
             window.location.replace('/app/popcorn/swipe')
@@ -79,7 +77,7 @@ export function RoomPage(props: RoomPageProps) {
           {' '}
           Enter{' '}
         </Button>
-      </span>
+      </div>
       {}
     </Page>
   )
