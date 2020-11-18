@@ -121,6 +121,7 @@ export interface FetchRooms_rooms {
   admin_user_id: number;
   genre1: string;
   genre2: string;
+  max_swipes: number;
 }
 
 export interface FetchRooms {
@@ -142,6 +143,7 @@ export interface FetchRoom_room {
   admin_user_id: number;
   genre1: string;
   genre2: string;
+  max_swipes: number;
 }
 
 export interface FetchRoom {
@@ -460,6 +462,7 @@ export interface Room {
   admin_user_id: number;
   genre1: string;
   genre2: string;
+  max_swipes: number;
 }
 
 /* tslint:disable */
@@ -566,6 +569,7 @@ export interface RoomAndMovieUserInput {
   room_id: number;
   genre1: string;
   genre2: string;
+  max_swipes: number;
   name: string;
 }
 

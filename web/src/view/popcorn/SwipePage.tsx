@@ -5,13 +5,14 @@ import { RouteComponentProps } from '@reach/router'
 import * as React from 'react'
 import { useState } from 'react'
 import { getApolloClient } from '../../graphql/apolloClient'
-import { FetchMovie, FetchNextMovie } from '../../graphql/query.gen'
+import { FetchMovie, FetchNextMovie, FetchRoom } from '../../graphql/query.gen'
 import { Button } from '../../style/button'
 import { UserContext } from '../auth/user'
 import { AppRouteParams } from '../nav/route'
 import { Page } from '../page/Page'
 import { fetchMovie } from '../playground/fetchMovies'
 import { fetchNextMovie } from '../playground/fetchNextMovie'
+import { fetchRoom } from '../playground/fetchRooms'
 import { addVote } from '../playground/mutateVotes'
 import { handleError } from '../toast/error'
 
@@ -23,6 +24,17 @@ export function SwipePage(props: SwipePageProps) {
   const movieId = getMovieId(count)
   const movieTitle = getMovieTitle(movieId)
 
+  const { loading, data } = useQuery<FetchRoom>(fetchRoom, { variables: { room_id: user?.room_id } })
+  if (loading) {
+    return <div>loading...</div>
+  }
+  if (!data || !data.room) {
+    return <div>no votes</div>
+  }
+  const total_swipes = data.room.max_swipes
+  console.log("TOTAL SWIPES")
+  console.log(total_swipes)
+
   function doAddVote() {
     console.log('voting')
     if (user != null && user.id != null && user.room_id != null && movieId != null)
@@ -30,6 +42,7 @@ export function SwipePage(props: SwipePageProps) {
   }
   console.log(count)
   //addMovieVote(1)
+
   return (
     <Page>
       <div
@@ -50,6 +63,10 @@ export function SwipePage(props: SwipePageProps) {
             doAddVote()
             console.log('voted')
             setCount(count + 1)
+
+            if (count >= total_swipes) {
+              window.location.replace('/app/popcorn/results')
+            }
           }}
         >
           Yes
@@ -62,6 +79,10 @@ export function SwipePage(props: SwipePageProps) {
             //console.log(count)
             //movieTitle = getMovie(count)
             //window.location.replace('/app/popcorn/swipe')
+
+            if (count >= total_swipes) {
+              window.location.replace('/app/popcorn/results')
+            }
           }}
         >
           {' '}
@@ -105,10 +126,12 @@ function getMovieTitle(movie_id: number) {
     variables: { movie_id: movie_id },
   })
   if (loading || !data) {
+    //window.location.replace('/app/popcorn/results')
     return null
   }
   const mov = data.movie
   if (!mov) {
+    //window.location.replace('/app/popcorn/results')
     return null
   }
   return mov.title

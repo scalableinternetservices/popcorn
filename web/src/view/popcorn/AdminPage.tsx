@@ -27,7 +27,8 @@ export function AdminPage(props: AdminPageProps) {
     console.log("lol", name, genres, maxSwipes)
     console.log("user!!!", user)
     const [genre1, genre2] = genres.split(',');
-    addRoomAndMovieUser(getApolloClient(), { genre1, genre2, room_id: new_room, name: name}).catch(handleError)
+    var swipe_num: number = +maxSwipes;
+    addRoomAndMovieUser(getApolloClient(), { genre1, genre2, room_id: new_room, max_swipes: swipe_num, name: name}).catch(handleError)
   }
 
   function getRandomInt() {

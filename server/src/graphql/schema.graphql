@@ -122,6 +122,7 @@ input RoomAndMovieUserInput {
   room_id: Int!
   genre1: String!
   genre2: String!
+  max_swipes: Int!
   name: String!
 }
 
@@ -176,6 +177,7 @@ type Room {
   admin_user_id: Int!
   genre1: String!
   genre2: String!
+  max_swipes: Int!
 }
 
 type RoomMovieCollection {

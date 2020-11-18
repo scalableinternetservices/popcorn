@@ -169,6 +169,7 @@ export interface RoomAndMovieUserInput {
   room_id: Scalars['Int']
   genre1: Scalars['String']
   genre2: Scalars['String']
+  max_swipes: Scalars['Int']
   name: Scalars['String']
 }
 
@@ -225,6 +226,7 @@ export interface Room {
   admin_user_id: Scalars['Int']
   genre1: Scalars['String']
   genre2: Scalars['String']
+  max_swipes: Scalars['Int']
 }
 
 export interface RoomMovieCollection {
@@ -596,6 +598,7 @@ export type RoomResolvers<
   admin_user_id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
   genre1?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   genre2?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  max_swipes?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
   __isTypeOf?: IsTypeOfResolverFn<ParentType>
 }
 
