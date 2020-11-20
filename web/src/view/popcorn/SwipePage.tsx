@@ -46,107 +46,92 @@ export function SwipePage(props: SwipePageProps) {
     <Page>
       <div
         style={{
-          padding: '20px',
-          fontSize: '30px',
-          margin: '10px',
-          fontWeight: 'lighter',
-          marginLeft: '100px',
+          padding: '5px',
+          fontSize: '20px',
+          fontWeight: 'normal',
         }}
       >
-        Title: {mov?.title}
+        Title: <span style={{ fontWeight: 'lighter' }}>{mov?.title}</span>
       </div>
       <div
         style={{
-          padding: '20px',
-          fontSize: '30px',
-          border: 'black',
-          borderStyle: 'double',
-          margin: '10px',
-          fontWeight: 'lighter',
+          padding: '5px',
+          fontSize: '20px',
+          fontWeight: 'normal',
         }}
       >
-        Rating: {mov?.rating}
+        Rating: <span style={{ fontWeight: 'lighter' }}>{mov?.rating}</span>
       </div>
       <div
         style={{
-          padding: '20px',
-          fontSize: '30px',
-          border: 'black',
-          borderStyle: 'double',
-          margin: '10px',
-          fontWeight: 'lighter',
+          padding: '5px',
+          fontSize: '20px',
+          fontWeight: 'normal',
         }}
       >
-        Director: {mov?.director}
+        Director: <span style={{ fontWeight: 'lighter' }}> {mov?.director}</span>
       </div>
       <div
         style={{
-          padding: '20px',
-          fontSize: '30px',
-          border: 'black',
-          borderStyle: 'double',
-          margin: '10px',
-          fontWeight: 'lighter',
+          padding: '5px',
+          fontSize: '20px',
+          fontWeight: 'normal',
         }}
       >
-        Actors: {mov?.actors}
+        Actors: <span style={{ fontWeight: 'lighter' }}> {mov?.actors}</span>
       </div>
       <div
         style={{
-          padding: '20px',
-          fontSize: '30px',
-          border: 'black',
-          borderStyle: 'double',
-          margin: '10px',
-          fontWeight: 'lighter',
+          padding: '5px',
+          fontSize: '20px',
+          fontWeight: 'normal',
         }}
       >
-        Year: {mov?.year}
+        Year: <span style={{ fontWeight: 'lighter' }}>{mov?.year}</span>
       </div>
-      <div>
-        <img
-          style={{ marginLeft: '88px', marginBottom: '60px' }}
-          src={'/app/assets/' + mov?.title?.replace('#', '') + '.jpg'}
-        />
-      </div>
-      <span style={{ padding: '12px', fontSize: '30px', fontWeight: 'lighter' }}>
-        <Button
-          onClick={async () => {
-            doAddVote()
-            console.log('voted')
-            setCount(count + 1)
+      <div style={{ display: 'inline-block' }}>
+        <span style={{ padding: '12px', fontSize: '30px', fontWeight: 'lighter', float: 'left', marginTop: '150px' }}>
+          <Button
+            onClick={() => {
+              setCount(count + 1)
+              //console.log(count)
+              //movieTitle = getMovie(count)
+              //window.location.replace('/app/popcorn/swipe')
 
-            if (count >= total_swipes) {
-              window.location.replace('/app/popcorn/results')
-            }
-          }}
-        >
-          Yes
-        </Button>
-      </span>
-      <span style={{ padding: '12px', fontSize: '30px', marginLeft: '480px', fontWeight: 'lighter' }}>
-        <Button
-          onClick={() => {
-            setCount(count + 1)
-            //console.log(count)
-            //movieTitle = getMovie(count)
-            //window.location.replace('/app/popcorn/swipe')
+              if (count >= total_swipes) {
+                window.location.replace('/app/popcorn/results')
+              }
+            }}
+          >
+            {' '}
+            No{' '}
+          </Button>
+        </span>
+        <span>
+          <img style={{ marginTop: '30px' }} src={'/app/assets/' + mov?.title?.replace('#', '') + '.jpg'} />
+        </span>
+        <span style={{ padding: '12px', fontSize: '30px', fontWeight: 'lighter', float: 'right', marginTop: '150px' }}>
+          <Button
+            onClick={async () => {
+              doAddVote()
+              console.log('voted')
+              setCount(count + 1)
 
-            if (count >= total_swipes) {
-              window.location.replace('/app/popcorn/results')
-            }
-          }}
-        >
-          {' '}
-          No{' '}
-        </Button>
-      </span>
+              if (count >= total_swipes) {
+                window.location.replace('/app/popcorn/results')
+              }
+            }}
+          >
+            Yes
+          </Button>
+        </span>
+      </div>
       <div
         style={{
           padding: '12px',
           fontSize: '30px',
           marginLeft: '180px',
-          marginTop: '50px',
+          marginTop: '40px',
           marginBottom: '200px',
           fontWeight: 'lighter',
         }}
