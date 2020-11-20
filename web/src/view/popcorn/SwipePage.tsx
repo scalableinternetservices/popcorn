@@ -38,9 +38,10 @@ export function SwipePage(props: SwipePageProps) {
           fontSize: '30px',
           margin: '10px',
           fontWeight: 'lighter',
+          marginLeft: '100px',
         }}
       >
-        Movie: {movieTitle}
+        Movie Title: {movieTitle}
       </div>
       <div>
         <img
@@ -48,7 +49,7 @@ export function SwipePage(props: SwipePageProps) {
           src={'/app/assets/' + movieTitle?.replace('#', '') + '.jpg'}
         />
       </div>
-      <span style={{ padding: '12px', fontSize: '30px' }}>
+      <span style={{ padding: '12px', fontSize: '30px', fontWeight: 'lighter' }}>
         <Button
           onClick={async () => {
             doAddVote()
@@ -59,7 +60,7 @@ export function SwipePage(props: SwipePageProps) {
           Yes
         </Button>
       </span>
-      <span style={{ padding: '12px', fontSize: '30px', marginLeft: '480px' }}>
+      <span style={{ padding: '12px', fontSize: '30px', marginLeft: '480px', fontWeight: 'lighter' }}>
         <Button
           onClick={() => {
             setCount(count + 1)
@@ -72,7 +73,16 @@ export function SwipePage(props: SwipePageProps) {
           No{' '}
         </Button>
       </span>
-      <div style={{ padding: '12px', fontSize: '30px', marginLeft: '180px', marginTop: '50px', marginBottom: '200px' }}>
+      <div
+        style={{
+          padding: '12px',
+          fontSize: '30px',
+          marginLeft: '180px',
+          marginTop: '50px',
+          marginBottom: '200px',
+          fontWeight: 'lighter',
+        }}
+      >
         <Button
           onClick={() => {
             window.location.replace('/app/popcorn/results')

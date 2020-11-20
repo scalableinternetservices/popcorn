@@ -29,9 +29,7 @@ export function UsersInRoom(roomId: number) {
   data.usersInRoom.forEach(function (user) {
     html += user?.name + ','
   })
-  //html = '<ul>' + html + '</ul>';
-
-  return html
+  return html.slice(0, -1)
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -45,17 +43,24 @@ export function RoomPage(props: RoomPageProps) {
   return (
     <Page>
       <div style={{ padding: '20px', fontSize: '30px', border: 'black', margin: '10px', fontWeight: 'lighter' }}>
-        Your Room Code Is: {user.room_id}
+        Your Room Code Is: <span style={{ fontWeight: 'lighter' }}>{user.room_id}</span>
       </div>
       <div style={{ padding: '20px', fontSize: '30px', border: 'black', margin: '10px', fontWeight: 'lighter' }}>
         People In The Room:
       </div>
-      {UsersInRoom(user.room_id)}
+      {UsersInRoom(user.room_id)
+        .toString()
+        .split(',')
+        .map(user => (
+          <li key={user} style={{ fontWeight: 'lighter', marginLeft: '40px' }}>
+            {user}
+          </li>
+        ))}
       <div
         style={{
           padding: '20px',
           fontSize: '30px',
-          margin: '10px',
+          margin: '20px',
           fontWeight: 'lighter',
           textAlign: 'center',
         }}
