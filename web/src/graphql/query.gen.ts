@@ -32,6 +32,10 @@ export interface FetchMovies_movies {
   __typename: "Movie";
   movie_id: number;
   title: string;
+  rating: number;
+  year: number;
+  director: string;
+  actors: string;
 }
 
 export interface FetchMovies {
@@ -51,6 +55,10 @@ export interface FetchMovie_movie {
   __typename: "Movie";
   movie_id: number;
   title: string;
+  rating: number;
+  year: number;
+  director: string;
+  actors: string;
 }
 
 export interface FetchMovie {
@@ -121,6 +129,7 @@ export interface FetchRooms_rooms {
   admin_user_id: number;
   genre1: string;
   genre2: string;
+  max_swipes: number;
 }
 
 export interface FetchRooms {
@@ -142,6 +151,7 @@ export interface FetchRoom_room {
   admin_user_id: number;
   genre1: string;
   genre2: string;
+  max_swipes: number;
 }
 
 export interface FetchRoom {
@@ -429,6 +439,10 @@ export interface Movie {
   __typename: "Movie";
   movie_id: number;
   title: string;
+  rating: number;
+  year: number;
+  director: string;
+  actors: string;
 }
 
 /* tslint:disable */
@@ -460,6 +474,7 @@ export interface Room {
   admin_user_id: number;
   genre1: string;
   genre2: string;
+  max_swipes: number;
 }
 
 /* tslint:disable */
@@ -566,6 +581,7 @@ export interface RoomAndMovieUserInput {
   room_id: number;
   genre1: string;
   genre2: string;
+  max_swipes: number;
   name: string;
 }
 

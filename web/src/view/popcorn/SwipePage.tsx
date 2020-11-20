@@ -5,13 +5,14 @@ import { RouteComponentProps } from '@reach/router'
 import * as React from 'react'
 import { useState } from 'react'
 import { getApolloClient } from '../../graphql/apolloClient'
-import { FetchMovie, FetchNextMovie } from '../../graphql/query.gen'
+import { FetchMovie, FetchNextMovie, FetchRoom } from '../../graphql/query.gen'
 import { Button } from '../../style/button'
 import { UserContext } from '../auth/user'
 import { AppRouteParams } from '../nav/route'
 import { Page } from '../page/Page'
 import { fetchMovie } from '../playground/fetchMovies'
 import { fetchNextMovie } from '../playground/fetchNextMovie'
+import { fetchRoom } from '../playground/fetchRooms'
 import { addVote } from '../playground/mutateVotes'
 import { handleError } from '../toast/error'
 
@@ -21,7 +22,17 @@ export function SwipePage(props: SwipePageProps) {
   const [count, setCount] = useState(1)
   const { user } = React.useContext(UserContext)
   const movieId = getMovieId(count)
-  const movieTitle = getMovieTitle(movieId)
+  const mov = getMovie(movieId)
+  const { loading, data } = useQuery<FetchRoom>(fetchRoom, { variables: { room_id: user?.room_id } })
+  if (loading) {
+    return <div>loading...</div>
+  }
+  if (!data || !data.room) {
+    return <div>no votes</div>
+  }
+  const total_swipes = data.room.max_swipes
+  console.log('TOTAL SWIPES')
+  console.log(total_swipes)
 
   function doAddVote() {
     console.log('voting')
@@ -30,6 +41,7 @@ export function SwipePage(props: SwipePageProps) {
   }
   console.log(count)
   //addMovieVote(1)
+
   return (
     <Page>
       <div
@@ -41,12 +53,60 @@ export function SwipePage(props: SwipePageProps) {
           marginLeft: '100px',
         }}
       >
-        Movie Title: {movieTitle}
+        Title: {mov?.title}
+      </div>
+      <div
+        style={{
+          padding: '20px',
+          fontSize: '30px',
+          border: 'black',
+          borderStyle: 'double',
+          margin: '10px',
+          fontWeight: 'lighter',
+        }}
+      >
+        Rating: {mov?.rating}
+      </div>
+      <div
+        style={{
+          padding: '20px',
+          fontSize: '30px',
+          border: 'black',
+          borderStyle: 'double',
+          margin: '10px',
+          fontWeight: 'lighter',
+        }}
+      >
+        Director: {mov?.director}
+      </div>
+      <div
+        style={{
+          padding: '20px',
+          fontSize: '30px',
+          border: 'black',
+          borderStyle: 'double',
+          margin: '10px',
+          fontWeight: 'lighter',
+        }}
+      >
+        Actors: {mov?.actors}
+      </div>
+      <div
+        style={{
+          padding: '20px',
+          fontSize: '30px',
+          border: 'black',
+          borderStyle: 'double',
+          margin: '10px',
+          fontWeight: 'lighter',
+        }}
+      >
+        Year: {mov?.year}
       </div>
       <div>
         <img
           style={{ marginLeft: '88px', marginBottom: '60px' }}
-          src={'/app/assets/' + movieTitle?.replace('#', '') + '.jpg'}
+          src={'/app/assets/' + mov?.title?.replace('#', '') + '.jpg'}
         />
       </div>
       <span style={{ padding: '12px', fontSize: '30px', fontWeight: 'lighter' }}>
@@ -55,6 +115,10 @@ export function SwipePage(props: SwipePageProps) {
             doAddVote()
             console.log('voted')
             setCount(count + 1)
+
+            if (count >= total_swipes) {
+              window.location.replace('/app/popcorn/results')
+            }
           }}
         >
           Yes
@@ -67,6 +131,10 @@ export function SwipePage(props: SwipePageProps) {
             //console.log(count)
             //movieTitle = getMovie(count)
             //window.location.replace('/app/popcorn/swipe')
+
+            if (count >= total_swipes) {
+              window.location.replace('/app/popcorn/results')
+            }
           }}
         >
           {' '}
@@ -114,16 +182,13 @@ function getMovieId(cur_index: number) {
   return currentMovie.m_movie_id
 }
 
-function getMovieTitle(movie_id: number) {
+function getMovie(movie_id: number) {
   const { loading, data } = useQuery<FetchMovie>(fetchMovie, {
     variables: { movie_id: movie_id },
   })
   if (loading || !data) {
+    //window.location.replace('/app/popcorn/results')
     return null
   }
-  const mov = data.movie
-  if (!mov) {
-    return null
-  }
-  return mov.title
+  return data.movie
 }

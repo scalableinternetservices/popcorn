@@ -4,6 +4,10 @@ export const fragmentMovie = gql`
   fragment Movie on Movie {
     movie_id
     title
+    rating
+    year
+    director
+    actors
   }
 `
 

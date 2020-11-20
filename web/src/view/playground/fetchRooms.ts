@@ -6,6 +6,7 @@ export const fragmentRoom = gql`
     admin_user_id
     genre1
     genre2
+    max_swipes
   }
 `
 

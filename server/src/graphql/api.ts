@@ -102,7 +102,7 @@ export const graphqlRoot: Resolvers<Context> = {
     },*/
     addRoomAndMovieUser: async (_, { input }, ctx) => {
       // check(ctx.user?.userType === UserType.Admin)
-      const { genre1, genre2, room_id } = input
+      const { genre1, genre2, room_id, max_swipes } = input
       //const question = check(await SurveyQuestion.findOne({ where: { id: questionId }, relations: ['survey'] }))
 
       const room = new Room()
@@ -110,6 +110,8 @@ export const graphqlRoot: Resolvers<Context> = {
       room.genre1 = genre1
       room.genre2 = genre2
       room.room_id = room_id
+      room.max_swipes = max_swipes
+      room.admin_user_id = 1
       const new_room = await room.save()
       console.log(new_room)
 
@@ -124,7 +126,7 @@ export const graphqlRoot: Resolvers<Context> = {
         return false
       }
 
-      const use_movies = movies_by_genre.slice(0, 20)
+      const use_movies = movies_by_genre.slice(0, max_swipes)
 
       let index = 1
       use_movies.forEach(m => {
