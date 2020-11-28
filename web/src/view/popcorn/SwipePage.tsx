@@ -108,7 +108,7 @@ export function SwipePage(props: SwipePageProps) {
           </Button>
         </span>
         <span>
-          <img style={{ marginTop: '30px' }} src={'/app/assets/' + mov?.title?.replace('#', '') + '.jpg'} />
+          <img style={{ marginTop: '30px' }} src={'/app/assets/' + mov?.title?.replace('#', '') + '.jpg'} width="400" />
         </span>
         <span style={{ padding: '12px', fontSize: '30px', fontWeight: 'lighter', float: 'right', marginTop: '150px' }}>
           <Button
