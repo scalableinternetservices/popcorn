@@ -66,14 +66,16 @@ function ResultsHistogram({ votes }: { votes: (FetchVotes_votes | null)[] }) {
     <div className="flex">
       <div style={{ flex: 1 }} className="tr">
         {sorted.map((pair, i) => (
-          <SmallText key={i} $monospace>
-            <SmallText title={pair.movie} $monospace>
-              {strutil.truncate(pair.movie, 17)}
+          <div key={i}>
+            <SmallText key={i} $monospace>
+              <SmallText title={pair.movie} $monospace>
+                {strutil.truncate(pair.movie, 17)}
+              </SmallText>
+              {new Array(Math.floor(pair.count / 15)).fill(' ').map((str, i) => (
+                <SmallText key={i}>{str}</SmallText>
+              ))}
             </SmallText>
-            {new Array(Math.floor(pair.count / 15)).fill(' ').map((str, i) => (
-              <SmallText key={i}>{str}</SmallText>
-            ))}
-          </SmallText>
+          </div>
         ))}
       </div>
       <div>

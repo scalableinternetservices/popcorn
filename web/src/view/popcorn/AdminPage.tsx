@@ -2,6 +2,7 @@ import { RouteComponentProps } from '@reach/router'
 // import { Multiselect } from 'multiselect-react-dropdown';
 import * as React from 'react'
 import { useState } from 'react'
+import MultiSelect from 'react-multi-select-component'
 import { check } from '../../../../common/src/util'
 import { getApolloClient } from '../../graphql/apolloClient'
 import { Button } from '../../style/button'
@@ -19,14 +20,10 @@ interface AdminPageProps extends RouteComponentProps, AppRouteParams {}
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function AdminPage(props: AdminPageProps) {
   const [name, setName] = useState('')
-  const [genres, setGenres] = useState('')
   const [maxSwipes, setMaxSwipes] = useState('')
-  const { user } = React.useContext(UserContext)
 
   function doAddRoomAndMovieUser(new_room: number) {
-    console.log('lol', name, genres, maxSwipes)
-    console.log('user!!!', user)
-    const [genre1, genre2] = genres.split(',')
+    const [genre1, genre2] = [genres[0].value, genres[1].value]
     const swipe_num: number = +maxSwipes
     addRoomAndMovieUser(getApolloClient(), {
       genre1,
@@ -40,6 +37,14 @@ export function AdminPage(props: AdminPageProps) {
   function getRandomInt() {
     return Math.floor(Math.random() * Math.floor(89999) + 10000)
   }
+
+  const options = [
+    { label: 'Thrillers', value: 'Thrillers' },
+    { label: 'Dramas', value: 'Dramas' },
+    { label: 'Comedies', value: 'Comedies' },
+  ]
+
+  const [genres, setGenres] = useState<any[]>([])
 
   function login(new_room: number) {
     console.log('in login function in admin')
@@ -66,16 +71,11 @@ export function AdminPage(props: AdminPageProps) {
       </div>
       <div style={{ margin: '30px' }}>
         <label style={{ fontSize: '30px', margin: '10px', fontWeight: 'lighter' }} htmlFor="genres">
-          Choose Genre/s
+          Choose 2 Genres
         </label>
-        <Input $onChange={setGenres} style={{ marginTop: '12px' }} name="genre" type="genre" />
-        {/* <Multiselect
-        options={[{name: "Hi"}]} // Options to display in the dropdown
-        // selectedValues={this.state.selectedValue} // Preselected value to persist in dropdown
-        // onSelect={this.onSelect} // Function will trigger on select event
-        // onRemove={this.onRemove} // Function will trigger on remove event
-        displayValue="name" // Property name to display in the dropdown options
-      /> */}
+        <div style={{ marginTop: '10px' }}>
+          <MultiSelect options={options} value={genres} onChange={setGenres} labelledBy={'Select'} />
+        </div>
       </div>
       <div style={{ margin: '30px' }}>
         <label style={{ fontSize: '30px', margin: '10px', fontWeight: 'lighter' }} htmlFor="max-swipes">
