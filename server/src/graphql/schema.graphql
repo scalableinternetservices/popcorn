@@ -144,7 +144,7 @@ input MovieByGenreInput {
 
 input VoteInput {
   room_id: Int!
-  movie_id: Int!
+  movie_title: String!
   user_id: Int!
 }
 
@@ -190,7 +190,7 @@ type RoomMovieCollection {
 type Vote {
   id: Int!
   room_id: Int!
-  movie_id: Int!
+  movie_title: String!
   user_id: Int!
 }
 

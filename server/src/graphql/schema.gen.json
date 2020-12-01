@@ -2235,14 +2235,14 @@
             "defaultValue": null
           },
           {
-            "name": "movie_id",
+            "name": "movie_title",
             "description": null,
             "type": {
               "kind": "NON_NULL",
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "Int",
+                "name": "String",
                 "ofType": null
               }
             },
@@ -2775,7 +2775,7 @@
             "deprecationReason": null
           },
           {
-            "name": "movie_id",
+            "name": "movie_title",
             "description": null,
             "args": [],
             "type": {
@@ -2783,7 +2783,7 @@
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "Int",
+                "name": "String",
                 "ofType": null
               }
             },

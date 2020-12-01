@@ -142,9 +142,9 @@ export const graphqlRoot: Resolvers<Context> = {
     },
     addVote: async (_, { input }, ctx) => {
       const vote = new Vote()
-      const { room_id, movie_id, user_id } = input
+      const { room_id, movie_title, user_id } = input
       vote.room_id = room_id
-      vote.movie_id = movie_id
+      vote.movie_title = movie_title
       vote.user_id = user_id
       await vote.save()
       //ctx.pubsub.publish('NEW_VOTE_' + 1, vote)

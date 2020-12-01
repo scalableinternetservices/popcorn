@@ -6,6 +6,8 @@ import { Vote as VoteType } from '../graphql/schema.types'
 
 @Entity()
 export class Vote extends BaseEntity implements VoteType {
+  __typename?: 'Vote' | undefined
+  movie_id: number
   @PrimaryGeneratedColumn()
   id: number
 
@@ -20,7 +22,7 @@ export class Vote extends BaseEntity implements VoteType {
   @Column({
     nullable: true,
   })
-  movie_id: number
+  movie_title: string
 
   //@ManyToOne(() => User)
   @Column({

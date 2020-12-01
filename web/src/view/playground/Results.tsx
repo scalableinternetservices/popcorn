@@ -1,10 +1,8 @@
 import { useQuery } from '@apollo/client'
 import * as React from 'react'
-import { FetchMovie, FetchVotes, FetchVotes_votes } from '../../graphql/query.gen'
-import { Button } from '../../style/button'
+import { FetchVotes, FetchVotes_votes } from '../../graphql/query.gen'
 import { SmallText } from '../../style/text'
 import { UserContext } from '../auth/user'
-import { fetchMovie } from './fetchMovies'
 import { fetchVotes } from './fetchVotes'
 
 export function Votes() {
@@ -13,7 +11,10 @@ export function Votes() {
     return <div>error: no user found</div>
   }
   console.log('test', user.room_id)
-  const { loading, data } = useQuery<FetchVotes>(fetchVotes, { variables: { room_id: user.room_id } })
+  const { loading, data } = useQuery<FetchVotes>(fetchVotes, {
+    variables: { room_id: user.room_id },
+    pollInterval: 10000,
+  })
   if (loading) {
     return <div>loading...</div>
   }
@@ -33,8 +34,8 @@ function ResultsHistogram({ votes }: { votes: (FetchVotes_votes | null)[] }) {
     if (!a) {
       norm = 'null movie'
     } else {
-      const mId = a.movie_id
-      const { loading, data } = useQuery<FetchMovie>(fetchMovie, { variables: { movie_id: mId } })
+      norm = a.movie_title
+      /*const { loading, data } = useQuery<FetchMovie>(fetchMovie, { variables: { movie_id: mId } })
       if (loading) {
         norm = 'loading'
       }
@@ -47,7 +48,7 @@ function ResultsHistogram({ votes }: { votes: (FetchVotes_votes | null)[] }) {
         } else {
           norm = mv.title
         }
-      }
+      }*/
     }
     answerBuckets[norm] = answerBuckets[norm] || 0
     answerBuckets[norm]++
@@ -64,25 +65,8 @@ function ResultsHistogram({ votes }: { votes: (FetchVotes_votes | null)[] }) {
 
   return (
     <div>
-      <div style={{ padding: '10px', fontSize: '50px', border: 'black', margin: '10px', fontWeight: 'lighter' }}>
+      <div style={{ padding: '20px', fontSize: '50px', border: 'black', margin: '10px', fontWeight: 'lighter' }}>
         <b>Results:</b>
-      </div>
-      <div
-        style={{
-          padding: '10px',
-          fontSize: '10px',
-          margin: '5px',
-          fontWeight: 'lighter',
-          textAlign: 'center',
-        }}
-      >
-        <Button
-          onClick={async () => {
-            window.location.reload()
-          }}
-        >
-          Refresh
-        </Button>
       </div>
       <div className="flex">
         <div>

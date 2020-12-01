@@ -12,7 +12,10 @@ interface RoomPageProps extends RouteComponentProps, AppRouteParams {}
 
 export function UsersInRoom(roomId: number) {
   console.log(roomId)
-  const { loading, data } = useQuery<FetchUsersInRoom>(fetchUsersInRoom, { variables: { room_id: roomId } })
+  const { loading, data } = useQuery<FetchUsersInRoom>(fetchUsersInRoom, {
+    variables: { room_id: roomId },
+    pollInterval: 10000,
+  })
   if (loading) {
     return <div>loading...</div>
   }
@@ -56,23 +59,6 @@ export function RoomPage(props: RoomPageProps) {
             {user}
           </li>
         ))}
-      <div
-        style={{
-          padding: '20px',
-          fontSize: '30px',
-          margin: '20px',
-          fontWeight: 'lighter',
-          textAlign: 'center',
-        }}
-      >
-        <Button
-          onClick={async () => {
-            window.location.reload()
-          }}
-        >
-          Refresh
-        </Button>
-      </div>
       <div style={{ padding: '20px', fontSize: '30px', margin: '10px', fontWeight: 'lighter', textAlign: 'center' }}>
         <Button
           onClick={() => {
