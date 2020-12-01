@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { StyleObject } from 'styletron-react'
-import { ColorName, Colors } from '../../../common/src/colors'
+import { ColorName } from '../../../common/src/colors'
 import { Theme } from '../../../common/src/theme'
 import { Fonts } from './fonts'
 import { style } from './styled'
@@ -22,7 +22,7 @@ export const ErrorText = style<'div', TextProps>('div', 'lh-copy sans-serif f5',
 
 function textStyle(type: TextType, p: TextProps & { $theme: Theme }): StyleObject {
   return {
-    color: p.$color ? Colors[p.$color] : p.$theme.textColor(type === 'error'),
+    color: "p.$color ? Colors[p.$color] : p.$theme.textColor(type === 'error')",
     fontFamily: p.$monospace ? Fonts.mono : Fonts.sansBody,
     display: p.$inline ? 'inline-block' : 'block',
     fontWeight: 'normal',

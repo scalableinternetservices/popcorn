@@ -30,7 +30,7 @@ export function init() {
 
   renderFn(
     <ApolloProvider client={getApolloClient()}>
-      <StyletronProvider value={engine} >
+      <StyletronProvider value={engine}>
         <App />
       </StyletronProvider>
     </ApolloProvider>,
@@ -53,9 +53,9 @@ export function App() {
 
 export function AppBody() {
   return (
-    <div style={{backgroundColor: "indianred"}}>
+    <div style={{ backgroundColor: 'indianred' }}>
       <Router className={bodyClass}>
-        <Redirect noThrow from="app" to="index" />
+        <Redirect noThrow from="app" to="popcorn/index" />
         <Redirect noThrow from="app/playground" to="surveys" />
         <HomePage path={Route.HOME} />
         <LecturesPage path={Route.LECTURES} />
