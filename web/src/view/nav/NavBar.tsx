@@ -1,63 +1,23 @@
 import { useLocation } from '@reach/router'
 import * as React from 'react'
-import { useContext, useEffect } from 'react'
+import { useEffect } from 'react'
 import ReactDOM from 'react-dom'
 import { useMediaQuery } from 'react-responsive'
 import { breakpoints } from '../../style/breakpoints'
 import { MenuIcon } from '../../style/icons'
 import { style } from '../../style/styled'
-import { UserContext } from '../auth/user'
 import { addToastListener, removeToastListener, Toast, ToastType } from '../toast/toast'
 import { link } from './Link'
-import { getLoginPath, getPath, getSurveyPath, Route } from './route'
+import { getPath, Route } from './route'
 
 const title = {
-  name: 'CS188',
-  path: getPath(Route.HOME),
+  name: 'popcorn',
+  path: getPath(Route.POPCORNHOME),
   title: true,
 }
 
-const otherTabs = [
-  {
-    name: 'lectures',
-    path: getPath(Route.LECTURES),
-  },
-  {
-    name: 'projects',
-    path: getPath(Route.PROJECTS),
-  },
-  {
-    name: 'playground',
-    path: getPath(Route.PLAYGROUND),
-  },
-  {
-    name: 'popcorn-homepage',
-    path: getPath(Route.POPCORNHOME),
-  },
-  {
-    name: 'popcorn-adminpage',
-    path: getPath(Route.POPCORNADMIN),
-  },
-  {
-    name: 'popcorn-guestpage',
-    path: getPath(Route.POPCORNGUEST),
-  },
-  {
-    name: 'popcorn-roompage',
-    path: getPath(Route.POPCORNROOM),
-  },
-  {
-    name: 'popcorn-swipepage',
-    path: getPath(Route.POPCORNSWIPE),
-  },
-  {
-    name: 'popcorn-resultspage',
-    path: getPath(Route.POPCORNRESULTS),
-  }
-]
-
 export function NavBar() {
-  const location = useLocation()
+  // const location = useLocation()
   const isSmall = useMediaQuery(breakpoints.small)
   const [showMenu, setShowMenu] = React.useState(false)
   const [toast, setToast] = React.useState<Toast | null>(null)
@@ -80,7 +40,7 @@ export function NavBar() {
     return void 0
   }, [toast])
 
-  const tabs = isSmall ? [otherTabs.find(t => location.pathname.startsWith(t.path)) || otherTabs[0]] : otherTabs
+  // const tabs = isSmall ? [otherTabs.find(t => location.pathname.startsWith(t.path)) || otherTabs[0]] : otherTabs
 
   return (
     <>
@@ -94,13 +54,13 @@ export function NavBar() {
           {isSmall && <div style={{ flex: 1 }} />}
 
           {/* layout additional tabs (possibly hidden for small screens) */}
-          {tabs.map((tab, i) => (
+          {/* {tabs.map((tab, i) => (
             <NavItem key={i} {...tab} />
-          ))}
+          ))} */}
 
           {isSmall && <NavMenu show={showMenu} onClick={() => setShowMenu(!showMenu)} />}
         </Nav>
-        <SubNav />
+        {/* <SubNav /> */}
       </div>
       {toast && <ToastContainer $isError={toast.type === ToastType.ERROR}>{toast.message}</ToastContainer>}
     </>
@@ -114,9 +74,9 @@ function NavMenu(props: { show: boolean; onClick: () => void }) {
       {props.show && (
         <Modal>
           <NavMenuModal>
-            {otherTabs.map((tab, i) => (
+            {/* {otherTabs.map((tab, i) => (
               <NavItem key={i} {...tab} />
-            ))}
+            ))} */}
           </NavMenuModal>
         </Modal>
       )}
@@ -124,26 +84,26 @@ function NavMenu(props: { show: boolean; onClick: () => void }) {
   )
 }
 
-function SubNav() {
-  const location = useLocation()
-  const { user } = useContext(UserContext)
-  if (!location.pathname.startsWith(getPath(Route.PLAYGROUND))) {
-    // only playground has subnav
-    return null
-  }
-  return (
-    <Nav $isSubNav>
-      <NavItem name="surveys" path={getSurveyPath()} />
-      <NavItem name={user ? 'logout' : 'login'} path={getLoginPath()} />
-    </Nav>
-  )
-}
+// function SubNav() {
+//   const location = useLocation()
+//   const { user } = useContext(UserContext)
+//   if (!location.pathname.startsWith(getPath(Route.PLAYGROUND))) {
+//     // only playground has subnav
+//     return null
+//   }
+//   return (
+//     <Nav $isSubNav>
+//       <NavItem name="surveys" path={getSurveyPath()} />
+//       <NavItem name={user ? 'logout' : 'login'} path={getLoginPath()} />
+//     </Nav>
+//   )
+// }
 
 const Nav = style(
   'nav',
   'flex white items-center list pa2 ph4 ph5-ns ph7-l avenir f4',
   (p: { $isSubNav?: boolean }) => ({
-    background: `linear-gradient(90deg, ${'#005587'} 0%, ${'#2774AE'} 100%)`,
+    background: `linear-gradient(90deg, ${'#ffbf00'} 0%, ${'#ffe28a'} 100%)`,
     opacity: '0.9',
     paddingTop: p.$isSubNav ? 0 : undefined,
     paddingBottom: p.$isSubNav ? 0 : undefined,

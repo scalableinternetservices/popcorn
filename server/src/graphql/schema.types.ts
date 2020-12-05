@@ -26,7 +26,9 @@ export interface Query {
   movieUser?: Maybe<MovieUser>
   movieInRoom?: Maybe<Movie>
   movieUsers: Array<MovieUser>
-  roomMovieCollection?: Maybe<Array<Maybe<RoomMovieCollection>>>
+  roomMovieCollection: Array<RoomMovieCollection>
+  usersInRoom?: Maybe<Array<Maybe<User>>>
+  nextMovie?: Maybe<RoomMovieCollection>
 }
 
 export interface QuerySurveyArgs {
@@ -62,11 +64,19 @@ export interface QueryRoomMovieCollectionArgs {
   room_id: Scalars['Int']
 }
 
+export interface QueryUsersInRoomArgs {
+  room_id: Scalars['Int']
+}
+
+export interface QueryNextMovieArgs {
+  roomId: Scalars['Int']
+  curIndex: Scalars['Int']
+}
+
 export interface Mutation {
   __typename?: 'Mutation'
   answerSurvey: Scalars['Boolean']
   nextSurveyQuestion?: Maybe<Survey>
-  nextMovie: Scalars['Int']
   addRoomAndMovieUser: Scalars['Boolean']
   addVote: Scalars['Boolean']
   addMovieToRoom: Scalars['Boolean']
@@ -79,10 +89,6 @@ export interface MutationAnswerSurveyArgs {
 
 export interface MutationNextSurveyQuestionArgs {
   surveyId: Scalars['Int']
-}
-
-export interface MutationNextMovieArgs {
-  input: NextMovieInput
 }
 
 export interface MutationAddRoomAndMovieUserArgs {
@@ -114,13 +120,12 @@ export interface User {
   __typename?: 'User'
   id: Scalars['Int']
   userType: UserType
-  email: Scalars['String']
+  room_id: Scalars['Int']
   name: Scalars['String']
 }
 
 export interface MovieUserInput {
   room_id: Scalars['Int']
-  u_id: Scalars['Int']
   name: Scalars['String']
 }
 
@@ -164,7 +169,7 @@ export interface RoomAndMovieUserInput {
   room_id: Scalars['Int']
   genre1: Scalars['String']
   genre2: Scalars['String']
-  u_id: Scalars['Int']
+  max_swipes: Scalars['Int']
   name: Scalars['String']
 }
 
@@ -186,7 +191,7 @@ export interface MovieByGenreInput {
 
 export interface VoteInput {
   room_id: Scalars['Int']
-  movie_id: Scalars['Int']
+  movie_title: Scalars['String']
   user_id: Scalars['Int']
 }
 
@@ -216,17 +221,19 @@ export interface MovieUser {
 
 export interface Room {
   __typename?: 'Room'
+  id: Scalars['Int']
   room_id: Scalars['Int']
   admin_user_id: Scalars['Int']
   genre1: Scalars['String']
   genre2: Scalars['String']
+  max_swipes: Scalars['Int']
 }
 
 export interface RoomMovieCollection {
   __typename?: 'RoomMovieCollection'
   id: Scalars['Int']
-  room_id: Scalars['Int']
-  movie_id: Scalars['Int']
+  m_room_id: Scalars['Int']
+  m_movie_id: Scalars['Int']
   movie_index: Scalars['Int']
 }
 
@@ -234,7 +241,7 @@ export interface Vote {
   __typename?: 'Vote'
   id: Scalars['Int']
   room_id: Scalars['Int']
-  movie_id: Scalars['Int']
+  movie_title: Scalars['String']
   user_id: Scalars['Int']
 }
 
@@ -437,10 +444,22 @@ export type QueryResolvers<
   >
   movieUsers?: Resolver<Array<ResolversTypes['MovieUser']>, ParentType, ContextType>
   roomMovieCollection?: Resolver<
-    Maybe<Array<Maybe<ResolversTypes['RoomMovieCollection']>>>,
+    Array<ResolversTypes['RoomMovieCollection']>,
     ParentType,
     ContextType,
     RequireFields<QueryRoomMovieCollectionArgs, 'room_id'>
+  >
+  usersInRoom?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['User']>>>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryUsersInRoomArgs, 'room_id'>
+  >
+  nextMovie?: Resolver<
+    Maybe<ResolversTypes['RoomMovieCollection']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryNextMovieArgs, 'roomId' | 'curIndex'>
   >
 }
 
@@ -460,7 +479,6 @@ export type MutationResolvers<
     ContextType,
     RequireFields<MutationNextSurveyQuestionArgs, 'surveyId'>
   >
-  nextMovie?: Resolver<ResolversTypes['Int'], ParentType, ContextType, RequireFields<MutationNextMovieArgs, 'input'>>
   addRoomAndMovieUser?: Resolver<
     ResolversTypes['Boolean'],
     ParentType,
@@ -501,7 +519,7 @@ export type UserResolvers<
 > = {
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
   userType?: Resolver<ResolversTypes['UserType'], ParentType, ContextType>
-  email?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  room_id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   __isTypeOf?: IsTypeOfResolverFn<ParentType>
 }
@@ -575,10 +593,12 @@ export type RoomResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes['Room'] = ResolversParentTypes['Room']
 > = {
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
   room_id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
   admin_user_id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
   genre1?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   genre2?: Resolver<ResolversTypes['String'], ParentType, ContextType>
+  max_swipes?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
   __isTypeOf?: IsTypeOfResolverFn<ParentType>
 }
 
@@ -587,8 +607,8 @@ export type RoomMovieCollectionResolvers<
   ParentType extends ResolversParentTypes['RoomMovieCollection'] = ResolversParentTypes['RoomMovieCollection']
 > = {
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-  room_id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-  movie_id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
+  m_room_id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
+  m_movie_id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
   movie_index?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
   __isTypeOf?: IsTypeOfResolverFn<ParentType>
 }
@@ -599,7 +619,7 @@ export type VoteResolvers<
 > = {
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
   room_id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-  movie_id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
+  movie_title?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   user_id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
   __isTypeOf?: IsTypeOfResolverFn<ParentType>
 }

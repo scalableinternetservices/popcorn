@@ -31,7 +31,9 @@ type Query {
   movieUser(uid: Int!): MovieUser
   movieInRoom(room_id: Int!, index: Int!): Movie
   movieUsers: [MovieUser!]!
-  roomMovieCollection(room_id: Int!): [RoomMovieCollection]
+  roomMovieCollection(room_id: Int!): [RoomMovieCollection!]!
+  usersInRoom(room_id: Int!): [User]
+  nextMovie(roomId: Int!, curIndex: Int!): RoomMovieCollection
 }
 
 type Mutation {
@@ -41,7 +43,7 @@ type Mutation {
   # Moves the survey to the next question (or starts it if it hasn't started). ADMIN only.
   nextSurveyQuestion(surveyId: Int!): Survey
 
-  nextMovie(input: NextMovieInput!): Int!
+  #nextMovie(input: NextMovieInput!): Int!
 
   addRoomAndMovieUser(input: RoomAndMovieUserInput!): Boolean!
   addVote(input: VoteInput!): Boolean!
@@ -56,13 +58,12 @@ type Subscription {
 type User {
   id: Int!
   userType: UserType!
-  email: String!
+  room_id: Int!
   name: String!
 }
 
 input MovieUserInput {
   room_id: Int!
-  u_id: Int!
   name: String!
 }
 
@@ -121,7 +122,7 @@ input RoomAndMovieUserInput {
   room_id: Int!
   genre1: String!
   genre2: String!
-  u_id: Int!
+  max_swipes: Int!
   name: String!
 }
 
@@ -143,7 +144,7 @@ input MovieByGenreInput {
 
 input VoteInput {
   room_id: Int!
-  movie_id: Int!
+  movie_title: String!
   user_id: Int!
 }
 
@@ -171,23 +172,25 @@ type MovieUser {
 }
 
 type Room {
+  id: Int!
   room_id: Int!
   admin_user_id: Int!
   genre1: String!
   genre2: String!
+  max_swipes: Int!
 }
 
 type RoomMovieCollection {
   id: Int!
-  room_id: Int!
-  movie_id: Int!
+  m_room_id: Int!
+  m_movie_id: Int!
   movie_index: Int!
 }
 
 type Vote {
   id: Int!
   room_id: Int!
-  movie_id: Int!
+  movie_title: String!
   user_id: Int!
 }
 

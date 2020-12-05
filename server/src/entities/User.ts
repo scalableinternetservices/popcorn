@@ -3,6 +3,7 @@ import { User as GraphqlUser, UserType } from '../graphql/schema.types'
 
 @Entity()
 export class User extends BaseEntity implements GraphqlUser {
+  __typename?: 'User' | undefined
   @PrimaryGeneratedColumn()
   id: number
 
@@ -13,9 +14,9 @@ export class User extends BaseEntity implements GraphqlUser {
   timeUpdated: Date
 
   @Column({
-    length: 100,
+    nullable: true,
   })
-  email: string
+  room_id: number
 
   @Column({
     type: 'enum',
