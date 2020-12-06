@@ -151,7 +151,7 @@ export function SwipePage(props: SwipePageProps) {
   )
 }
 
-function getMovieId(cur_index: number) {
+export function getMovieId(cur_index: number) {
   const { user } = React.useContext(UserContext)
   if (!user || user.room_id == null) {
     return -1
@@ -169,7 +169,7 @@ function getMovieId(cur_index: number) {
   return currentMovie.m_movie_id
 }
 
-function getMovie(movie_id: number) {
+export function getMovie(movie_id: number) {
   const { loading, data } = useQuery<FetchMovie>(fetchMovie, {
     variables: { movie_id: movie_id },
   })

@@ -37,6 +37,7 @@ export interface QuerySurveyArgs {
 
 export interface QueryVotesArgs {
   roomId: Scalars['Int']
+  movieTitle: Scalars['String']
 }
 
 export interface QueryRoomArgs {
@@ -349,11 +350,11 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 export type ResolversTypes = {
   Query: ResolverTypeWrapper<{}>
   Int: ResolverTypeWrapper<Scalars['Int']>
+  String: ResolverTypeWrapper<Scalars['String']>
   Mutation: ResolverTypeWrapper<{}>
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>
   Subscription: ResolverTypeWrapper<{}>
   User: ResolverTypeWrapper<User>
-  String: ResolverTypeWrapper<Scalars['String']>
   MovieUserInput: MovieUserInput
   UserType: UserType
   Survey: ResolverTypeWrapper<Survey>
@@ -378,11 +379,11 @@ export type ResolversTypes = {
 export type ResolversParentTypes = {
   Query: {}
   Int: Scalars['Int']
+  String: Scalars['String']
   Mutation: {}
   Boolean: Scalars['Boolean']
   Subscription: {}
   User: User
-  String: Scalars['String']
   MovieUserInput: MovieUserInput
   Survey: Survey
   SurveyQuestion: SurveyQuestion
@@ -419,7 +420,7 @@ export type QueryResolvers<
     Maybe<Array<Maybe<ResolversTypes['Vote']>>>,
     ParentType,
     ContextType,
-    RequireFields<QueryVotesArgs, 'roomId'>
+    RequireFields<QueryVotesArgs, 'roomId' | 'movieTitle'>
   >
   rooms?: Resolver<Array<ResolversTypes['Room']>, ParentType, ContextType>
   room?: Resolver<Maybe<ResolversTypes['Room']>, ParentType, ContextType, RequireFields<QueryRoomArgs, 'room_id'>>
