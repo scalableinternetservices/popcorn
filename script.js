@@ -24,31 +24,30 @@ export const options = {
 //another request: {operationName: "AddVote", variables: {input: {room_id: 84200, movie_id: -1, user_id: 2}},…}
 ///auth/createUser
 export default function () {
-
   //http.get('http://localhost:3000')
   // recordRates(
 
-  var url = 'http://localhost:3000/auth/createUser';
-  var payload = JSON.stringify({
-      room_id: '44444',
-      name: 'test_user'
-  });
-  var params = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-  };
-  http.post(url, payload, params);
+  // var url = 'http://localhost:3000/auth/createUser'
+  // var payload = JSON.stringify({
+  //   room_id: '44444',
+  //   name: 'test_user',
+  // })
+  // var params = {
+  //   headers: {
+  //     'Content-Type': 'application/json',
+  //   },
+  // }
+  // http.post(url, payload, params)
 
-  const resp_createUser = http.post(
-    'http://localhost:3000/graphql',
-    '{"operationName":"AddRoomAndMovieUser","variables":{"input":{"genre1":"Thrillers","genre2":"Dramas","room_id":44444,"max_swipes":10,"name":"test"}},"query":"mutation AddRoomAndMovieUser($input: RoomAndMovieUserInput!) {\\n  addRoomAndMovieUser(input: $input)\\n}\\n"}',
-    {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    }
-  )
+  // const resp_createUser = http.post(
+  //   'http://localhost:3000/graphql',
+  //   '{"operationName":"AddRoomAndMovieUser","variables":{"input":{"genre1":"Thrillers","genre2":"Dramas","room_id":44444,"max_swipes":10,"name":"test"}},"query":"mutation AddRoomAndMovieUser($input: RoomAndMovieUserInput!) {\\n  addRoomAndMovieUser(input: $input)\\n}\\n"}',
+  //   {
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //   }
+  // )
 
   // const resp_fetchMovie = http.post(
   //   'http://localhost:3000/graphql',
@@ -99,12 +98,12 @@ export default function () {
   // )
 
   //http.get('http://localhost:3000/app/popcorn/results')
-  http.get('http://localhost:3000/app/popcorn/room')
+  //http.get('http://localhost:3000/app/popcorn/room')
   //http.get('http://localhost:3000/app/popcorn/swipe')
 
   // )
-  //sleep(1)
-  //http.get('http://localhost:3000')
+  http.get('http://localhost:3000/app/index')
+  sleep(Math.random() * 3)
 }
 
 const count200 = new Counter('status_code_2xx')
