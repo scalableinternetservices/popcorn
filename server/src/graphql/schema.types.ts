@@ -191,7 +191,7 @@ export interface MovieByGenreInput {
 
 export interface VoteInput {
   room_id: Scalars['Int']
-  movie_id: Scalars['Int']
+  movie_title: Scalars['String']
   user_id: Scalars['Int']
 }
 
@@ -241,7 +241,7 @@ export interface Vote {
   __typename?: 'Vote'
   id: Scalars['Int']
   room_id: Scalars['Int']
-  movie_id: Scalars['Int']
+  movie_title: Scalars['String']
   user_id: Scalars['Int']
 }
 
@@ -619,7 +619,7 @@ export type VoteResolvers<
 > = {
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
   room_id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
-  movie_id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
+  movie_title?: Resolver<ResolversTypes['String'], ParentType, ContextType>
   user_id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>
   __isTypeOf?: IsTypeOfResolverFn<ParentType>
 }

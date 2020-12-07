@@ -36,8 +36,10 @@ export function SwipePage(props: SwipePageProps) {
 
   function doAddVote() {
     console.log('voting')
-    if (user != null && user.id != null && user.room_id != null && movieId != null)
-      addVote(getApolloClient(), { room_id: user.room_id, movie_id: movieId, user_id: user?.id }).catch(handleError)
+    if (user != null && user.id != null && user.room_id != null && mov != null)
+      addVote(getApolloClient(), { room_id: user.room_id, movie_title: mov.title, user_id: user?.id }).catch(
+        handleError
+      )
   }
   console.log(count)
   //addMovieVote(1)

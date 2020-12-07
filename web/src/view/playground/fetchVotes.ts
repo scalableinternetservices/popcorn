@@ -2,7 +2,7 @@ import { gql } from '@apollo/client'
 
 export const fragmentVote = gql`
   fragment Vote on Vote {
-    movie_id
+    movie_title
   }
 `
 

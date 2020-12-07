@@ -103,7 +103,7 @@ const Nav = style(
   'nav',
   'flex white items-center list pa2 ph4 ph5-ns ph7-l avenir f4',
   (p: { $isSubNav?: boolean }) => ({
-    background: `linear-gradient(90deg, ${'#005587'} 0%, ${'#2774AE'} 100%)`,
+    background: `linear-gradient(90deg, ${'#ffbf00'} 0%, ${'#ffe28a'} 100%)`,
     opacity: '0.9',
     paddingTop: p.$isSubNav ? 0 : undefined,
     paddingBottom: p.$isSubNav ? 0 : undefined,

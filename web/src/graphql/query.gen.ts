@@ -308,7 +308,7 @@ export interface FetchUsersInRoomVariables {
 
 export interface FetchVotes_votes {
   __typename: "Vote";
-  movie_id: number;
+  movie_title: string;
 }
 
 export interface FetchVotes {
@@ -555,7 +555,7 @@ export interface User {
 
 export interface Vote {
   __typename: "Vote";
-  movie_id: number;
+  movie_title: string;
 }
 
 /* tslint:disable */
@@ -592,7 +592,7 @@ export interface SurveyInput {
 
 export interface VoteInput {
   room_id: number;
-  movie_id: number;
+  movie_title: string;
   user_id: number;
 }
 
