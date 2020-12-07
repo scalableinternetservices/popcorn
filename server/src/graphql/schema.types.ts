@@ -111,10 +111,15 @@ export interface MutationAddMovieUserArgs {
 export interface Subscription {
   __typename?: 'Subscription'
   surveyUpdates?: Maybe<Survey>
+  userUpdates: Array<User>
 }
 
 export interface SubscriptionSurveyUpdatesArgs {
   surveyId: Scalars['Int']
+}
+
+export interface SubscriptionUserUpdatesArgs {
+  roomId: Scalars['Int']
 }
 
 export interface User {
@@ -511,6 +516,13 @@ export type SubscriptionResolvers<
     ParentType,
     ContextType,
     RequireFields<SubscriptionSurveyUpdatesArgs, 'surveyId'>
+  >
+  userUpdates?: SubscriptionResolver<
+    Array<ResolversTypes['User']>,
+    'userUpdates',
+    ParentType,
+    ContextType,
+    RequireFields<SubscriptionUserUpdatesArgs, 'roomId'>
   >
 }
 

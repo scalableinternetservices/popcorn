@@ -180,5 +180,9 @@ export const graphqlRoot: Resolvers<Context> = {
       subscribe: (_, { surveyId }, context) => context.pubsub.asyncIterator('SURVEY_UPDATE_' + surveyId),
       resolve: (payload: any) => payload,
     },
+    userUpdates: {
+      subscribe: (_, { roomId }, context) => context.pubsub.asyncIterator('USERS_IN_ROOM_UPDATE_' + roomId),
+      resolve: (payload: any) => payload,
+    },
   },
 }

@@ -53,6 +53,7 @@ type Mutation {
 
 type Subscription {
   surveyUpdates(surveyId: Int!): Survey
+  userUpdates(roomId: Int!): [User!]!
 }
 
 type User {
