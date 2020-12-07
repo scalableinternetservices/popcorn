@@ -1,4 +1,4 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from 'typeorm'
+import { BaseEntity, Column, CreateDateColumn, Entity, Index, PrimaryGeneratedColumn } from 'typeorm'
 import { Room as RoomType } from '../graphql/schema.types'
 
 @Entity()
@@ -17,6 +17,7 @@ export class Room extends BaseEntity implements RoomType {
   })
   admin_user_id: number
 
+  @Index()
   @Column()
   room_id: number
 

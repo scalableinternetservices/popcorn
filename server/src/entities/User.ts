@@ -1,9 +1,10 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
+import { BaseEntity, Column, CreateDateColumn, Entity, Index, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
 import { User as GraphqlUser, UserType } from '../graphql/schema.types'
 
 @Entity()
 export class User extends BaseEntity implements GraphqlUser {
   __typename?: 'User' | undefined
+  @Index()
   @PrimaryGeneratedColumn()
   id: number
 

@@ -1,4 +1,4 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
+import { BaseEntity, Column, CreateDateColumn, Entity, Index, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
 import { RoomMovieCollection as RoomMovieCollectionType } from '../graphql/schema.types'
 import { Movie } from './Movies'
 
@@ -15,9 +15,11 @@ export class RoomMovieCollection extends BaseEntity implements RoomMovieCollecti
   timeCreated: Date
 
   //@ManyToOne(() => Room)
+  @Index()
   @Column()
   m_room_id: number
 
+  @Index()
   @ManyToOne(() => Movie)
   @Column()
   m_movie_id: number

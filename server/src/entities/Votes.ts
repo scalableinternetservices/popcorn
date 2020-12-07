@@ -1,4 +1,4 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from 'typeorm'
+import { BaseEntity, Column, CreateDateColumn, Entity, Index, PrimaryGeneratedColumn } from 'typeorm'
 import { Vote as VoteType } from '../graphql/schema.types'
 //import { Movie } from './Movies'
 //import { Room } from './Rooms'
@@ -15,6 +15,7 @@ export class Vote extends BaseEntity implements VoteType {
   timeCreated: Date
 
   //@ManyToOne(() => Room)
+  @Index()
   @Column()
   room_id: number
 
@@ -25,6 +26,7 @@ export class Vote extends BaseEntity implements VoteType {
   movie_title: string
 
   //@ManyToOne(() => User)
+  @Index()
   @Column({
     nullable: true,
   })

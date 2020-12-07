@@ -1,4 +1,4 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, OneToOne, PrimaryColumn } from 'typeorm'
+import { BaseEntity, Column, CreateDateColumn, Entity, Index, JoinColumn, OneToOne, PrimaryColumn } from 'typeorm'
 import { Genres as GenresType } from '../graphql/schema.types'
 import { Movie } from './Movies'
 
@@ -8,6 +8,7 @@ export class Genres extends BaseEntity implements GenresType {
   @CreateDateColumn()
   timeCreated: Date
 
+  @Index()
   @OneToOne(() => Movie)
   @JoinColumn()
   @PrimaryColumn()

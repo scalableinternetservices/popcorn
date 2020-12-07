@@ -1,4 +1,4 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } from 'typeorm'
+import { BaseEntity, Column, CreateDateColumn, Entity, Index, PrimaryColumn, UpdateDateColumn } from 'typeorm'
 import { Movie as MovieType } from '../graphql/schema.types'
 
 @Entity()
@@ -9,6 +9,7 @@ export class Movie extends BaseEntity implements MovieType {
   @UpdateDateColumn()
   timeUpdated: Date
 
+  @Index()
   @PrimaryColumn()
   movie_id: number
 
