@@ -40,7 +40,7 @@ export async function initORM() {
       RoomMovieCollection,
     ],
     extra: {
-      connectionLimit: 5,
+      connectionLimit: 512,
     },
   })
 }
