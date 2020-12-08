@@ -303,6 +303,28 @@ export interface FetchSurveyVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL subscription operation: UserSubscription
+// ====================================================
+
+export interface UserSubscription_userUpdates {
+  __typename: "User";
+  name: string;
+}
+
+export interface UserSubscription {
+  userUpdates: UserSubscription_userUpdates | null;
+}
+
+export interface UserSubscriptionVariables {
+  roomId: number;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: FetchUsersInRoom
 // ====================================================
 

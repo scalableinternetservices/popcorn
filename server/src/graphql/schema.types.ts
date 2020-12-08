@@ -111,7 +111,7 @@ export interface MutationAddMovieUserArgs {
 export interface Subscription {
   __typename?: 'Subscription'
   surveyUpdates?: Maybe<Survey>
-  userUpdates: Array<User>
+  userUpdates?: Maybe<User>
 }
 
 export interface SubscriptionSurveyUpdatesArgs {
@@ -518,7 +518,7 @@ export type SubscriptionResolvers<
     RequireFields<SubscriptionSurveyUpdatesArgs, 'surveyId'>
   >
   userUpdates?: SubscriptionResolver<
-    Array<ResolversTypes['User']>,
+    Maybe<ResolversTypes['User']>,
     'userUpdates',
     ParentType,
     ContextType,
