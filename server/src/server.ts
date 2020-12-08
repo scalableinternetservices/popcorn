@@ -65,12 +65,11 @@ server.express.post(
     user.room_id = req.body.room_id
     user.name = req.body.name
     user.userType = UserType.User
+    user = await user.save()
 
     pubsub.publish('USERS_IN_ROOM_UPDATE_' + user.room_id, user)
 
     // save the User model to the database, refresh `user` to get ID
-    user = await user.save()
-
     const authToken = await createSession(user)
     res
       .status(200)

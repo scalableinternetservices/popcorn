@@ -148,7 +148,6 @@ export const graphqlRoot: Resolvers<Context> = {
       vote.movie_title = movie_title
       vote.user_id = user_id
       await vote.save()
-      //ctx.pubsub.publish('NEW_VOTE_' + 1, vote)
       return true
     },
     addMovieUser: async (_, { input }, ctx) => {
