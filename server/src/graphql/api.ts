@@ -37,7 +37,8 @@ export const graphqlRoot: Resolvers<Context> = {
     rooms: () => Room.find(),
     room: async (_, { room_id }) => (await Room.findOne({ where: { room_id: room_id } })) || null,
     movies: () => Movie.find(),
-    votes: async (_, { roomId }) => Vote.find({ where: { room_id: roomId } }) || null,
+    votes: async (_, { roomId, movieTitle }) =>
+      Vote.find({ where: { room_id: roomId, movie_title: movieTitle } }) || null,
     movie: async (_, { movieId }) => (await Movie.findOne({ where: { movie_id: movieId } })) || null,
     movieUser: async (_, { uid }) => (await MovieUser.findOne({ where: { u_id: uid } })) || null,
     movieUsers: () => MovieUser.find(),
@@ -177,6 +178,10 @@ export const graphqlRoot: Resolvers<Context> = {
   Subscription: {
     surveyUpdates: {
       subscribe: (_, { surveyId }, context) => context.pubsub.asyncIterator('SURVEY_UPDATE_' + surveyId),
+      resolve: (payload: any) => payload,
+    },
+    userUpdates: {
+      subscribe: (_, { roomId }, context) => context.pubsub.asyncIterator('USERS_IN_ROOM_UPDATE_' + roomId),
       resolve: (payload: any) => payload,
     },
   },
