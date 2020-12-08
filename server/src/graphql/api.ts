@@ -29,6 +29,20 @@ interface Context {
   pubsub: PubSub
 }
 
+async function batchFunction(keys: readonly number[]): Promise<Movie[]> {
+  const results = await Movie.find()
+  console.log(keys.map(key=> results[key]))
+  return keys.map(key => results[key-1] || new Error(`No result for ${key}`))
+  /*
+  if (results[keys[0]]) {
+    return [results[keys[0]]]
+  }
+  return new Error(`No result`)*/
+}
+
+export const DataLoader = require('dataloader')
+export const userLoader = new DataLoader(batchFunction)
+
 export const graphqlRoot: Resolvers<Context> = {
   Query: {
     self: (_, args, ctx) => ctx.user,
@@ -38,7 +52,23 @@ export const graphqlRoot: Resolvers<Context> = {
     room: async (_, { room_id }) => (await Room.findOne({ where: { room_id: room_id } })) || null,
     movies: () => Movie.find(),
     votes: async (_, { roomId }) => Vote.find({ where: { room_id: roomId } }) || null,
-    movie: async (_, { movieId }) => (await Movie.findOne({ where: { movie_id: movieId } })) || null,
+    movie: async (_, { movieId }) => (await userLoader.load([movieId])) || null,
+    //movie: async (_, { movieId }) => (await Movie.findOne({ where: { movie_id: movieId } })) || null,
+    /*
+    movie: async (_, { movieId }) => {
+      const find = await Movie.findOne({ where: { movie_id: movieId } })
+      if (find) {
+        return find
+      }
+      return null
+    },*/
+    /*
+    movie: async (_, { movieId }) => {
+      console.log(movieId)
+      const wrapped = await userLoader.load([movieId])
+      console.log(wrapped)
+      return wrapped
+    },*/
     movieUser: async (_, { uid }) => (await MovieUser.findOne({ where: { u_id: uid } })) || null,
     movieUsers: () => MovieUser.find(),
     roomMovieCollection: async (_, { room_id }) =>
@@ -122,6 +152,7 @@ export const graphqlRoot: Resolvers<Context> = {
       const wherestring = '(' + genre1 + ' = true or ' + genre2 + ' = true)'
 
       console.log('In Add Room and Movie users')
+
 
       const movies_by_genre = await getRepository(Genres)
       .createQueryBuilder('genres')

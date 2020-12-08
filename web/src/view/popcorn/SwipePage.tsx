@@ -152,29 +152,34 @@ export function SwipePage(props: SwipePageProps) {
 }
 
 function getMovieId(cur_index: number) {
+
   const { user } = React.useContext(UserContext)
   if (!user || user.room_id == null) {
-    return -1
+    return 2
   }
   const { loading, data } = useQuery<FetchNextMovie>(fetchNextMovie, {
     variables: { room_id: user.room_id, index: cur_index },
   })
   if (loading || !data) {
-    return -1
+    return 2
   }
   const currentMovie = data.nextMovie
   if (!currentMovie || currentMovie.m_movie_id == null) {
-    return -1
+    return 2
   }
   return currentMovie.m_movie_id
 }
 
 function getMovie(movie_id: number) {
+  console.log("movie ----------")
+  console.log(movie_id)
+
   const { loading, data } = useQuery<FetchMovie>(fetchMovie, {
     variables: { movie_id: movie_id },
   })
   if (loading || !data) {
     //window.location.replace('/app/popcorn/results')
+    console.log("no movie")
     return null
   }
   return data.movie
