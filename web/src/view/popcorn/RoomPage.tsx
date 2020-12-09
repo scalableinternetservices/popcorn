@@ -32,18 +32,10 @@ export function UsersInRoom(roomId: number) {
     refetch().catch(handleError)
     console.log('got subscription' + sub.data?.userUpdates?.name)
   }
-  /*useEffect(() => {
-    if (sub.data?.userUpdates) {
-      usersInRoom?.push(sub.data.userUpdates)
-      setUsersInRoom(usersInRoom)
-    }
-  }, [sub.data])
-  */
+
   if (!data.usersInRoom) return <div>null users</div>
   if (data.usersInRoom.length === 0) return <div>no users in room</div>
-
   let html = ''
-  // Loop through each wizard and create a list item
   if (!usersInRoom) {
     html = 'no users'
   } else {
