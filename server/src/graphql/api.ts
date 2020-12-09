@@ -121,7 +121,11 @@ export const graphqlRoot: Resolvers<Context> = {
       // query movies of those genres
       const wherestring = '(' + genre1 + ' = true or ' + genre2 + ' = true)'
 
-      const movies_by_genre = await getRepository(Genres).createQueryBuilder('genres').where(wherestring).getMany()
+      const movies_by_genre = await getRepository(Genres)
+        .createQueryBuilder('genres')
+        .where(wherestring)
+        .limit(max_swipes)
+        .getMany()
       if (!movies_by_genre) {
         return false
       }
