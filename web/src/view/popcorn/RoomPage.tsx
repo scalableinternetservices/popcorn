@@ -8,11 +8,12 @@ import { UserContext } from '../auth/user'
 import { AppRouteParams } from '../nav/route'
 import { Page } from '../page/Page'
 import { fetchUsersInRoom, subscribeUsers } from '../playground/fetchUsersInRoom'
+import { handleError } from '../toast/error'
 
 interface RoomPageProps extends RouteComponentProps, AppRouteParams {}
 
 export function UsersInRoom(roomId: number) {
-  const { loading, data } = useQuery<FetchUsersInRoom>(fetchUsersInRoom, {
+  const { loading, data, refetch } = useQuery<FetchUsersInRoom>(fetchUsersInRoom, {
     variables: { room_id: roomId },
   })
   if (loading || !data) {
@@ -25,23 +26,16 @@ export function UsersInRoom(roomId: number) {
   }, [data])
 
   const sub = useSubscription<UserSubscription, UserSubscriptionVariables>(subscribeUsers, {
-    variables: { roomId },
+    variables: { roomId: roomId },
   })
-  if (sub) {
+  if (sub.data?.userUpdates) {
+    refetch().catch(handleError)
     console.log('got subscription' + sub.data?.userUpdates?.name)
   }
-  /*useEffect(() => {
-    if (sub.data?.userUpdates) {
-      usersInRoom?.push(sub.data.userUpdates)
-      setUsersInRoom(usersInRoom)
-    }
-  }, [sub.data])
-  */
+
   if (!data.usersInRoom) return <div>null users</div>
   if (data.usersInRoom.length === 0) return <div>no users in room</div>
-
   let html = ''
-  // Loop through each wizard and create a list item
   if (!usersInRoom) {
     html = 'no users'
   } else {

@@ -122,7 +122,11 @@ export const graphqlRoot: Resolvers<Context> = {
       // query movies of those genres
       const wherestring = '(' + genre1 + ' = true or ' + genre2 + ' = true)'
 
-      const movies_by_genre = await getRepository(Genres).createQueryBuilder('genres').where(wherestring).getMany()
+      const movies_by_genre = await getRepository(Genres)
+        .createQueryBuilder('genres')
+        .where(wherestring)
+        .limit(max_swipes)
+        .getMany()
       if (!movies_by_genre) {
         return false
       }
@@ -148,7 +152,6 @@ export const graphqlRoot: Resolvers<Context> = {
       vote.movie_title = movie_title
       vote.user_id = user_id
       await vote.save()
-      //ctx.pubsub.publish('NEW_VOTE_' + 1, vote)
       return true
     },
     addMovieUser: async (_, { input }, ctx) => {

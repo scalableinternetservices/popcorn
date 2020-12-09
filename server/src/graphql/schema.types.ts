@@ -114,12 +114,12 @@ export interface Subscription {
   userUpdates?: Maybe<User>
 }
 
-export interface SubscriptionSurveyUpdatesArgs {
-  surveyId: Scalars['Int']
-}
-
 export interface SubscriptionUserUpdatesArgs {
   roomId: Scalars['Int']
+}
+
+export interface SubscriptionSurveyUpdatesArgs {
+  surveyId: Scalars['Int']
 }
 
 export interface User {
