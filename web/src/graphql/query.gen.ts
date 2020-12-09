@@ -75,6 +75,28 @@ export interface FetchMovieVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL query operation: FetchMovieUser
+// ====================================================
+
+export interface FetchMovieUser_movieUser {
+  __typename: "MovieUser";
+  room_id: number;
+}
+
+export interface FetchMovieUser {
+  movieUser: FetchMovieUser_movieUser | null;
+}
+
+export interface FetchMovieUserVariables {
+  id: number;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: FetchNextMovie
 // ====================================================
 
@@ -281,6 +303,28 @@ export interface FetchSurveyVariables {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL subscription operation: UserSubscription
+// ====================================================
+
+export interface UserSubscription_userUpdates {
+  __typename: "User";
+  name: string;
+}
+
+export interface UserSubscription {
+  userUpdates: UserSubscription_userUpdates | null;
+}
+
+export interface UserSubscriptionVariables {
+  roomId: number;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL query operation: FetchUsersInRoom
 // ====================================================
 
@@ -308,7 +352,7 @@ export interface FetchUsersInRoomVariables {
 
 export interface FetchVotes_votes {
   __typename: "Vote";
-  movie_title: string;
+  room_id: number;
 }
 
 export interface FetchVotes {
@@ -317,6 +361,7 @@ export interface FetchVotes {
 
 export interface FetchVotesVariables {
   room_id: number;
+  movie_title: string;
 }
 
 /* tslint:disable */
@@ -451,6 +496,20 @@ export interface Movie {
 // This file was automatically generated and should not be edited.
 
 // ====================================================
+// GraphQL fragment: MovieUser
+// ====================================================
+
+export interface MovieUser {
+  __typename: "MovieUser";
+  room_id: number;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// @generated
+// This file was automatically generated and should not be edited.
+
+// ====================================================
 // GraphQL fragment: RoomMovieCollection
 // ====================================================
 
@@ -555,7 +614,7 @@ export interface User {
 
 export interface Vote {
   __typename: "Vote";
-  movie_title: string;
+  room_id: number;
 }
 
 /* tslint:disable */
