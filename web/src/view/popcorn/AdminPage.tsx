@@ -39,9 +39,25 @@ export function AdminPage(props: AdminPageProps) {
   }
 
   const options = [
-    { label: 'Thrillers', value: 'Thrillers' },
-    { label: 'Dramas', value: 'Dramas' },
+    { label: 'Action & Adventure', value: 'Action & Adventure' },
+    { label: 'Anime Features', value: 'Anime Features' },
+    { label: 'Children & Family Movies', value: 'Children & Family Movies' },
+    { label: 'Classic Movies', value: 'Classic Movies' },
     { label: 'Comedies', value: 'Comedies' },
+    { label: 'Cult Movies', value: 'Cult Movies' },
+    { label: 'Documentaries', value: 'Documentaries' },
+    { label: 'Dramas', value: 'Dramas' },
+    { label: 'Faith & Spirituality', value: 'Faith & Spirituality' },
+    { label: 'Horror Movies', value: 'Horror Movies' },
+    { label: 'Independent Movies', value: 'Independent Movies' },
+    { label: 'LGBTQ Movies', value: 'LGBTQ Movies' },
+    { label: 'Music & Musicals', value: 'Music & Musicals' },
+    { label: 'Romantic Movies', value: 'Romantic Movies' },
+    { label: 'Sci-Fi & Fantasy', value: 'Sci-Fi & Fantasy' },
+    { label: 'Sports Movies', value: 'Sports Movies' },
+    { label: 'Stand-Up Comedy', value: 'Stand-Up Comedy' },
+    { label: 'Sports Movies', value: 'Sports Movies' },
+    { label: 'Thrillers', value: 'Thrillers' },
   ]
 
   const [genres, setGenres] = useState<any[]>([])
@@ -64,10 +80,22 @@ export function AdminPage(props: AdminPageProps) {
   return (
     <Page>
       <div style={{ margin: '30px' }}>
-        <label style={{ fontSize: '30px', margin: '10px', fontWeight: 'lighter' }} htmlFor="name">
+        <label
+          style={{
+            fontSize: '30px',
+            margin: '10px',
+            fontWeight: 'lighter',
+          }}
+          htmlFor="name"
+        >
           Enter Name
         </label>
-        <Input $onChange={setName} style={{ marginTop: '12px' }} name="name" type="name" />
+        <Input
+          $onChange={setName}
+          style={{ marginTop: '12px', borderRadius: '4px', border: 'transparent', backgroundColor: 'white' }}
+          name="name"
+          type="name"
+        />
       </div>
       <div style={{ margin: '30px' }}>
         <label style={{ fontSize: '30px', margin: '10px', fontWeight: 'lighter' }} htmlFor="genres">
@@ -78,10 +106,22 @@ export function AdminPage(props: AdminPageProps) {
         </div>
       </div>
       <div style={{ margin: '30px' }}>
-        <label style={{ fontSize: '30px', margin: '10px', fontWeight: 'lighter' }} htmlFor="max-swipes">
+        <label
+          style={{
+            fontSize: '30px',
+            margin: '10px',
+            fontWeight: 'lighter',
+          }}
+          htmlFor="max-swipes"
+        >
           Choose Max Swipes
         </label>
-        <Input $onChange={setMaxSwipes} style={{ marginTop: '12px' }} name="max-swipes" type="max-swipes" />
+        <Input
+          $onChange={setMaxSwipes}
+          style={{ marginTop: '12px', borderRadius: '4px', border: 'transparent', backgroundColor: 'white' }}
+          name="max-swipes"
+          type="max-swipes"
+        />
       </div>
       <div style={{ marginTop: '48px' }}>
         <span style={{ padding: '12px', fontSize: '30px' }}>
