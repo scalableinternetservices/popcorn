@@ -2,13 +2,13 @@ import { gql } from '@apollo/client'
 
 export const fragmentVote = gql`
   fragment Vote on Vote {
-    room_id
+    movie_title
   }
 `
 
 export const fetchVotes = gql`
-  query FetchVotes($room_id: Int!, $movie_title: String!) {
-    votes(roomId: $room_id, movieTitle: $movie_title) {
+  query FetchVotes($room_id: Int!) {
+    votes(roomId: $room_id) {
       ...Vote
     }
   }

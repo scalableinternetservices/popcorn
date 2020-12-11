@@ -1,56 +1,37 @@
-import { useQuery, useSubscription } from '@apollo/client'
+import { useQuery } from '@apollo/client'
 import { RouteComponentProps } from '@reach/router'
 import * as React from 'react'
-import { useEffect } from 'react'
-import { FetchUsersInRoom, UserSubscription, UserSubscriptionVariables } from '../../graphql/query.gen'
+import { FetchUsersInRoom } from '../../graphql/query.gen'
 import { Button } from '../../style/button'
 import { UserContext } from '../auth/user'
 import { AppRouteParams } from '../nav/route'
 import { Page } from '../page/Page'
-import { fetchUsersInRoom, subscribeUsers } from '../playground/fetchUsersInRoom'
-import { handleError } from '../toast/error'
+import { fetchUsersInRoom } from '../playground/fetchUsersInRoom'
 
 interface RoomPageProps extends RouteComponentProps, AppRouteParams {}
 
 export function UsersInRoom(roomId: number) {
-  const { loading, data, refetch } = useQuery<FetchUsersInRoom>(fetchUsersInRoom, {
+  console.log(roomId)
+  const { loading, data } = useQuery<FetchUsersInRoom>(fetchUsersInRoom, {
     variables: { room_id: roomId },
+    pollInterval: 10000,
   })
-  if (loading || !data) {
-    return <div>no users yet</div>
+  if (loading) {
+    return <div>loading...</div>
   }
-
-  const [usersInRoom, setUsersInRoom] = React.useState(data?.usersInRoom)
-  useEffect(() => {
-    setUsersInRoom(data?.usersInRoom)
-  }, [data])
-
-  const sub = useSubscription<UserSubscription, UserSubscriptionVariables>(subscribeUsers, {
-    variables: { roomId: roomId },
-  })
-  if (sub.data?.userUpdates) {
-    refetch().catch(handleError)
-    console.log('got subscription' + sub.data?.userUpdates?.name)
+  if (!data) {
+    return <div>no votes</div>
   }
-  /*useEffect(() => {
-    if (sub.data?.userUpdates) {
-      usersInRoom?.push(sub.data.userUpdates)
-      setUsersInRoom(usersInRoom)
-    }
-  }, [sub.data])
-  */
+  console.log(data)
   if (!data.usersInRoom) return <div>null users</div>
   if (data.usersInRoom.length === 0) return <div>no users in room</div>
 
   let html = ''
+
   // Loop through each wizard and create a list item
-  if (!usersInRoom) {
-    html = 'no users'
-  } else {
-    usersInRoom.forEach(function (user) {
-      html += user?.name + ','
-    })
-  }
+  data.usersInRoom.forEach(function (user) {
+    html += user?.name + ','
+  })
   return html.slice(0, -1)
 }
 

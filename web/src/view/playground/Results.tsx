@@ -1,10 +1,8 @@
 import { useQuery } from '@apollo/client'
 import * as React from 'react'
-import { FetchRoom, FetchRoom_room, FetchVotes } from '../../graphql/query.gen'
+import { FetchVotes, FetchVotes_votes } from '../../graphql/query.gen'
 import { SmallText } from '../../style/text'
 import { UserContext } from '../auth/user'
-import { getMovie, getMovieId } from '../popcorn/SwipePage'
-import { fetchRoom } from './fetchRooms'
 import { fetchVotes } from './fetchVotes'
 
 export function Votes() {
@@ -13,15 +11,7 @@ export function Votes() {
     return <div>error: no user found</div>
   }
   console.log('test', user.room_id)
-  const { loading, data } = useQuery<FetchRoom>(fetchRoom, { variables: { room_id: user.room_id } })
-  if (loading) {
-    return <div>loading...</div>
-  }
-  if (!data) {
-    return <div>no data</div>
-  }
-  return <ResultsHistogram room={data.room} />
-  /*const { loading, data } = useQuery<FetchVotes>(fetchVotes, {
+  const { loading, data } = useQuery<FetchVotes>(fetchVotes, {
     variables: { room_id: user.room_id },
     pollInterval: 10000,
   })
@@ -34,37 +24,10 @@ export function Votes() {
   if (!data.votes) return <div>null votes</div>
   if (data.votes.length === 0) return <div>no length</div>
 
-  return <ResultsHistogram votes={data.votes} />*/
+  return <ResultsHistogram votes={data.votes} />
 }
 
-function ResultsHistogram({ room }: { room: FetchRoom_room | null }) {
-  const swipes = room?.max_swipes
-  const cur_room_id = room?.room_id
-  if (!swipes || !cur_room_id) {
-    return <div>no room</div>
-  }
-  const pairs: { movie: string; count: number }[] = []
-  for (let i = 1; i < swipes + 1; i++) {
-    const cur_movie_id = getMovieId(i)
-    const cur_movie_title = getMovie(cur_movie_id)?.title
-    if (!cur_movie_title) {
-      console.log('bad')
-    } else {
-      console.log('good')
-      console.log('current movie:' + cur_movie_title + 'room id: ' + cur_room_id)
-      const { data } = useQuery<FetchVotes>(fetchVotes, {
-        variables: { room_id: cur_room_id, movie_title: cur_movie_title },
-        pollInterval: 10000,
-      })
-      if (!data?.votes || data.votes.length == 0) {
-        //don't add to list
-      } else {
-        console.log('current movie:' + cur_movie_title + 'number of votes: ')
-        pairs.push({ movie: cur_movie_title, count: data.votes.length })
-      }
-    }
-  }
-  /*
+function ResultsHistogram({ votes }: { votes: (FetchVotes_votes | null)[] }) {
   const answerBuckets: { [key: string]: number } = {}
   votes.forEach(a => {
     let norm = ''
@@ -72,6 +35,20 @@ function ResultsHistogram({ room }: { room: FetchRoom_room | null }) {
       norm = 'null movie'
     } else {
       norm = a.movie_title
+      /*const { loading, data } = useQuery<FetchMovie>(fetchMovie, { variables: { movie_id: mId } })
+      if (loading) {
+        norm = 'loading'
+      }
+      if (!data) {
+        norm = 'null titles'
+      } else {
+        const mv = data.movie
+        if (!mv) {
+          norm = 'null title'
+        } else {
+          norm = mv.title
+        }
+      }*/
     }
     answerBuckets[norm] = answerBuckets[norm] || 0
     answerBuckets[norm]++
@@ -80,7 +57,7 @@ function ResultsHistogram({ room }: { room: FetchRoom_room | null }) {
   const pairs: { movie: string; count: number }[] = []
   for (const movie of Object.keys(answerBuckets)) {
     pairs.push({ movie, count: answerBuckets[movie] })
-  }*/
+  }
   const sorted = pairs.sort((a, b) => b.count - a.count)
   if (sorted.length === 0) {
     return <div>no length</div>

@@ -6,15 +6,6 @@ export const fragmentUsersInRoom = gql`
   }
 `
 
-export const subscribeUsers = gql`
-  subscription UserSubscription($roomId: Int!) {
-    userUpdates(roomId: $roomId) {
-      ...User
-    }
-  }
-  ${fragmentUsersInRoom}
-`
-
 export const fetchUsersInRoom = gql`
   query FetchUsersInRoom($room_id: Int!) {
     usersInRoom(room_id: $room_id) {
